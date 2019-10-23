@@ -12,7 +12,7 @@ Note: The Makefile has currently only been tested on MacOS and may require some 
 
 
 ## Demo
-1. Run `./demo.sh` to compile the code and run it on example darpa dataset.
+1. Run `./demo.sh` to compile the code and run it on example dataset.
 
 
 ## Command line options
