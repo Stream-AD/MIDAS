@@ -23,7 +23,7 @@ Note: The Makefile has currently only been tested on MacOS and may require some 
   * `-b --buckets`: Number of Buckets (default: 769)  
   * `-a --alpha`: Temporal Decay Factor (default: 0.6)  
   * `--midas` : Run MIDAS instead of MIDAS-R
-  * `--undirected` : is the graph undirected (=1) or directed (=0)? If 0, edges are internally symmetrized. (default: 1)
+  * `--undirected` : Treat graph as undirected instead of directed
 
 
 ## Input file format
