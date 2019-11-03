@@ -418,7 +418,7 @@ public:
   std::string print_help() {
     std::stringstream stream;
     stream << std::left;
-    stream << "Usage: " << mProgramName << " [options] ";
+    stream << "Usage: ./" << mProgramName << " [options] ";
     size_t tLongestArgumentLength = get_length_of_longest_argument();
 
     for (const auto &argument : mPositionalArguments) {
@@ -436,7 +436,7 @@ public:
 
     if (!mOptionalArguments.empty())
       stream << (mPositionalArguments.empty() ? "" : "\n")
-             << "Optional arguments:\n";
+             << "Options:\n";
 
     for (const auto &mOptionalArgument : mOptionalArguments) {
       stream.width(tLongestArgumentLength);
