@@ -28,8 +28,8 @@ Note: The Makefile has currently only been tested on MacOS and may require some 
 
 ## Input file format
 MIDAS expects the input edge stream to be stored in a single file containing the following three columns in order:
-1. `source (str)`: source ID of the edge
-2. `destination (str)`: destination ID of the edge
+1. `source (int)`: source ID of the edge
+2. `destination (int)`: destination ID of the edge
 3. `time (int)`: time stamp of the edge
 
 Thus, each line represents an edge. Edges should be sorted in non-decreasing order of their time stamps and the column delimiter should be ,
