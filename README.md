@@ -33,3 +33,9 @@ MIDAS expects the input edge stream to be stored in a single file containing the
 3. `time (int)`: time stamp of the edge
 
 Thus, each line represents an edge. Edges should be sorted in non-decreasing order of their time stamps and the column delimiter should be ,
+
+
+## Datasets
+1. [DARPA](https://www.ll.mit.edu/r-d/datasets/1998-darpa-intrusion-detection-evaluation-dataset)
+2. [TwitterWorldCup2014](http://odds.cs.stonybrook.edu/twitterworldcup2014-dataset)
+3. [TwitterSecurity](http://odds.cs.stonybrook.edu/twittersecurity-dataset)
