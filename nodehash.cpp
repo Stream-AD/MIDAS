@@ -1,6 +1,7 @@
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 
+#include <iostream>
 #include "nodehash.hpp"
 
 Nodehash::Nodehash(int r, int b)
