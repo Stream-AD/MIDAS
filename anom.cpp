@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <math.h>
+#include <algorithm>
+#include <vector>
 #include "anom.hpp"
 #include "edgehash.hpp"
 #include "nodehash.hpp"
@@ -12,7 +14,7 @@ vector<double>* midas(vector<int>& src, vector<int>& dst, vector<int>& times, in
     int m = *max_element(src.begin(), src.end());
     Edgehash cur_count(num_rows, num_buckets, m);
     Edgehash total_count(num_rows, num_buckets, m);
-    vector<double>* anom_score = new vector<double>();
+    vector<double>* anom_score = new vector<double>(src.size());
     int cur_t = 1;
     for (int i = 0; i < src.size(); i++) {
 
@@ -28,7 +30,7 @@ vector<double>* midas(vector<int>& src, vector<int>& dst, vector<int>& times, in
         double cur_mean = total_count.get_count(cur_src, cur_dst) / cur_t;
         double sqerr = pow(cur_count.get_count(cur_src, cur_dst) - cur_mean, 2);
         double cur_score = sqerr / cur_mean + sqerr / (cur_mean * (cur_t - 1));
-        anom_score->push_back(cur_score);
+        (*anom_score)[i] = cur_score;
     }
 
     return anom_score;
@@ -50,7 +52,7 @@ vector<double>* midasR(vector<int>& src, vector<int>& dst, vector<int>& times, i
     Nodehash dst_score(num_rows, num_buckets);
     Nodehash src_total(num_rows, num_buckets);
     Nodehash dst_total(num_rows, num_buckets);
-    vector<double>* anom_score = new vector<double>();
+    vector<double>* anom_score = new vector<double>(src.size());
     int cur_t = 1;
 
     for (int i = 0; i < src.size(); i++) {
@@ -76,7 +78,7 @@ vector<double>* midasR(vector<int>& src, vector<int>& dst, vector<int>& times, i
         //double combined_score = MAX(cur_score_src, cur_score_dst) + cur_score;
         //double combined_score = cur_score_src + cur_score_dst + cur_score;
         double combined_score = MAX(MAX(cur_score_src, cur_score_dst), cur_score);
-        anom_score->push_back(log(1 + combined_score));
+        (*anom_score)[i] = log(1 + combined_score);
     }
 
     return anom_score;
