@@ -22,7 +22,7 @@ Note: The Makefile has currently only been tested on MacOS and may require some 
   * `-r --rows`: Number of Hash Functions (default: 2)  
   * `-b --buckets`: Number of Buckets (default: 769)  
   * `-a --alpha`: Temporal Decay Factor (default: 0.6)  
-  * `--midas` : Run MIDAS instead of MIDAS-R
+  * `--norelations` : Run MIDAS instead of MIDAS-R
   * `--undirected` : Treat graph as undirected instead of directed
 
 
