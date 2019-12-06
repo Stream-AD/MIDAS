@@ -39,3 +39,15 @@ Thus, each line represents an edge. Edges should be sorted in non-decreasing ord
 1. [DARPA](https://www.ll.mit.edu/r-d/datasets/1998-darpa-intrusion-detection-evaluation-dataset)
 2. [TwitterWorldCup2014](http://odds.cs.stonybrook.edu/twitterworldcup2014-dataset)
 3. [TwitterSecurity](http://odds.cs.stonybrook.edu/twittersecurity-dataset)
+
+## Citation
+If you use this code for your research, please consider citing our paper.
+
+```
+@article{bhatia2019midas,
+  title={MIDAS: Microcluster-Based Detector of Anomalies in Edge Streams},
+  author={Bhatia, Siddharth and Hooi, Bryan and Yoon, Minji and Shin, Kijung and Faloutsos, Christos},
+  journal={arXiv preprint arXiv:1911.04464},
+  year={2019}
+}
+```
