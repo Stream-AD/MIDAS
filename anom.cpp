@@ -15,21 +15,23 @@ vector<double>* midas(vector<int>& src, vector<int>& dst, vector<int>& times, in
     Edgehash cur_count(num_rows, num_buckets, m);
     Edgehash total_count(num_rows, num_buckets, m);
     vector<double>* anom_score = new vector<double>(src.size());
-    int cur_t = 1;
-    for (int i = 0; i < src.size(); i++) {
+    int cur_t = 1, size = src.size(), cur_src, cur_dst;
+    double cur_mean, sqerr, cur_score;
+    for (int i = 0; i < size; i++) {
 
         if (i == 0 || times[i] > cur_t) {
             cur_count.clear();
             cur_t = times[i];
         }
 
-        int cur_src = src[i];
-        int cur_dst = dst[i];
+        cur_src = src[i];
+        cur_dst = dst[i];
         cur_count.insert(cur_src, cur_dst, 1);
         total_count.insert(cur_src, cur_dst, 1);
-        double cur_mean = total_count.get_count(cur_src, cur_dst) / cur_t;
-        double sqerr = pow(cur_count.get_count(cur_src, cur_dst) - cur_mean, 2);
-        double cur_score = sqerr / cur_mean + sqerr / (cur_mean * (cur_t - 1));
+        cur_mean = total_count.get_count(cur_src, cur_dst) / cur_t;
+        sqerr = pow(cur_count.get_count(cur_src, cur_dst) - cur_mean, 2);
+        if (cur_t == 1) cur_score = 0;
+        else cur_score = sqerr / cur_mean + sqerr / (cur_mean * (cur_t - 1));
         (*anom_score)[i] = cur_score;
     }
 
@@ -53,7 +55,8 @@ vector<double>* midasR(vector<int>& src, vector<int>& dst, vector<int>& times, i
     Nodehash src_total(num_rows, num_buckets);
     Nodehash dst_total(num_rows, num_buckets);
     vector<double>* anom_score = new vector<double>(src.size());
-    int cur_t = 1;
+    int cur_t = 1, size = src.size(), cur_src, cur_dst;
+    double cur_score, cur_score_src, cur_score_dst, combined_score;
 
     for (int i = 0; i < src.size(); i++) {
 
@@ -64,20 +67,20 @@ vector<double>* midasR(vector<int>& src, vector<int>& dst, vector<int>& times, i
             cur_t = times[i];
         }
 
-        int cur_src = src[i];
-        int cur_dst = dst[i];
+        cur_src = src[i];
+        cur_dst = dst[i];
         cur_count.insert(cur_src, cur_dst, 1);
         total_count.insert(cur_src, cur_dst, 1);
         src_score.insert(cur_src, 1);
         dst_score.insert(cur_dst, 1);
         src_total.insert(cur_src, 1);
         dst_total.insert(cur_dst, 1);
-        double cur_score = counts_to_anom(total_count.get_count(cur_src, cur_dst), cur_count.get_count(cur_src, cur_dst), cur_t);
-        double cur_score_src = counts_to_anom(src_total.get_count(cur_src), src_score.get_count(cur_src), cur_t);
-        double cur_score_dst = counts_to_anom(dst_total.get_count(cur_dst), dst_score.get_count(cur_dst), cur_t);
+        cur_score = counts_to_anom(total_count.get_count(cur_src, cur_dst), cur_count.get_count(cur_src, cur_dst), cur_t);
+        cur_score_src = counts_to_anom(src_total.get_count(cur_src), src_score.get_count(cur_src), cur_t);
+        cur_score_dst = counts_to_anom(dst_total.get_count(cur_dst), dst_score.get_count(cur_dst), cur_t);
         //double combined_score = MAX(cur_score_src, cur_score_dst) + cur_score;
         //double combined_score = cur_score_src + cur_score_dst + cur_score;
-        double combined_score = MAX(MAX(cur_score_src, cur_score_dst), cur_score);
+        combined_score = MAX(MAX(cur_score_src, cur_score_dst), cur_score);
         (*anom_score)[i] = log(1 + combined_score);
     }
 

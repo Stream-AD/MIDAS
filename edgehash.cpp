@@ -9,10 +9,12 @@ Edgehash::Edgehash(int r, int b, int m0)
     num_rows = r;
     num_buckets = b;
     m = m0;
+    hash_a.reserve(r);
+    hash_b.reserve(r);
     for (int i = 0; i < r; i++) {
         // a is in [1, p-1]; b is in [0, p-1]
-        hash_a.push_back(rand() % (num_buckets - 1) + 1);
-        hash_b.push_back(rand() % num_buckets);
+        hash_a[i] = rand() % (num_buckets - 1) + 1;
+        hash_b[i] = rand() % num_buckets;
     }
     this->clear();
 }
@@ -38,8 +40,9 @@ void Edgehash::insert(int a, int b, double weight)
 double Edgehash::get_count(int a, int b)
 {
     double min_count = numeric_limits<double>::max();
+    int bucket;
     for (int i = 0; i < num_rows; i++) {
-        int bucket = hash(a, b, i);
+        bucket = hash(a, b, i);
         min_count = MIN(min_count, count[i][bucket]);
     }
     return min_count;
