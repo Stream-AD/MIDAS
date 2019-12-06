@@ -58,7 +58,7 @@ vector<double>* midasR(vector<int>& src, vector<int>& dst, vector<int>& times, i
     int cur_t = 1, size = src.size(), cur_src, cur_dst;
     double cur_score, cur_score_src, cur_score_dst, combined_score;
 
-    for (int i = 0; i < src.size(); i++) {
+    for (int i = 0; i < size; i++) {
 
         if (i == 0 || times[i] > cur_t) {
             cur_count.lower(factor);
