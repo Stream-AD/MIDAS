@@ -8,8 +8,6 @@ This implementation is based on the following paper - [MIDAS:Microcluster-Based 
 2. Run `./midas -i ` followed by the input file path and name.
 3. Run `make clean` to clean binaries.
 
-Note: The Makefile has currently only been tested on MacOS and may require some changes for the other operating systems.
-
 
 ## Demo
 1. Run `./demo.sh` to compile the code and run it on example dataset.
