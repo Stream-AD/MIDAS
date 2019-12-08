@@ -30,7 +30,7 @@ MIDAS expects the input edge stream to be stored in a single file containing the
 2. `destination (int)`: destination ID of the edge
 3. `time (int)`: time stamp of the edge
 
-Thus, each line represents an edge. Edges should be sorted in non-decreasing order of their time stamps and the column delimiter should be ,
+Thus, each line represents an edge. Edges should be sorted in non-decreasing order of their time stamps and the column delimiter should be `,`
 
 
 ## Datasets

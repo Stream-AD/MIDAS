@@ -9,8 +9,8 @@ Edgehash::Edgehash(int r, int b, int m0)
     num_rows = r;
     num_buckets = b;
     m = m0;
-    hash_a.reserve(r);
-    hash_b.reserve(r);
+    hash_a.resize(num_rows);
+    hash_b.resize(num_rows);
     for (int i = 0; i < r; i++) {
         // a is in [1, p-1]; b is in [0, p-1]
         hash_a[i] = rand() % (num_buckets - 1) + 1;
