@@ -59,7 +59,7 @@ vector<double>* midasR(vector<int>& src, vector<int>& dst, vector<int>& times, i
     double cur_score, cur_score_src, cur_score_dst, combined_score;
 
     for (int i = 0; i < size; i++) {
-
+    	
         if (i == 0 || times[i] > cur_t) {
             cur_count.lower(factor);
             src_score.lower(factor);
@@ -78,8 +78,8 @@ vector<double>* midasR(vector<int>& src, vector<int>& dst, vector<int>& times, i
         cur_score = counts_to_anom(total_count.get_count(cur_src, cur_dst), cur_count.get_count(cur_src, cur_dst), cur_t);
         cur_score_src = counts_to_anom(src_total.get_count(cur_src), src_score.get_count(cur_src), cur_t);
         cur_score_dst = counts_to_anom(dst_total.get_count(cur_dst), dst_score.get_count(cur_dst), cur_t);
-        //double combined_score = MAX(cur_score_src, cur_score_dst) + cur_score;
-        //double combined_score = cur_score_src + cur_score_dst + cur_score;
+        //combined_score = MAX(cur_score_src, cur_score_dst) + cur_score;
+        //combined_score = cur_score_src + cur_score_dst + cur_score;
         combined_score = MAX(MAX(cur_score_src, cur_score_dst), cur_score);
         (*anom_score)[i] = log(1 + combined_score);
     }
