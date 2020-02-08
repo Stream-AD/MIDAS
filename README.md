@@ -1,6 +1,6 @@
 # MIDAS
 [![Conference](http://img.shields.io/badge/AAAI-2020-4b44ce.svg)](https://aaai.org/Conferences/AAAI-20/)
-[![Paper](http://img.shields.io/badge/Paper-Link-B31B1B.svg)](https://arxiv.org/pdf/1911.04464.pdf)
+[![Paper](http://img.shields.io/badge/Paper-Link-B31B1B.svg)](https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midas.pdf)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/bhatiasiddharth/MIDAS/blob/master/LICENSE)
 
 Anomaly detection in graphs is a critical problem for finding suspicious behavior in innumerable systems, such as intrusion detection, fake ratings, and financial fraud. This has been a well-researched problem with majority of the proposed approaches focusing on static graphs. However, many real-world graphs are dynamic in nature, and methods based on static connections may miss temporal characteristics of the graphs and anomalies.
@@ -9,7 +9,7 @@ Among the methods focusing on dynamic graphs, most of them have edges aggregated
 
 In this work, we propose MIDAS, short for Microcluster-Based Detector of Anomalies in Edge Streams, which detects microcluster anomalies, or suddenly arriving groups of suspiciously similar edges, in edge streams, using constant time and memory. In addition, by using a principled hypothesis testing framework, MIDAS provides theoretical bounds on the false positive probability, which earlier methods do not provide. Also, we are up to 48% more accurate while being up to 644 times faster than state of the art approaches.
 
-For more details, please read the paper - [MIDAS:Microcluster-Based Detector of Anomalies in Edge Streams](https://arxiv.org/pdf/1911.04464.pdf). *Siddharth Bhatia, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. AAAI 2020.
+For more details, please read the paper - [MIDAS:Microcluster-Based Detector of Anomalies in Edge Streams](https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midas.pdf). *Siddharth Bhatia, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. AAAI 2020.
 
 
 ## Getting started
