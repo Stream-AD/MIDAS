@@ -3,6 +3,11 @@
 [![Paper](http://img.shields.io/badge/Paper-Link-B31B1B.svg)](https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midas.pdf)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/bhatiasiddharth/MIDAS/blob/master/LICENSE)
 
+<p align="center">
+  <img align="center" src="https://www.comp.nus.edu.sg/~sbhatia/assets/img/midasstream.png" alt="...">
+</p>
+
+
 Anomaly detection in graphs is a critical problem for finding suspicious behavior in innumerable systems, such as intrusion detection, fake ratings, and financial fraud. This has been a well-researched problem with majority of the proposed approaches focusing on static graphs. However, many real-world graphs are dynamic in nature, and methods based on static connections may miss temporal characteristics of the graphs and anomalies.
 
 Among the methods focusing on dynamic graphs, most of them have edges aggregated into graph snapshots. However, to minimize the effect of malicious activities and start recovery as soon as possible, we need to detect anomalies in real-time or near real-time i.e. to identify whether an incoming edge is anomalous or not, as soon as we receive it. In addition, since the number of vertices can increase as we process the stream of edges, we need an algorithm which uses constant memory in graph size. Moreover, fraudulent or anomalous events in many applications occur in microclusters or suddenly arriving groups of suspiciously similar edges e.g. denial of service attacks in network traffic data and lockstep behavior.
