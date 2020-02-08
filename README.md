@@ -1,6 +1,7 @@
 # MIDAS
-[![Conference](http://img.shields.io/badge/AAAI-2020-4b44ce.svg)](https://aaai.org/Conferences/AAAI-20/)
-[![Paper](http://img.shields.io/badge/Paper-Link-B31B1B.svg)](https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midas.pdf)
+[![Conference](http://img.shields.io/badge/AAAI-2020-red.svg)](https://aaai.org/Conferences/AAAI-20/)
+[![Paper](http://img.shields.io/badge/Paper-pdf-brightgreen.svg)](https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midas.pdf)
+[![Poster](http://img.shields.io/badge/Poster-pdf-blueviolet.svg)](https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midasposter.pdf)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/bhatiasiddharth/MIDAS/blob/master/LICENSE)
 
 <p align="center">
