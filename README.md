@@ -65,4 +65,4 @@ If you use this code for your research, please consider citing our paper.
 }
 ```
 ## MIDAS in other languages
-1. [Ruby](https://github.com/ankane/midas)
+1. [Ruby](https://github.com/ankane/midas) by [Andrew Kane](https://github.com/ankane)
