@@ -64,3 +64,5 @@ If you use this code for your research, please consider citing our paper.
   year={2019}
 }
 ```
+## MIDAS in other languages
+1. [Ruby](https://github.com/ankane/midas)
