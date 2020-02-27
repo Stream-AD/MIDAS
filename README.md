@@ -49,7 +49,7 @@ Thus, each line represents an edge. Edges should be sorted in non-decreasing ord
 
 
 ## Datasets
-1. [DARPA](https://www.ll.mit.edu/r-d/datasets/1998-darpa-intrusion-detection-evaluation-dataset)
+1. [DARPA](https://www.ll.mit.edu/r-d/datasets/1998-darpa-intrusion-detection-evaluation-dataset): [Original Format](https://www.comp.nus.edu.sg/~sbhatia/assets/datasets/darpa_original.csv), [MIDAS format](https://www.comp.nus.edu.sg/~sbhatia/assets/datasets/darpa_midas.csv)
 2. [TwitterWorldCup2014](http://odds.cs.stonybrook.edu/twitterworldcup2014-dataset)
 3. [TwitterSecurity](http://odds.cs.stonybrook.edu/twittersecurity-dataset)
 
