@@ -67,3 +67,7 @@ If you use this code for your research, please consider citing our paper.
 ## MIDAS in other languages
 1. [Rust](https://github.com/scooter-dangle/midas_rs) and [Python](https://github.com/scooter-dangle/midas_rs/tree/master/python) by [Scott Steele](https://github.com/scooter-dangle)
 2. [Ruby](https://github.com/ankane/midas) by [Andrew Kane](https://github.com/ankane)
+
+## Tutorials using MIDAS
+1. [Controlling Fake News using Graphs and Statistics](https://towardsdatascience.com/controlling-fake-news-using-graphs-and-statistics-31ed116a986f)
+2. [Anomaly detection in dynamic graphs using MIDAS](https://towardsdatascience.com/anomaly-detection-in-dynamic-graphs-using-midas-e4f8d0b1db45)
