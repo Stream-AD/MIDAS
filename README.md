@@ -25,7 +25,7 @@
 </p>
 
 
-![GIF demo](https://www.comp.nus.edu.sg/~sbhatia/assets/img/midas.gif) 
+![GIF demo](https://www.comp.nus.edu.sg/~sbhatia/assets/img/midas_gif.gif) 
 <img align="center" src="https://www.comp.nus.edu.sg/~sbhatia/assets/img/midasstream.jpg" alt="...">
 
 ## Table of Contents
@@ -35,13 +35,12 @@
 - [Use Cases](#use-cases)
 - [Getting Started](#getting-started)
 - [Demo](#demo)
-- [Command Line Options](#command-line-options)
+- [Command-Line Options](#command-line-options)
 - [Input File Format](#input-file-format)
 - [Datasets](#datasets)
 - [MIDAS in other languages](#midas-in-other-languages)
 - [Blog Posts and Tutorials](#blog-posts-and-tutorials)
 - [Citation](#citation)
-- [Feedback](#feedback)
 
 <!-- - [See Also](#see-also) -->
 
@@ -51,10 +50,10 @@
 - Detects Microcluster Anomalies (suddenly arriving groups of suspiciously similar edges e.g. DoS attack)
 - Theoretical Guarantees on False Positive Probability
 - Constant Memory (independent of graph size)
-- Constant Update Time (real-time anomaly detection to minimise harm)
-- Up to 48% more accurate and 644 times faster than state of the art approaches
+- Constant Update Time (real-time anomaly detection to minimize harm)
+- Up to 48% more accurate and 644 times faster than the state of the art approaches
 
-For more details, please read the paper - [MIDAS:Microcluster-Based Detector of Anomalies in Edge Streams](https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midas.pdf). *Siddharth Bhatia, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. AAAI 2020.
+For more details, please read the paper - [MIDAS: Microcluster-Based Detector of Anomalies in Edge Streams](https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midas.pdf). *Siddharth Bhatia, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. AAAI 2020.
 
 ## Use Cases
 1. Intrusion Detection
@@ -71,7 +70,7 @@ For more details, please read the paper - [MIDAS:Microcluster-Based Detector of 
 1. Run `./demo.sh` to compile the code and run it on an example dataset.
 
 
-## Command line options
+## Command-Line Options
   * `-h --help`: produce help message
   * `-i --input`: input file name
   * `-o --output`: output file name (default: scores.txt)  
@@ -82,7 +81,7 @@ For more details, please read the paper - [MIDAS:Microcluster-Based Detector of 
   * `--undirected` : Treat graph as undirected instead of directed
 
 
-## Input file format
+## Input File Format
 MIDAS expects the input edge stream to be stored in a single file containing the following three columns in order:
 1. `source (int)`: source ID of the edge
 2. `destination (int)`: destination ID of the edge
@@ -116,11 +115,14 @@ If you use this code for your research, please consider citing our paper.
   year={2019}
 }
 ```
-## Feedback
-- [Email](mailto:siddharth@comp.nus.edu.sg?subject=[GitHub]%20MIDAS)
-- [Twitter](https://twitter.com/siddharthb_)
 
 
 ------------------------------------------------------------------------
-![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fbhatiasiddharth%2FMIDAS)
-![Twitter Follow](https://img.shields.io/twitter/follow/siddharthb_?style=social)
+
+<a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fbhatiasiddharth%2FMIDAS%2F">
+    <img src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fbhatiasiddharth%2FMIDAS%2F">
+</a>
+
+> Webpage [https://www.comp.nus.edu.sg/~sbhatia/](https://www.comp.nus.edu.sg/~sbhatia/) &nbsp;&middot;&nbsp;
+> Email [siddharth@comp.nus.edu.sg](mailto:siddharth@comp.nus.edu.sg?subject=[GitHub]%20MIDAS) &nbsp;&middot;&nbsp;
+> Twitter [@siddharthb_](https://twitter.com/siddharthb_)
