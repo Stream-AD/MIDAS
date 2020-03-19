@@ -122,7 +122,8 @@ If you use this code for your research, please consider citing our paper.
 <a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fbhatiasiddharth%2FMIDAS%2F">
     <img src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fbhatiasiddharth%2FMIDAS%2F">
 </a>
-<br\>
+<br>
+
 > Webpage [https://www.comp.nus.edu.sg/~sbhatia/](https://www.comp.nus.edu.sg/~sbhatia/) &nbsp;&middot;&nbsp;
 > Email [siddharth@comp.nus.edu.sg](mailto:siddharth@comp.nus.edu.sg?subject=[GitHub]%20MIDAS) &nbsp;&middot;&nbsp;
 > Twitter [@siddharthb_](https://twitter.com/siddharthb_)
