@@ -10,14 +10,17 @@ Due to the file size limitation, you need to download the dataset manually:
 2. Move `final_dataset.csv` to `RejectMIDAS/data/`
 3. Run `RejectMIDAS/util/PreprocessData.py`, the script can detect the correct file path
 
-To run the demo, if you use Windows:
-1. Open a Visual Studio developer command prompt
-2. `cd` to the project root `RejectMIDAS`
+To run the demo, if you have a CMake-based IDE, you can build the target `CPU_Demo` and enjoy.
+
+Otherwise, if you use Windows:
+
+1. Open a Visual Studio developer command prompt, we want their toolchain
+2. `cd` to the project root `RejectMIDAS/`
 3. `cmake -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles" -S . -B build/release`
 4. `cmake --build build/release --target CPU_Demo`
 5. `"build/release/CPU/CPU_Demo.exe"`
 
-The demo runs on the `final_dataset_processed.csv`, which has 12M records, with the relational core.
+The demo runs on the `RejectMIDAS/data/final_dataset_processed.csv`, which has 12M records, with the relational core.
 
 The scores will be exported to `RejectMIDAS/temp/score.txt`, higher means more anomalous.
 
@@ -65,7 +68,7 @@ Then you can change the `pathMeta` and `pathData` to your file paths, and run th
 
 ### Custom Datasets + Custom Runner
 
-Include the header `CPU/NormalCore.hpp` or `CPU/RelationalCore.hpp`, the implementations are all in-place.
+Include the header `RejectMIDAS/CPU/NormalCore.hpp` or `RejectMIDAS/CPU/RelationalCore.hpp`, the implementations are all in-place.
 
 Then, instantiate the core and use `operator()` to process one record and obtain the score.
 
