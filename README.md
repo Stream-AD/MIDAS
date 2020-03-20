@@ -4,27 +4,26 @@ C++ implementation of the RejectMIDAS algorithm.
 
 ## Demo
 
-Due the file size limitation, you need to download the dataset.
+Due to the file size limitation, you need to download the dataset manually:
 
-1. 
+1. Download `final_dataset.csv` using the link below
+2. Move `final_dataset.csv` to `RejectMIDAS/data/`
+3. Run `RejectMIDAS/util/PreprocessData.py`, the script can detect the correct file path
 
-If you use Window:
-1. Download `final_dataset.csv` from the link below
-2. Move `final_dataset.csv` to `RejectMIDAS/data`
-3. `""`
-4. Open a Visual Studio developer command prompt
-5. `cd` to the project root `RejectMIDAS`
-6. `cmake -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles" -S . -B build/release`
-7. `cmake --build build/release --target CPU_Demo`
-8. `"build/release/CPU/CPU_Demo.exe"`
+To run the demo, if you use Windows:
+1. Open a Visual Studio developer command prompt
+2. `cd` to the project root `RejectMIDAS`
+3. `cmake -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles" -S . -B build/release`
+4. `cmake --build build/release --target CPU_Demo`
+5. `"build/release/CPU/CPU_Demo.exe"`
 
 The demo runs on the `final_dataset_processed.csv`, which has 12M records, with the relational core.
 
 The scores will be exported to `RejectMIDAS/temp/score.txt`, higher means more anomalous.
 
-`cmake` must be called at the project root to "hardcode" file paths. So the demo can be run from anywhere.
+`cmake` must be called at the project root to "hardcode" file paths. So the file paths can be hardcoded into the program.
 
-The last step must be within quotes, so as to be regarded as a path.
+The last step must be within quotes, so as to be regarded as a path. Or you can directly find it and double click.
 
 ## Environment
 
@@ -39,7 +38,7 @@ Below is my development environment.
 ## Dataset
 
 - `darpa_original.csv`: <https://www.comp.nus.edu.sg/~sbhatia/assets/datasets/darpa_original.csv>
-- `final_dataset.csv`: <https://www.kaggle.com/devendra416/ddos-datasets>, the balanced one.
+- `final_dataset.csv`: <https://www.kaggle.com/devendra416/ddos-datasets>, the balanced one
 
 ## Customization
 
@@ -49,15 +48,18 @@ Cores are instantiated at `Demo.cpp:49-50`, uncomment the chosen one.
 
 ### Other Provided Datasets
 
-Dataset paths are declared in `Demo.cpp:9-17`.
-
-Each dataset has a `pathMeta` and a `pathData`, uncomment your chosen group.
+1. Download the dataset from links above, the file name should be exactly the same
+1. Move it to `RejectMIDAS/data/`
+1. Uncomment corresponding function in `RejectMIDAS/util/PreprocessData.py`
+1. Run the script
+1. Uncomment the corresponding group of `pathMeta` and `pathData` within `RejectMIDAS/example/Demo.cpp:9-17`
+1. Compile and run
 
 ### Custom Datasets + `Demo.cpp`
 
 You need to prepare two files:
-- A text file only consists an integer, the number of records in the dataset (that you want to use).
-- A csv file (without headers) consists of four columns of integers, which stand for sources, destinations, timestamps and labels, respectively. 
+- A text file only consists an integer, the number of records in the dataset (that you want to use)
+- A csv file (without headers) consists of four columns of integers, which stand for sources, destinations, timestamps and labels, respectively
 
 Then you can change the `pathMeta` and `pathData` to your file paths, and run the demo.
 

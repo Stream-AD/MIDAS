@@ -48,6 +48,6 @@ def final_dataset(prefix: Path) -> None:
 if __name__ == '__main__':
 	root = Path(__file__) / '../..'
 	root = root.resolve()
-	yellow_small(root)
+	# yellow_small(root)
 	# darpa_original(root)
-	# final_dataset(root)
+	final_dataset(root)
