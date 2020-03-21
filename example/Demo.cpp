@@ -24,22 +24,20 @@ int main(int argc, char* argv[]) {
 #ifndef NDEBUG
 	const int n = 10000;
 #else
-	FILE* fileMeta;
-	fopen_s(&fileMeta, pathMeta, "r");
+	const auto fileMeta = fopen(pathMeta, "r");
 	int n;
-	fscanf_s(fileMeta, "%d", &n);
+	fscanf(fileMeta, "%d", &n);
 	fclose(fileMeta);
 #endif
 
 	// Read dataset
 
-	FILE* fileData;
-	fopen_s(&fileData, pathData, "r");
+	const auto fileData = fopen(pathData, "r");
 	const auto source = new int[n];
 	const auto destination = new int[n];
 	const auto timestamp = new int[n];
 	for (int i = 0; i < n; i++)
-		fscanf_s(fileData, "%d,%d,%d,%*d", &source[i], &destination[i], &timestamp[i]);
+		fscanf(fileData, "%d,%d,%d,%*d", &source[i], &destination[i], &timestamp[i]);
 	fclose(fileData);
 	printf("# Records = %d\t// Dataset is loaded\n", n);
 
@@ -52,13 +50,12 @@ int main(int argc, char* argv[]) {
 	const auto time = high_resolution_clock::now().time_since_epoch();
 	for (int i = 0; i < n; i++)
 		score[i] = midas(source[i], destination[i], timestamp[i]);
-	printf("Time = %lldms\t// Algorithm is finished\n", duration_cast<milliseconds>(high_resolution_clock::now().time_since_epoch() - time).count());
+	printf("Time = %lldms\t// Algorithm is finished\n", static_cast<long long>(duration_cast<milliseconds>(high_resolution_clock::now().time_since_epoch() - time).count())); // Windows' long long == Linux's long
 
 	// Write output scores
 
 	const char* pathScore = SOLUTION_DIR"temp/score.txt";
-	FILE* fileScore;
-	fopen_s(&fileScore, pathScore, "w");
+	const auto fileScore = fopen(pathScore, "w");
 	for (int i = 0; i < n; i++)
 		fprintf(fileScore, "%f\n", score[i]);
 	fclose(fileScore);
@@ -75,5 +72,5 @@ int main(int argc, char* argv[]) {
 	delete[] source;
 	delete[] destination;
 	delete[] timestamp;
- 	delete[] score;
+	delete[] score;
 }

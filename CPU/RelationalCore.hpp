@@ -1,5 +1,7 @@
 #pragma once
 
+#include <algorithm>
+
 #include "EdgeHash.hpp"
 #include "NodeHash.hpp"
 

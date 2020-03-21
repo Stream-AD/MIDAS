@@ -18,19 +18,20 @@ Otherwise, if you use Windows:
 2. `cd` to the project root `RejectMIDAS/`
 3. `cmake -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles" -S . -B build/release`
 4. `cmake --build build/release --target CPU_Demo`
-5. `"build/release/CPU/CPU_Demo.exe"`
+5. `cd` to `RejectMIDAS/build/release/CPU/`
+6. `.\CPU_Demo`
+
+The code should be compatible with Linux, but I only tested with WSL.
 
 The demo runs on the `RejectMIDAS/data/final_dataset_processed.csv`, which has 12M records, with the relational core.
 
 The scores will be exported to `RejectMIDAS/temp/score.txt`, higher means more anomalous.
 
-`cmake` must be called at the project root to "hardcode" file paths. So the file paths can be hardcoded into the program.
-
-The last step must be within quotes, so as to be regarded as a path. Or you can directly find it and double click.
+All file paths are absolute and "hardcoded", but if you double click to run, you may miss the ROC-AUC metric.
 
 ## Environment
 
-Below is my development environment.
+Below is my Windows environment.
 
 - CMake: 3.16.3
 - MSVC: v142, x64, c++20

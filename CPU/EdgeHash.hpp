@@ -24,7 +24,7 @@ struct EdgeHash {
 	EdgeHash(int numRow, int numColumn, int magic = 104729) :
 		r(numRow), c(numColumn), m(magic), lenData(r * c), param1(new int[r]), param2(new int[r]), data(new float[lenData]) {
 		std::random_device generator;
-		const std::uniform_int_distribution<> distribution;
+		std::uniform_int_distribution<> distribution;
 #pragma omp parallel for
 		for (int i = 0; i < r; i++) {
 			param1[i] = distribution(generator) + 1; // ×0 is not a good idea, see Hash()
