@@ -14,6 +14,7 @@ struct EdgeHash {
 	int* const param2 = nullptr;
 	float* const data = nullptr;
 	std::unordered_set<int> indexModified;
+	const float Infinity = std::numeric_limits<float>::infinity();
 
 	// Methods
 	// --------------------------------------------------------------------------------
@@ -25,7 +26,6 @@ struct EdgeHash {
 		r(numRow), c(numColumn), m(magic), lenData(r * c), param1(new int[r]), param2(new int[r]), data(new float[lenData]) {
 		std::random_device generator;
 		std::uniform_int_distribution<> distribution;
-#pragma omp parallel for
 		for (int i = 0; i < r; i++) {
 			param1[i] = distribution(generator) + 1; // ×0 is not a good idea, see Hash()
 			param2[i] = distribution(generator);
@@ -46,36 +46,8 @@ struct EdgeHash {
 		delete[] data;
 	}
 
-	float operator()(int a, int b) const {
-		float least = std::numeric_limits<float>::infinity();
-#pragma omp parallel for reduction(min:least)
-		for (int i = 0; i < r; i++)
-			least = std::min(least, data[i * c + Hash(a, b, i)]);
-		return least;
-	}
-
-	int Hash(int a, int b, int r) const {
-		return abs((a + m * b) * param1[r] + param2[r]) % c;
-	}
-
-	float Assign(int a, int b, float to) const {
-#pragma omp parallel for
-		for (int i = 0; i < r; i++)
-			data[i * c + Hash(a, b, i)] = to;
-		return to;
-	}
-
-	void Add(int a, int b, float by = 1) {
-#pragma omp parallel for
-		for (int i = 0; i < r; i++) {
-			const int index = i * c + Hash(a, b, i);
-			data[index] += by;
-			indexModified.insert(index);
-		}
-	}
-
 	void MultiplyAll(float by) const {
-#pragma omp parallel for
+		#pragma omp parallel for
 		for (int i = 0; i < lenData; i++)
 			data[i] *= by;
 	}
@@ -83,6 +55,65 @@ struct EdgeHash {
 	void Clear() {
 		std::fill(data, data + lenData, 0); // Can't imagine, even faster than omp
 		indexModified.clear();
+	}
+
+	// If you prefer to hash once, use everywhere
+	// --------------------------------------------------------------------------------
+
+	void Hash(int a, int b, int indexOut[]) {
+		for (int i = 0; i < r; i++)
+			indexOut[i] = abs((a + m * b) * param1[r] + param2[r]) % c;
+	}
+
+	float operator()(const int index[]) const {
+		float least = Infinity;
+		for (int i = 0; i < r; i++)
+			least = std::min(least, data[index[i]]);
+		return least;
+	}
+
+	float Assign(const int index[], float to) const {
+		for (int i = 0; i < r; i++)
+			data[index[i]] = to;
+		return to;
+	}
+
+	void Add(const int index[], float by = 1) {
+		for (int i = 0; i < r; i++) {
+			data[index[i]] += by;
+			indexModified.insert(index[i]);
+		}
+	}
+
+	// If you wish to hash on-the-fly
+	// --------------------------------------------------------------------------------
+
+	int Hash(int a, int b, int r) const {
+		return abs((a + m * b) * param1[r] + param2[r]) % c;
+	}
+
+	float operator()(int a, int b) const {
+		float least = Infinity;
+		#pragma omp parallel for
+		for (int i = 0; i < r; i++)
+			least = std::min(least, data[i * c + Hash(a, b, i)]);
+		return least;
+	}
+
+	float Assign(int a, int b, float to) const {
+		#pragma omp parallel for
+		for (int i = 0; i < r; i++)
+			data[i * c + Hash(a, b, i)] = to;
+		return to;
+	}
+
+	void Add(int a, int b, float by = 1) {
+		#pragma omp parallel for
+		for (int i = 0; i < r; i++) {
+			const int index = i * c + Hash(a, b, i);
+			data[index] += by;
+			indexModified.insert(index);
+		}
 	}
 };
 }

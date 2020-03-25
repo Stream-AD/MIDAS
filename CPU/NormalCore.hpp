@@ -13,6 +13,7 @@ struct NormalCore {
 	EdgeHash scoreEdge;
 	int timestampCurrent = 1;
 	const int lenHash;
+	int* const indexEdge;
 
 	// Methods
 	// --------------------------------------------------------------------------------
@@ -20,10 +21,15 @@ struct NormalCore {
 	explicit NormalCore(int numRow, int numColumn, float thresholdRejection = 1e3f) :
 		lenHash(numRow * numColumn),
 		threshold(thresholdRejection),
+		indexEdge(new int[numRow]),
 		numCurrentEdge(numRow, numColumn),
 		numTotalEdge(numCurrentEdge),
 		scoreEdge(numCurrentEdge) {
 		printf("Algorithm = RejectMIDAS.NormalCore\n");
+	}
+
+	virtual ~NormalCore() {
+		delete[] indexEdge;
 	}
 
 	static float ComputeScore(float a, float s, float t) {
@@ -37,11 +43,11 @@ struct NormalCore {
 					numCurrentEdge.data[i] : timestampCurrent - 1 ?
 						numTotalEdge.data[i] / (timestampCurrent - 1) : 0;
 			numCurrentEdge.Clear();
-			scoreEdge.Clear();
 			timestampCurrent = timestamp;
 		}
-		numCurrentEdge.Add(source, destination);
-		return scoreEdge.Assign(source, destination, ComputeScore(numCurrentEdge(source, destination), numTotalEdge(source, destination), timestamp));
+		numCurrentEdge.Hash(source, destination, indexEdge);
+		numCurrentEdge.Add(indexEdge);
+		return scoreEdge.Assign(indexEdge, ComputeScore(numCurrentEdge(indexEdge), numTotalEdge(indexEdge), timestamp));
 	}
 };
 }

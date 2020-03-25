@@ -21,14 +21,14 @@ int main(int argc, char* argv[]) {
 	// Read meta (total number of records)
 	// PreprocessData.py will generate those meta files
 
-#ifndef NDEBUG
+	#ifndef NDEBUG
 	const int n = 10000;
-#else
+	#else
 	const auto fileMeta = fopen(pathMeta, "r");
 	int n;
 	fscanf(fileMeta, "%d", &n);
 	fclose(fileMeta);
-#endif
+	#endif
 
 	// Read dataset
 

@@ -17,6 +17,9 @@ struct RelationalCore {
 	int timestampCurrent = 1;
 	const int lenHash;
 	const float factor;
+	int* const indexEdge; // Pre-compute the index to-be-modified, thanks to the same structure of CMSs
+	int* const indexSource;
+	int* const indexDestination;
 
 	// Methods
 	// --------------------------------------------------------------------------------
@@ -25,6 +28,9 @@ struct RelationalCore {
 		factor(factorHashShrink),
 		lenHash(numRow * numColumn),
 		threshold(thresholdRejection),
+		indexEdge(new int[numRow]),
+		indexSource(new int[numRow]),
+		indexDestination(new int[numRow]),
 		numCurrentEdge(numRow, numColumn),
 		numTotalEdge(numCurrentEdge),
 		scoreEdge(numCurrentEdge),
@@ -33,7 +39,15 @@ struct RelationalCore {
 		scoreSource(numCurrentSource),
 		numCurrentDestination(numRow, numColumn),
 		numTotalDestination(numCurrentDestination),
-		scoreDestination(numCurrentDestination) { }
+		scoreDestination(numCurrentDestination) {
+		printf("Algorithm = RejectMIDAS.RelationalCore\n");
+	}
+
+	virtual ~RelationalCore() {
+		delete[] indexEdge;
+		delete[] indexSource;
+		delete[] indexDestination;
+	}
 
 	static float ComputeScore(float a, float s, float t) {
 		return abs(s * (t - 1)) < 1e-4 ? 0 : pow(a + s - a * t, 2) / (s * (t - 1));
@@ -41,17 +55,14 @@ struct RelationalCore {
 
 	float operator()(int source, int destination, int timestamp) {
 		if (timestamp > timestampCurrent) {
-#pragma omp parallel for
 			for (const int i: numCurrentEdge.indexModified)
 				numTotalEdge.data[i] += scoreEdge.data[i] < threshold ?
 					numCurrentEdge.data[i] : timestampCurrent - 1 ?
 						numTotalEdge.data[i] / (timestampCurrent - 1) : 0;
-#pragma omp parallel for
 			for (const int i: numCurrentSource.indexModified)
 				numTotalSource.data[i] += scoreSource.data[i] < threshold ?
 					numCurrentSource.data[i] : timestampCurrent - 1 ?
 						numTotalSource.data[i] / (timestampCurrent - 1) : 0;
-#pragma omp parallel for
 			for (const int i: numCurrentDestination.indexModified)
 				numTotalDestination.data[i] += scoreDestination.data[i] < threshold ?
 					numCurrentDestination.data[i] : timestampCurrent - 1 ?
@@ -61,13 +72,16 @@ struct RelationalCore {
 			numCurrentDestination.MultiplyAll(factor);
 			timestampCurrent = timestamp;
 		}
-		numCurrentEdge.Add(source, destination);
-		numCurrentSource.Add(source);
-		numCurrentDestination.Add(destination);
+		numCurrentEdge.Hash(source, destination, indexEdge);
+		numCurrentSource.Hash(source, indexSource);
+		numCurrentDestination.Hash(destination, indexDestination);
+		numCurrentEdge.Add(indexEdge);
+		numCurrentSource.Add(indexSource);
+		numCurrentDestination.Add(indexDestination);
 		return std::log(1 + std::max({
-			scoreEdge.Assign(source, destination, ComputeScore(numCurrentEdge(source, destination), numTotalEdge(source, destination), timestamp)),
-			scoreSource.Assign(source, ComputeScore(numCurrentSource(source), numTotalSource(source), timestamp)),
-			scoreDestination.Assign(destination, ComputeScore(numCurrentDestination(destination), numTotalDestination(destination), timestamp)),
+			scoreEdge.Assign(indexEdge, ComputeScore(numCurrentEdge(indexEdge), numTotalEdge(indexEdge), timestamp)),
+			scoreSource.Assign(indexSource, ComputeScore(numCurrentSource(indexSource), numTotalSource(indexSource), timestamp)),
+			scoreDestination.Assign(indexDestination, ComputeScore(numCurrentDestination(indexDestination), numTotalDestination(indexDestination), timestamp)),
 		}));
 	}
 };
