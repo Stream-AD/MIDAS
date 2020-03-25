@@ -62,7 +62,7 @@ Cores are instantiated at `Demo.cpp:49-50`, uncomment the chosen one.
 ### Custom Datasets + `Demo.cpp`
 
 You need to prepare two files:
-- A text file only consists an integer, the number of records in the dataset (that you want to use)
+- A text file only consists an integer, the number of records in the dataset
 - A csv file (without headers) consists of four columns of integers, which stand for sources, destinations, timestamps and labels, respectively
 
 Then you can change the `pathMeta` and `pathData` to your file paths, and run the demo.

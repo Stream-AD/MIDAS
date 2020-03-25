@@ -42,23 +42,20 @@ struct RelationalCore {
 	float operator()(int source, int destination, int timestamp) {
 		if (timestamp > timestampCurrent) {
 #pragma omp parallel for
-			for (const int i: numCurrentEdge.indexModified) {
+			for (const int i: numCurrentEdge.indexModified)
 				numTotalEdge.data[i] += scoreEdge.data[i] < threshold ?
 					numCurrentEdge.data[i] : timestampCurrent - 1 ?
 						numTotalEdge.data[i] / (timestampCurrent - 1) : 0;
-			}
 #pragma omp parallel for
-			for (const int i: numCurrentSource.indexModified) {
+			for (const int i: numCurrentSource.indexModified)
 				numTotalSource.data[i] += scoreSource.data[i] < threshold ?
 					numCurrentSource.data[i] : timestampCurrent - 1 ?
 						numTotalSource.data[i] / (timestampCurrent - 1) : 0;
-			}
 #pragma omp parallel for
-			for (const int i: numCurrentDestination.indexModified) {
+			for (const int i: numCurrentDestination.indexModified)
 				numTotalDestination.data[i] += scoreDestination.data[i] < threshold ?
 					numCurrentDestination.data[i] : timestampCurrent - 1 ?
 						numTotalDestination.data[i] / (timestampCurrent - 1) : 0;
-			}
 			numCurrentEdge.MultiplyAll(factor);
 			numCurrentSource.MultiplyAll(factor);
 			numCurrentDestination.MultiplyAll(factor);

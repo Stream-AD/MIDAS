@@ -32,11 +32,10 @@ struct NormalCore {
 
 	float operator()(int source, int destination, int timestamp) {
 		if (timestamp > timestampCurrent) {
-			for (const int i: numCurrentEdge.indexModified) {
+			for (const int i: numCurrentEdge.indexModified)
 				numTotalEdge.data[i] += scoreEdge.data[i] < threshold ?
 					numCurrentEdge.data[i] : timestampCurrent - 1 ?
 						numTotalEdge.data[i] / (timestampCurrent - 1) : 0;
-			}
 			numCurrentEdge.Clear();
 			scoreEdge.Clear();
 			timestampCurrent = timestamp;
