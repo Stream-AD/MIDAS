@@ -55,21 +55,27 @@ struct RelationalCore {
 
 	float operator()(int source, int destination, int timestamp) {
 		if (timestamp > timestampCurrent) {
-			for (const int i: numCurrentEdge.indexModified)
+			#pragma omp for
+			for (int i = 0; i < numCurrentEdge.c; i++)
 				numTotalEdge.data[i] += scoreEdge.data[i] < threshold ?
 					numCurrentEdge.data[i] : timestampCurrent - 1 ?
 						numTotalEdge.data[i] / (timestampCurrent - 1) : 0;
-			for (const int i: numCurrentSource.indexModified)
+			#pragma omp for
+			for (int i = 0; i < numCurrentSource.c; i++)
 				numTotalSource.data[i] += scoreSource.data[i] < threshold ?
 					numCurrentSource.data[i] : timestampCurrent - 1 ?
 						numTotalSource.data[i] / (timestampCurrent - 1) : 0;
-			for (const int i: numCurrentDestination.indexModified)
+			#pragma omp for
+			for (int i = 0; i < numCurrentDestination.c; i++)
 				numTotalDestination.data[i] += scoreDestination.data[i] < threshold ?
 					numCurrentDestination.data[i] : timestampCurrent - 1 ?
 						numTotalDestination.data[i] / (timestampCurrent - 1) : 0;
 			numCurrentEdge.MultiplyAll(factor);
 			numCurrentSource.MultiplyAll(factor);
 			numCurrentDestination.MultiplyAll(factor);
+			scoreEdge.Clear();
+			scoreSource.Clear();
+			scoreDestination.Clear();
 			timestampCurrent = timestamp;
 		}
 		numCurrentEdge.Hash(source, destination, indexEdge);

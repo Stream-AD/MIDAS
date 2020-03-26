@@ -13,7 +13,6 @@ struct EdgeHash {
 	int* const param1 = nullptr; // Delete an uninitialized pointer is not a good idea
 	int* const param2 = nullptr;
 	float* const data = nullptr;
-	std::unordered_set<int> indexModified;
 	const float Infinity = std::numeric_limits<float>::infinity();
 
 	// Methods
@@ -54,7 +53,6 @@ struct EdgeHash {
 
 	void Clear() {
 		std::fill(data, data + lenData, 0); // Can't imagine, even faster than omp
-		indexModified.clear();
 	}
 
 	// If you prefer to hash once, use everywhere
@@ -78,11 +76,9 @@ struct EdgeHash {
 		return to;
 	}
 
-	void Add(const int index[], float by = 1) {
-		for (int i = 0; i < r; i++) {
+	void Add(const int index[], float by = 1) const {
+		for (int i = 0; i < r; i++)
 			data[index[i]] += by;
-			indexModified.insert(index[i]);
-		}
 	}
 
 	// If you wish to hash on-the-fly
@@ -107,13 +103,10 @@ struct EdgeHash {
 		return to;
 	}
 
-	void Add(int a, int b, float by = 1) {
+	void Add(int a, int b, float by = 1) const {
 		#pragma omp parallel for
-		for (int i = 0; i < r; i++) {
-			const int index = i * c + Hash(a, b, i);
-			data[index] += by;
-			indexModified.insert(index);
-		}
+		for (int i = 0; i < r; i++)
+			data[(i * c + Hash(a, b, i))] += by;
 	}
 };
 }
