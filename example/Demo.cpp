@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
 
 	// Write output scores
 
-	const char* pathScore = SOLUTION_DIR"temp/score.txt";
+	const char* pathScore = SOLUTION_DIR"temp/Score.txt";
 	const auto fileScore = fopen(pathScore, "w");
 	for (int i = 0; i < n; i++)
 		fprintf(fileScore, "%f\n", score[i]);
