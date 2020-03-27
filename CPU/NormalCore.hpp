@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cstdio>
+#include <cmath>
+
 #include "EdgeHash.hpp"
 
 namespace RejectMIDAS::CPU {
@@ -38,6 +41,7 @@ struct NormalCore {
 
 	float operator()(int source, int destination, int timestamp) {
 		if (timestamp > timestampCurrent) {
+			#pragma omp for
 			for (int i = 0; i < numCurrentEdge.c; i++)
 				numTotalEdge.data[i] += scoreEdge.data[i] < threshold ?
 					numCurrentEdge.data[i] : timestampCurrent - 1 ?

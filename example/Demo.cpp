@@ -1,9 +1,9 @@
-#include <chrono>
+#include <cstdio>
+#include <ctime>
+#include <cstdlib>
 
 #include "CPU/NormalCore.hpp"
 #include "CPU/RelationalCore.hpp"
-
-using namespace std::chrono;
 
 int main(int argc, char* argv[]) {
 	// Parameter
@@ -18,11 +18,13 @@ int main(int argc, char* argv[]) {
 	// Implementation
 	// --------------------------------------------------------------------------------
 
+	srand(time(nullptr)); // Many rand(), need to init
+
 	// Read meta (total number of records)
 	// PreprocessData.py will generate those meta files
 
 	#ifndef NDEBUG
-	const int n = 10000;
+	const int n = 100000;
 	#else
 	const auto fileMeta = fopen(pathMeta, "r");
 	int n;
@@ -44,13 +46,13 @@ int main(int argc, char* argv[]) {
 	// Do the magic
 	// Of course, I can merge loading and processing together, but this demo is also for benchmarking.
 
-	// RejectMIDAS::CPU::NormalCore midas(2, 1024, 1e-3f);
-	RejectMIDAS::CPU::RelationalCore midas(2, 1024, 1e-3f);
+	// RejectMIDAS::CPU::NormalCore midas(2, 1024, 1e3f);
+	RejectMIDAS::CPU::RelationalCore midas(2, 1024, 1e3f);
 	const auto score = new float[n];
-	const auto time = high_resolution_clock::now().time_since_epoch();
+	const auto time = clock();
 	for (int i = 0; i < n; i++)
 		score[i] = midas(source[i], destination[i], timestamp[i]);
-	printf("Time = %lldms\t// Algorithm is finished\n", static_cast<long long>(duration_cast<milliseconds>(high_resolution_clock::now().time_since_epoch() - time).count())); // Windows' long long == Linux's long
+	printf("Time = %ldms\t// Algorithm is finished\n", clock() - time);
 
 	// Write output scores
 

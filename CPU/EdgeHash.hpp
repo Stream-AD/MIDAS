@@ -1,7 +1,6 @@
 #pragma once
 
-#include <unordered_set>
-#include <random>
+#include <algorithm>
 
 namespace RejectMIDAS::CPU {
 struct EdgeHash {
@@ -23,11 +22,9 @@ struct EdgeHash {
 
 	EdgeHash(int numRow, int numColumn, int magic = 104729) :
 		r(numRow), c(numColumn), m(magic), lenData(r * c), param1(new int[r]), param2(new int[r]), data(new float[lenData]) {
-		std::random_device generator;
-		std::uniform_int_distribution<> distribution;
 		for (int i = 0; i < r; i++) {
-			param1[i] = distribution(generator) + 1; // ×0 is not a good idea, see Hash()
-			param2[i] = distribution(generator);
+			param1[i] = rand() + 1; // ×0 is not a good idea, see Hash()
+			param2[i] = rand();
 		}
 		std::fill(data, data + lenData, 0);
 	}
