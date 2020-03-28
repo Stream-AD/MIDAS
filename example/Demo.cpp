@@ -18,7 +18,9 @@ int main(int argc, char* argv[]) {
 	// Implementation
 	// --------------------------------------------------------------------------------
 
-	srand(time(nullptr)); // Many rand(), need to init
+	const auto seed = time(nullptr);
+	printf("Seed = %lld\t// In case of reproduction\n", seed);
+	srand(seed); // Many rand(), need to init
 
 	// Read meta (total number of records)
 	// PreprocessData.py will generate those meta files
