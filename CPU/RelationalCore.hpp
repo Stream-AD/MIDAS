@@ -25,7 +25,7 @@ struct RelationalCore {
 	// Methods
 	// --------------------------------------------------------------------------------
 
-	explicit RelationalCore(int numRow, int numColumn, float thresholdRejection = 1e3f, float factorHashShrink = 0.5f):
+	explicit RelationalCore(int numRow, int numColumn, float thresholdRejection, float factorHashShrink = 0.5f):
 		factor(factorHashShrink),
 		lenHash(numRow * numColumn),
 		threshold(thresholdRejection),

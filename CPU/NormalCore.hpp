@@ -21,7 +21,7 @@ struct NormalCore {
 	// Methods
 	// --------------------------------------------------------------------------------
 
-	explicit NormalCore(int numRow, int numColumn, float thresholdRejection = 1e3f):
+	explicit NormalCore(int numRow, int numColumn, float thresholdRejection):
 		lenHash(numRow * numColumn),
 		threshold(thresholdRejection),
 		indexEdge(new int[numRow]),
