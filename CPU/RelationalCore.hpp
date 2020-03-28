@@ -80,11 +80,11 @@ struct RelationalCore {
 		numCurrentEdge.Add(indexEdge);
 		numCurrentSource.Add(indexSource);
 		numCurrentDestination.Add(indexDestination);
-		return std::log(1 + std::max({
+		return std::max({
 			scoreEdge.Assign(indexEdge, ComputeScore(numCurrentEdge(indexEdge), numTotalEdge(indexEdge), timestamp)),
 			scoreSource.Assign(indexSource, ComputeScore(numCurrentSource(indexSource), numTotalSource(indexSource), timestamp)),
 			scoreDestination.Assign(indexDestination, ComputeScore(numCurrentDestination(indexDestination), numTotalDestination(indexDestination), timestamp)),
-		}));
+		});
 	}
 };
 }
