@@ -25,7 +25,7 @@ struct RelationalCore {
 	// Methods
 	// --------------------------------------------------------------------------------
 
-	explicit RelationalCore(int numRow, int numColumn, float thresholdRejection = 1e3f, float factorHashShrink = 0.5f) :
+	explicit RelationalCore(int numRow, int numColumn, float thresholdRejection = 1e3f, float factorHashShrink = 0.5f):
 		factor(factorHashShrink),
 		lenHash(numRow * numColumn),
 		threshold(thresholdRejection),
@@ -56,17 +56,14 @@ struct RelationalCore {
 
 	float operator()(int source, int destination, int timestamp) {
 		if (timestamp > timestampCurrent) {
-			#pragma omp for
 			for (int i = 0; i < numCurrentEdge.c; i++)
 				numTotalEdge.data[i] += scoreEdge.data[i] < threshold ?
 					numCurrentEdge.data[i] : timestampCurrent - 1 ?
 						numTotalEdge.data[i] / (timestampCurrent - 1) : 0;
-			#pragma omp for
 			for (int i = 0; i < numCurrentSource.c; i++)
 				numTotalSource.data[i] += scoreSource.data[i] < threshold ?
 					numCurrentSource.data[i] : timestampCurrent - 1 ?
 						numTotalSource.data[i] / (timestampCurrent - 1) : 0;
-			#pragma omp for
 			for (int i = 0; i < numCurrentDestination.c; i++)
 				numTotalDestination.data[i] += scoreDestination.data[i] < threshold ?
 					numCurrentDestination.data[i] : timestampCurrent - 1 ?

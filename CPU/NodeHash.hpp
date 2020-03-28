@@ -20,7 +20,7 @@ struct NodeHash {
 	NodeHash() = delete;
 	NodeHash& operator=(const NodeHash& b) = delete;
 
-	NodeHash(int numRow, int numColumn) :
+	NodeHash(int numRow, int numColumn):
 		r(numRow), c(numColumn), lenData(r * c), param1(new int[r]), param2(new int[r]), data(new float[lenData]) {
 		for (int i = 0; i < r; i++) {
 			param1[i] = rand() + 1; // ×0 is not a good idea, see Hash()
@@ -29,7 +29,7 @@ struct NodeHash {
 		std::fill(data, data + lenData, 0);
 	}
 
-	NodeHash(const NodeHash& b) :
+	NodeHash(const NodeHash& b):
 		r(b.r), c(b.c), lenData(b.lenData), param1(new int[r]), param2(new int[r]), data(new float[lenData]) {
 		std::copy(b.param1, b.param1 + r, param1);
 		std::copy(b.param2, b.param2 + r, param2);
@@ -43,7 +43,6 @@ struct NodeHash {
 	}
 
 	void MultiplyAll(float by) const {
-		#pragma omp parallel for
 		for (int i = 0; i < lenData; i++)
 			data[i] *= by;
 	}
@@ -87,21 +86,18 @@ struct NodeHash {
 
 	float operator()(int a) const {
 		float least = Infinity;
-		#pragma omp parallel for
 		for (int i = 0; i < r; i++)
 			least = std::min(least, data[i * c + Hash(a, i)]);
 		return least;
 	}
 
 	float Assign(int a, float to) const {
-		#pragma omp parallel for
 		for (int i = 0; i < r; i++)
 			data[i * c + Hash(a, i)] = to;
 		return to;
 	}
 
 	void Add(int a, float by = 1) const {
-		#pragma omp parallel for
 		for (int i = 0; i < r; i++)
 			data[(i * c + Hash(a, i))] += by;
 	}

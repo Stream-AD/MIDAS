@@ -21,7 +21,7 @@ struct NormalCore {
 	// Methods
 	// --------------------------------------------------------------------------------
 
-	explicit NormalCore(int numRow, int numColumn, float thresholdRejection = 1e3f) :
+	explicit NormalCore(int numRow, int numColumn, float thresholdRejection = 1e3f):
 		lenHash(numRow * numColumn),
 		threshold(thresholdRejection),
 		indexEdge(new int[numRow]),
@@ -41,7 +41,6 @@ struct NormalCore {
 
 	float operator()(int source, int destination, int timestamp) {
 		if (timestamp > timestampCurrent) {
-			#pragma omp for
 			for (int i = 0; i < numCurrentEdge.c; i++)
 				numTotalEdge.data[i] += scoreEdge.data[i] < threshold ?
 					numCurrentEdge.data[i] : timestampCurrent - 1 ?

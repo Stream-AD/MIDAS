@@ -20,7 +20,7 @@ struct EdgeHash {
 	EdgeHash() = delete;
 	EdgeHash& operator=(const EdgeHash& b) = delete;
 
-	EdgeHash(int numRow, int numColumn, int magic = 104729) :
+	EdgeHash(int numRow, int numColumn, int magic = 104729):
 		r(numRow), c(numColumn), m(magic), lenData(r * c), param1(new int[r]), param2(new int[r]), data(new float[lenData]) {
 		for (int i = 0; i < r; i++) {
 			param1[i] = rand() + 1; // ×0 is not a good idea, see Hash()
@@ -29,7 +29,7 @@ struct EdgeHash {
 		std::fill(data, data + lenData, 0);
 	}
 
-	EdgeHash(const EdgeHash& b) :
+	EdgeHash(const EdgeHash& b):
 		r(b.r), c(b.c), m(b.m), lenData(b.lenData), param1(new int[r]), param2(new int[r]), data(new float[lenData]) {
 		std::copy(b.param1, b.param1 + r, param1);
 		std::copy(b.param2, b.param2 + r, param2);
@@ -43,7 +43,6 @@ struct EdgeHash {
 	}
 
 	void MultiplyAll(float by) const {
-		#pragma omp parallel for
 		for (int i = 0; i < lenData; i++)
 			data[i] *= by;
 	}
@@ -87,21 +86,18 @@ struct EdgeHash {
 
 	float operator()(int a, int b) const {
 		float least = Infinity;
-		#pragma omp parallel for
 		for (int i = 0; i < r; i++)
 			least = std::min(least, data[i * c + Hash(a, b, i)]);
 		return least;
 	}
 
 	float Assign(int a, int b, float to) const {
-		#pragma omp parallel for
 		for (int i = 0; i < r; i++)
 			data[i * c + Hash(a, b, i)] = to;
 		return to;
 	}
 
 	void Add(int a, int b, float by = 1) const {
-		#pragma omp parallel for
 		for (int i = 0; i < r; i++)
 			data[(i * c + Hash(a, b, i))] += by;
 	}
