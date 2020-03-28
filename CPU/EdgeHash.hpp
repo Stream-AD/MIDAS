@@ -43,12 +43,11 @@ struct EdgeHash {
 	}
 
 	void MultiplyAll(float by) const {
-		for (int i = 0; i < lenData; i++)
-			data[i] *= by;
+		std::for_each(data, data + lenData, [&](float& a) { a *= by; }); // Magic of vectorization
 	}
 
 	void Clear() {
-		std::fill(data, data + lenData, 0); // Can't imagine, even faster than omp
+		std::fill(data, data + lenData, 0); // Magic of vectorization
 	}
 
 	// If you prefer to hash once, use everywhere
