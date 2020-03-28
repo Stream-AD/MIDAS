@@ -40,9 +40,7 @@ struct RelationalCore {
 		scoreSource(numCurrentSource),
 		numCurrentDestination(numRow, numColumn),
 		numTotalDestination(numCurrentDestination),
-		scoreDestination(numCurrentDestination) {
-		printf("Algorithm = RejectMIDAS.RelationalCore\n");
-	}
+		scoreDestination(numCurrentDestination) { }
 
 	virtual ~RelationalCore() {
 		delete[] indexEdge;
@@ -51,7 +49,7 @@ struct RelationalCore {
 	}
 
 	static float ComputeScore(float a, float s, float t) {
-		return t > 1 && s > 0 ? pow(a + s - a * t, 2) / (s * (t - 1)) : 0;
+		return t == 1 || s == 0 ? 0 : pow(a + s - a * t, 2) / (s * (t - 1));
 	}
 
 	float operator()(int source, int destination, int timestamp) {
