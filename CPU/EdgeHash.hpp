@@ -7,7 +7,7 @@ struct EdgeHash {
 	// Fields
 	// --------------------------------------------------------------------------------
 
-	const int r, c, m; // Yes, a magic number, I just pick a random prime
+	const int r, c, m = 104729; // Yes, a magic number, I just pick a random prime
 	const int lenData;
 	int* const param1 = nullptr; // Delete an uninitialized pointer is not a good idea
 	int* const param2 = nullptr;
@@ -20,8 +20,8 @@ struct EdgeHash {
 	EdgeHash() = delete;
 	EdgeHash& operator=(const EdgeHash& b) = delete;
 
-	EdgeHash(int numRow, int numColumn, int magic = 104729):
-		r(numRow), c(numColumn), m(magic), lenData(r * c), param1(new int[r]), param2(new int[r]), data(new float[lenData]) {
+	EdgeHash(int numRow, int numColumn):
+		r(numRow), c(numColumn), lenData(r * c), param1(new int[r]), param2(new int[r]), data(new float[lenData]) {
 		for (int i = 0; i < r; i++) {
 			param1[i] = rand() + 1; // ×0 is not a good idea, see Hash()
 			param2[i] = rand();
@@ -30,7 +30,7 @@ struct EdgeHash {
 	}
 
 	EdgeHash(const EdgeHash& b):
-		r(b.r), c(b.c), m(b.m), lenData(b.lenData), param1(new int[r]), param2(new int[r]), data(new float[lenData]) {
+		r(b.r), c(b.c), lenData(b.lenData), param1(new int[r]), param2(new int[r]), data(new float[lenData]) {
 		std::copy(b.param1, b.param1 + r, param1);
 		std::copy(b.param2, b.param2 + r, param2);
 		std::copy(b.data, b.data + lenData, data);
@@ -53,9 +53,9 @@ struct EdgeHash {
 	// If you prefer to hash once, use everywhere
 	// --------------------------------------------------------------------------------
 
-	void Hash(int a, int b, int indexOut[]) {
+	void Hash(int a, int b, int indexOut[]) const {
 		for (int i = 0; i < r; i++)
-			indexOut[i] = abs((a + m * b) * param1[r] + param2[r]) % c;
+			indexOut[i] = i * c + abs((a + m * b) * param1[i] + param2[i]) % c;
 	}
 
 	float operator()(const int index[]) const {
@@ -98,7 +98,7 @@ struct EdgeHash {
 
 	void Add(int a, int b, float by = 1) const {
 		for (int i = 0; i < r; i++)
-			data[(i * c + Hash(a, b, i))] += by;
+			data[i * c + Hash(a, b, i)] += by;
 	}
 };
 }

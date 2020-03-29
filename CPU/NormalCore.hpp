@@ -10,18 +10,16 @@ struct NormalCore {
 	// --------------------------------------------------------------------------------
 
 	const float threshold;
+	int timestampCurrent = 1;
+	int* const indexEdge;
 	EdgeHash numCurrentEdge;
 	EdgeHash numTotalEdge;
 	EdgeHash scoreEdge;
-	int timestampCurrent = 1;
-	const int lenHash;
-	int* const indexEdge;
 
 	// Methods
 	// --------------------------------------------------------------------------------
 
-	explicit NormalCore(int numRow, int numColumn, float thresholdRejection):
-		lenHash(numRow * numColumn),
+	NormalCore(int numRow, int numColumn, float thresholdRejection):
 		threshold(thresholdRejection),
 		indexEdge(new int[numRow]),
 		numCurrentEdge(numRow, numColumn),
@@ -33,12 +31,12 @@ struct NormalCore {
 	}
 
 	static float ComputeScore(float a, float s, float t) {
-		return t == 1 || s == 0 ? 0 : pow(a + s - a * t, 2) / (s * (t - 1));
+		return s == 0 ? 0 : pow(a + s - a * t, 2) / (s * (t - 1));
 	}
 
 	float operator()(int source, int destination, int timestamp) {
 		if (timestamp > timestampCurrent) {
-			for (int i = 0; i < numCurrentEdge.c; i++)
+			for (int i = 0; i < numCurrentEdge.lenData; i++)
 				numTotalEdge.data[i] += scoreEdge.data[i] < threshold ?
 					numCurrentEdge.data[i] : timestampCurrent - 1 ?
 						numTotalEdge.data[i] / (timestampCurrent - 1) : 0;

@@ -53,9 +53,9 @@ struct NodeHash {
 	// If you prefer to hash once, use everywhere
 	// --------------------------------------------------------------------------------
 
-	void Hash(int a, int indexOut[]) {
+	void Hash(int a, int indexOut[]) const {
 		for (int i = 0; i < r; i++)
-			indexOut[i] = abs(a * param1[r] + param2[r]) % c;
+			indexOut[i] = i * c + abs(a * param1[i] + param2[i]) % c;
 	}
 
 	float operator()(const int index[]) const {
@@ -98,7 +98,7 @@ struct NodeHash {
 
 	void Add(int a, float by = 1) const {
 		for (int i = 0; i < r; i++)
-			data[(i * c + Hash(a, i))] += by;
+			data[i * c + Hash(a, i)] += by;
 	}
 };
 }
