@@ -7,7 +7,7 @@
 #include "CPU/NormalCore.hpp"
 #include "CPU/RelationalCore.hpp"
 
-void TestAUC(const int n, const char pathGroundTruth[], const std::initializer_list<int>& numColumn, const std::initializer_list<float>& thresholdRejection, const int numRepeat, const int source[], const int destination[], const int timestamp[]) {
+void TestAUC(int n, const char pathGroundTruth[], const std::initializer_list<int>& numColumn, const std::initializer_list<float>& thresholdRejection, int numRepeat, const int source[], const int destination[], const int timestamp[]) {
 	const auto pathExperimentResult = SOLUTION_DIR"temp/Experiment.csv";
 	const auto fileExperimentResult = fopen(pathExperimentResult, "w");
 	fprintf(fileExperimentResult, "numColumn,threshold,seed,auc\n");
@@ -25,7 +25,8 @@ void TestAUC(const int n, const char pathGroundTruth[], const std::initializer_l
 				srand(seed[indexRun]); // Re-seed, I don't want all results to be the same
 
 				const auto score = new float[n];
-				RejectMIDAS::CPU::RelationalCore midas(2, column, threshold);
+				RejectMIDAS::CPU::NormalCore midas(2, column, threshold);
+				// RejectMIDAS::CPU::RelationalCore midas(2, column, threshold);
 				for (int i = 0; i < n; i++)
 					score[i] = midas(source[i], destination[i], timestamp[i]);
 
@@ -61,7 +62,7 @@ void TestAUC(const int n, const char pathGroundTruth[], const std::initializer_l
 	fclose(fileExperimentResult);
 }
 
-void TestSpeed(const int n, const char pathGroundTruth[], const std::initializer_list<int>& numColumn, const std::initializer_list<float>& thresholdRejection, const int numRepeat, const int source[], const int destination[], const int timestamp[]) {
+void TestSpeed(int n, const char pathGroundTruth[], const std::initializer_list<int>& numColumn, const std::initializer_list<float>& thresholdRejection, int numRepeat, const int source[], const int destination[], const int timestamp[]) {
 	const auto pathExperimentResult = SOLUTION_DIR"temp/Experiment.csv";
 	const auto fileExperimentResult = fopen(pathExperimentResult, "w");
 	fprintf(fileExperimentResult, "numColumn,threshold,seed,time\n");
@@ -95,7 +96,7 @@ void TestSpeed(const int n, const char pathGroundTruth[], const std::initializer
 	fclose(fileExperimentResult);
 }
 
-void ReproduceROC(const int n, const char pathGroundTruth[], const int numColumn, const float thresholdRejection, const int seed, const int source[], const int destination[], const int timestamp[]) {
+void ReproduceROC(int n, const char pathGroundTruth[], int numColumn, float thresholdRejection, int seed, const int source[], const int destination[], const int timestamp[]) {
 	srand(seed);
 
 	const auto score = new float[n];
@@ -159,9 +160,9 @@ int main(int argc, char* argv[]) {
 	const int numRepeat = 21;
 	const auto numColumn = {1024};
 	const auto thresholdRejection = {1e0f, 1e1f, 1e2f, 1e3f, 1e4f, 1e5f, 1e6f, 1e7f};
-	// TestAUC(n, pathGroundTruth, numColumn, thresholdRejection, numRepeat, source, destination, timestamp);
+	TestAUC(n, pathGroundTruth, numColumn, thresholdRejection, numRepeat, source, destination, timestamp);
 	// TestSpeed(n, pathGroundTruth, numColumn, thresholdRejection, numRepeat, source, destination, timestamp);
-	ReproduceROC(n, pathGroundTruth, 1024, 1, 17627, source, destination, timestamp);
+	// ReproduceROC(n, pathGroundTruth, 1024, 1, 17627, source, destination, timestamp);
 
 	// Clean up
 
