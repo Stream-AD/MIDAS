@@ -9,17 +9,19 @@ int main(int argc, char* argv[]) {
 	// Parameter
 	// --------------------------------------------------------------------------------
 
-	// const char* pathMeta = SOLUTION_DIR"data/darpa_shape.txt";
-	// const char* pathData = SOLUTION_DIR"data/darpa_processed.csv";
+	// const auto pathMeta = SOLUTION_DIR"data/darpa_shape.txt";
+	// const auto pathData = SOLUTION_DIR"data/darpa_processed.csv";
+	// const auto pathGroundTruth = SOLUTION_DIR"data/darpa_ground_truth.csv";
 
-	const char* pathMeta = SOLUTION_DIR"data/final_dataset_shape.txt";
-	const char* pathData = SOLUTION_DIR"data/final_dataset_processed.csv";
+	const auto pathMeta = SOLUTION_DIR"data/final_dataset_shape.txt";
+	const auto pathData = SOLUTION_DIR"data/final_dataset_processed.csv";
+	const auto pathGroundTruth = SOLUTION_DIR"data/final_dataset_ground_truth.csv";
 
 	// Implementation
 	// --------------------------------------------------------------------------------
 
-	const auto seed = time(nullptr);
-	printf("Seed = %lld\t// In case of reproduction\n", seed);
+	const unsigned seed = time(nullptr);
+	printf("Seed = %u\t// In case of reproduction\n", seed);
 	srand(seed); // Many rand(), need to init
 
 	// Read meta (total number of records)
@@ -41,7 +43,7 @@ int main(int argc, char* argv[]) {
 	const auto destination = new int[n];
 	const auto timestamp = new int[n];
 	for (int i = 0; i < n; i++)
-		fscanf(fileData, "%d,%d,%d,%*d", &source[i], &destination[i], &timestamp[i]);
+		fscanf(fileData, "%d,%d,%d", &source[i], &destination[i], &timestamp[i]);
 	fclose(fileData);
 	printf("# Records = %d\t// Dataset is loaded\n", n);
 
@@ -58,6 +60,7 @@ int main(int argc, char* argv[]) {
 
 	// Write output scores
 
+	#ifdef NDEBUG
 	const char* pathScore = SOLUTION_DIR"temp/Score.txt";
 	const auto fileScore = fopen(pathScore, "w");
 	for (int i = 0; i < n; i++)
@@ -68,8 +71,9 @@ int main(int argc, char* argv[]) {
 	// Evaluate scores
 
 	char command[1024];
-	sprintf(command, "python %s %s %s", SOLUTION_DIR"util/EvaluateScore.py", pathData, pathScore);
+	sprintf(command, "python %s %s %s", SOLUTION_DIR"util/EvaluateScore.py", pathGroundTruth, pathScore);
 	system(command);
+	#endif
 
 	// Clean up
 

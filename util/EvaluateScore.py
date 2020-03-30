@@ -1,10 +1,18 @@
-import sys
-import pandas as pd
-import sklearn.metrics as skm
+from pathlib import Path
+from sys import argv
 
-if len(sys.argv) <= 1:
-	print(f"Usage: python EvaluateScore.py <pathData> <pathScore>")
+import pandas as pd
+from sklearn.metrics import roc_auc_score
+
+root = (Path(__file__) / '../..').resolve()
+
+if len(argv) < 3:
+	print(f"Usage: python EvaluateScore.py <pathGroundTruth> <pathScore> [<indexRun>]")
 else:
-	y = pd.read_csv(sys.argv[1], header=None, usecols=[3])
-	z = pd.read_csv(sys.argv[2], header=None)
-	print(f"ROC-AUC = {skm.roc_auc_score(y, z):.4f}\t// Evaluation is over, program should return 0")
+	y = pd.read_csv(argv[1], header=None)
+	z = pd.read_csv(argv[2], header=None)
+	indexRun = argv[3] if len(argv) >= 4 else ''
+	auc = roc_auc_score(y, z)
+	print(f"ROC-AUC{indexRun} = {auc:.4f}")
+	with open(root / f"temp/AUC{indexRun}.txt", 'w') as file:
+		file.write(str(auc))

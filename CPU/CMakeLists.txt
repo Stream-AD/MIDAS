@@ -14,3 +14,4 @@ ELSEIF(UNIX)
 ENDIF()
 
 ADD_EXECUTABLE(${PROJECT_NAME}_Demo ${CMAKE_SOURCE_DIR}/example/Demo.cpp)
+ADD_EXECUTABLE(${PROJECT_NAME}_Experiment ${CMAKE_SOURCE_DIR}/example/Experiment.cpp)
