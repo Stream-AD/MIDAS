@@ -9,9 +9,9 @@ struct NodeHash {
 
 	const int r, c;
 	const int lenData;
-	int* const param1 = nullptr; // Delete an uninitialized pointer is not a good idea
-	int* const param2 = nullptr;
-	float* const data = nullptr;
+	int* const param1;
+	int* const param2;
+	float* const data;
 	const float Infinity = std::numeric_limits<float>::infinity();
 
 	// Methods
@@ -46,7 +46,7 @@ struct NodeHash {
 		std::for_each(data, data + lenData, [&](float& a) { a *= by; }); // Magic of vectorization
 	}
 
-	void Clear() {
+	void Clear() const {
 		std::fill(data, data + lenData, 0); // Magic of vectorization
 	}
 
