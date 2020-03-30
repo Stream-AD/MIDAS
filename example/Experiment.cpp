@@ -45,6 +45,8 @@ void TestAUC(const int n, const char pathGroundTruth[], const std::initializer_l
 				const auto fileAUC = fopen(pathAUC, "r");
 				fscanf(fileAUC, "%f", auc + indexRun);
 				fclose(fileAUC);
+
+				delete[] score;
 			}
 
 			for (int i = 0; i < numRepeat; i++)
