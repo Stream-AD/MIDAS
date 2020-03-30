@@ -70,7 +70,7 @@ void TestSpeed(const int n, const char pathGroundTruth[], const std::initializer
 		for (const auto threshold: thresholdRejection) {
 			const auto seed = new int[numRepeat];
 			const auto time = new int[numRepeat];
-			const auto score = new float[n];
+			const auto score = new float[n]; // I know there is no need to save scores, just to keep consistency
 
 			for (int indexRun = 0; indexRun < numRepeat; indexRun++) {
 				srand(seed[indexRun] = rand()); // Re-seed, I don't want all results to be the same
@@ -81,18 +81,6 @@ void TestSpeed(const int n, const char pathGroundTruth[], const std::initializer
 				time[indexRun] = clock() - timeBegin;
 				printf("Time%02d = %dms\n", indexRun, time[indexRun]);
 			}
-
-			char pathScore[1024];
-			sprintf(pathScore, SOLUTION_DIR"temp/Score.txt");
-			const auto fileScore = fopen(pathScore, "w");
-			for (int i = 0; i < n; i++)
-				fprintf(fileScore, "%f\n", score[i]);
-			fclose(fileScore);
-
-			char command[1024];
-			sprintf(command, "python %s %s %s", SOLUTION_DIR"util/EvaluateScore.py", pathGroundTruth, pathScore);
-			printf("// Below is the AUC of the last run\n");
-			system(command);
 
 			for (int i = 0; i < numRepeat; i++)
 				fprintf(fileExperimentResult, "%d,%g,%d,%d\n", column, threshold, seed[i], time[i]);
@@ -121,7 +109,7 @@ void ReproduceROC(const int n, const char pathGroundTruth[], const int numColumn
 		fprintf(fileScore, "%f\n", score[i]);
 	fclose(fileScore);
 
-	printf("// Python is generating ROC curve\n");
+	printf("// Reproduction is done, python is generating the ROC curve\n");
 
 	char command[1024];
 	sprintf(command, "python %s %s %s", SOLUTION_DIR"util/ReproduceROC.py", pathGroundTruth, pathScore);
@@ -171,9 +159,9 @@ int main(int argc, char* argv[]) {
 	const int numRepeat = 21;
 	const auto numColumn = {1024};
 	const auto thresholdRejection = {1e0f, 1e1f, 1e2f, 1e3f, 1e4f, 1e5f, 1e6f, 1e7f};
-	TestAUC(n, pathGroundTruth, numColumn, thresholdRejection, numRepeat, source, destination, timestamp);
+	// TestAUC(n, pathGroundTruth, numColumn, thresholdRejection, numRepeat, source, destination, timestamp);
 	// TestSpeed(n, pathGroundTruth, numColumn, thresholdRejection, numRepeat, source, destination, timestamp);
-	// ReproduceROC(n, pathGroundTruth, 1024, 1000, 18223, source, destination, timestamp);
+	ReproduceROC(n, pathGroundTruth, 1024, 1, 17627, source, destination, timestamp);
 
 	// Clean up
 
