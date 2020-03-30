@@ -20,7 +20,7 @@ void TestAUC(const int n, const char pathGroundTruth[], const std::initializer_l
 			for (int i = 0; i < numRepeat; i++)
 				seed[i] = rand();
 
-			#pragma omp parallel for schedule(static)
+			#pragma omp parallel for
 			for (int indexRun = 0; indexRun < numRepeat; indexRun++) {
 				srand(seed[indexRun]); // Re-seed, I don't want all results to be the same
 
