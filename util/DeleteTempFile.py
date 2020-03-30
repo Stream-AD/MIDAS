@@ -9,4 +9,5 @@ if len(argv) <= 1:
 	print('Usage: python DeleteTempFile.py <pattern> [<pattern>...]')
 else:
 	for i in range(1, len(argv)):
-		map(lambda file: remove(file), glob(str(root / f"temp/{argv[i]}")))
+		for file in glob(str(root / f"temp/{argv[i]}")):
+			remove(file)
