@@ -24,9 +24,9 @@ struct RelationalCore {
 	// Methods
 	// --------------------------------------------------------------------------------
 
-	RelationalCore(int numRow, int numColumn, float thresholdRejection, float factorHashShrink = 0.5f):
-		threshold(thresholdRejection),
-		factor(factorHashShrink),
+	RelationalCore(int numRow, int numColumn, float threshold, float factor = 0.5f):
+		threshold(threshold),
+		factor(factor),
 		indexEdge(new int[numRow]),
 		indexSource(new int[numRow]),
 		indexDestination(new int[numRow]),
@@ -67,16 +67,13 @@ struct RelationalCore {
 			numCurrentEdge.MultiplyAll(factor);
 			numCurrentSource.MultiplyAll(factor);
 			numCurrentDestination.MultiplyAll(factor);
-			scoreEdge.Clear();
-			scoreSource.Clear();
-			scoreDestination.Clear();
 			timestampCurrent = timestamp;
 		}
 		numCurrentEdge.Hash(source, destination, indexEdge);
-		numCurrentSource.Hash(source, indexSource);
-		numCurrentDestination.Hash(destination, indexDestination);
 		numCurrentEdge.Add(indexEdge);
+		numCurrentSource.Hash(source, indexSource);
 		numCurrentSource.Add(indexSource);
+		numCurrentDestination.Hash(destination, indexDestination);
 		numCurrentDestination.Add(indexDestination);
 		return std::max({
 			scoreEdge.Assign(indexEdge, ComputeScore(numCurrentEdge(indexEdge), numTotalEdge(indexEdge), timestamp)),

@@ -11,6 +11,7 @@ struct NormalCore {
 
 	const float threshold;
 	int timestampCurrent = 1;
+	const float factor;
 	int* const indexEdge;
 	EdgeHash numCurrentEdge;
 	EdgeHash numTotalEdge;
@@ -19,8 +20,9 @@ struct NormalCore {
 	// Methods
 	// --------------------------------------------------------------------------------
 
-	NormalCore(int numRow, int numColumn, float thresholdRejection):
-		threshold(thresholdRejection),
+	NormalCore(int numRow, int numColumn, float threshold, float factor = 0.5):
+		threshold(threshold),
+		factor(factor),
 		indexEdge(new int[numRow]),
 		numCurrentEdge(numRow, numColumn),
 		numTotalEdge(numCurrentEdge),
@@ -40,7 +42,7 @@ struct NormalCore {
 				numTotalEdge.data[i] += scoreEdge.data[i] < threshold ?
 					numCurrentEdge.data[i] : timestampCurrent - 1 ?
 						numTotalEdge.data[i] / (timestampCurrent - 1) : 0;
-			numCurrentEdge.Clear();
+			numCurrentEdge.MultiplyAll(factor);
 			timestampCurrent = timestamp;
 		}
 		numCurrentEdge.Hash(source, destination, indexEdge);
