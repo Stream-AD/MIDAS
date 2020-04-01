@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 def darpa_original(prefix: Path) -> None:
@@ -39,7 +40,7 @@ def final_dataset(prefix: Path) -> None:
 def Twitter_May_Aug_2014_TerrorSecurity_resolved(prefix: Path):
 	data = pd.read_csv(prefix / 'data/Twitter_May_Aug_2014_TerrorSecurity_resolved.txt', sep=' ', header=None, names=['ts', 'src', 'dst'])
 	data = data.append(data.rename(columns={'src': 'dst', 'dst': 'src'}))
-	data['ts'] = data['ts'].apply(lambda s: s[0:2] + s[3:5])
+	data['ts'] = data['ts'].apply(lambda s: s[0:2] + s[3:5] + str(int(s[11:13] >= '12')))  # Month + day + hour + minute
 	date = data['ts'].unique()  # This is date, not data
 	data['ts'] = data['ts'].astype('category').cat.codes + 1  # Time starts from 1
 	data['src'] = data['src'].astype('category').cat.codes
@@ -48,14 +49,21 @@ def Twitter_May_Aug_2014_TerrorSecurity_resolved(prefix: Path):
 	data.to_csv(prefix / 'data/twitter_security_processed.csv', header=False, index=False)
 	# I don't need the shape
 
-	date = dict(zip(date, range(date.shape[0])))  # Time starts from 1, but first row is row 0
-	ground_truth = pd.read_excel(prefix / 'data/Ground Truth- 2009 & 2014.xlsx', sheet_name=1, names=['ts'], usecols=[0])
-	ground_truth.iloc[15, 0] = pd.Timestamp('2014-06-21')  # Hard code
-	ground_truth['ts'] = ground_truth['ts'].apply(lambda a: a.strftime('%m%d'))
-	ground_truth['ts'] = ground_truth['ts'].apply(lambda a: date.get(a, None))
-	ground_truth.dropna(inplace=True)
-	ground_truth = ground_truth.astype(int)
-	ground_truth.to_csv(prefix / 'data/twitter_security_ground_truth.txt', header=False, index=False)
+	ground_truth = pd.read_excel(prefix / 'data/Ground Truth- 2009 & 2014.xlsx', sheet_name=1, names=['ts'], usecols=[0], squeeze=True)
+	ground_truth[15] = pd.Timestamp('2014-06-21')  # Hard code
+	ground_truth = ground_truth.apply(lambda a: a.strftime('%m%d'))
+	span = np.full([ground_truth.shape[0], 2], -1)
+	for i, t in enumerate(ground_truth):
+		for j, d in enumerate(date):
+			if d.startswith(t):
+				span[i, 0] = j
+				break
+		for j, d in enumerate(reversed(date)):
+			if d.startswith(t):
+				span[i, 1] = date.shape[0] - 1 - j
+				break
+	span: np.ndarray = span[np.any(span != -1, axis=1), :]
+	np.savetxt(prefix / 'data/twitter_security_ground_truth.csv', span, fmt='%i', delimiter=',')
 
 if __name__ == '__main__':
 	root = (Path(__file__) / '../..').resolve()

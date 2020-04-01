@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
 	const auto fileScore = fopen(SOLUTION_DIR"temp/Score.txt", "w");
 	int timestampCurrent = 1; // Always starts from 1
 	float scoreMost = -std::numeric_limits<float>::infinity(); // Highest
-	RejectMIDAS::CPU::RelationalCore midas(2, 2719, 1e4f);
+	RejectMIDAS::CPU::RelationalCore midas(2, 2719, 1e2f);
 	int source, destination, timestamp;
 	while (~fscanf(fileData, "%d,%d,%d", &timestamp, &source, &destination)) {
 		if (timestamp > timestampCurrent) {
@@ -27,6 +27,4 @@ int main(int argc, char* argv[]) {
 	fprintf(fileScore, "%f\n", scoreMost);
 	fclose(fileData);
 	fclose(fileScore);
-
-
 }
