@@ -12,7 +12,7 @@ struct NodeHash {
 	int* const param1;
 	int* const param2;
 	float* const data;
-	const float Infinity = std::numeric_limits<float>::infinity();
+	constexpr static float Infinity = std::numeric_limits<float>::infinity();
 
 	// Methods
 	// --------------------------------------------------------------------------------
@@ -52,12 +52,8 @@ struct NodeHash {
 		delete[] data;
 	}
 
-	void MultiplyAll(float by) const {
+	void MultiplyAll(float by = 0) const {
 		std::for_each(data, data + lenData, [&](float& a) { a *= by; }); // Magic of vectorization
-	}
-
-	void Clear() const {
-		std::fill(data, data + lenData, 0); // Magic of vectorization
 	}
 
 	void Hash(int a, int indexOut[]) const {
