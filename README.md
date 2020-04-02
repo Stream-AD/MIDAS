@@ -38,7 +38,7 @@
 - [Command-Line Options](#command-line-options)
 - [Input File Format](#input-file-format)
 - [Datasets](#datasets)
-- [MIDAS in other languages](#midas-in-other-languages)
+- [MIDAS in other Languages](#midas-in-other-languages)
 - [Online Articles](#online-articles)
 - [Citation](#citation)
 
