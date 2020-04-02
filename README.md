@@ -39,7 +39,7 @@
 - [Input File Format](#input-file-format)
 - [Datasets](#datasets)
 - [MIDAS in other languages](#midas-in-other-languages)
-- [Blog Posts and Tutorials](#blog-posts-and-tutorials)
+- [Online Articles](#online-articles)
 - [Citation](#citation)
 
 <!-- - [See Also](#see-also) -->
