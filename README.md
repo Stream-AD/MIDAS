@@ -12,9 +12,9 @@
   <a href="https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midasslides.pdf">
       <img src="http://img.shields.io/badge/Slides-pdf-ff9e18.svg">
   </a>
-  <a href="https://lionbridge.ai/articles/introducing-midas-a-new-baseline-for-anomaly-detection-in-graphs/">
+<!--   <a href="https://lionbridge.ai/articles/introducing-midas-a-new-baseline-for-anomaly-detection-in-graphs/">
     <img src="http://img.shields.io/badge/Press-article-ff69b4.svg">
-  </a>
+  </a> -->
 <!--   <a href="#midas-in-other-languages"> -->
 <!--     <img src="https://img.shields.io/badge/contributions-welcome-orange.svg"> -->
 <!--   </a> -->
@@ -61,7 +61,7 @@ For more details, please read the paper - [MIDAS: Microcluster-Based Detector of
 3. Financial Fraud
 
 
-## Getting started
+## Getting Started
 1. Run `make` to compile code and create the executable.
 2. Run `./midas -i ` followed by the input file path and name.
 
@@ -95,11 +95,12 @@ Thus, each line represents an edge. Edges should be sorted in non-decreasing ord
 2. [TwitterWorldCup2014](http://odds.cs.stonybrook.edu/twitterworldcup2014-dataset)
 3. [TwitterSecurity](http://odds.cs.stonybrook.edu/twittersecurity-dataset)
 
-## MIDAS in other languages
+## MIDAS in other Languages
 1. [Rust](https://github.com/scooter-dangle/midas_rs) and [Python](https://github.com/scooter-dangle/midas_rs/tree/master/python) by [Scott Steele](https://github.com/scooter-dangle)
 2. [Ruby](https://github.com/ankane/midas) by [Andrew Kane](https://github.com/ankane)
 
-## Blog Posts and Tutorials
+## Online Articles
+1. KDnuggets: [Introducing MIDAS: A New Baseline for Anomaly Detection in Graphs](https://www.kdnuggets.com/2020/04/midas-new-baseline-anomaly-detection-graphs.html)
 1. Towards Data Science: [Controlling Fake News using Graphs and Statistics](https://towardsdatascience.com/controlling-fake-news-using-graphs-and-statistics-31ed116a986f)
 2. Towards Data Science: [Anomaly detection in dynamic graphs using MIDAS](https://towardsdatascience.com/anomaly-detection-in-dynamic-graphs-using-midas-e4f8d0b1db45)
 3. Towards AI: [Anomaly Detection with MIDAS](https://medium.com/towards-artificial-intelligence/anomaly-detection-with-midas-2735a2e6dce8)
