@@ -21,5 +21,6 @@ else:
 	indexRun = argv[3] if len(argv) >= 4 else ''
 	auc = roc_auc_score(y, z)
 	print(f"ROC-AUC{indexRun} = {auc:.4f}")
-	with open(root / f"temp/AUC{indexRun}.txt", 'w') as file:
-		file.write(str(auc))
+	if indexRun:
+		with open(root / f"temp/AUC{indexRun}.txt", 'w') as file:
+			file.write(str(auc))
