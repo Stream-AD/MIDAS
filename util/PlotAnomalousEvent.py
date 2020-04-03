@@ -1,10 +1,7 @@
-from pathlib import Path
 from sys import argv
 
-from matplotlib.pyplot import plot, show, axvspan
-from numpy import log10, loadtxt
-
-root = (Path(__file__) / '../..').resolve()
+from matplotlib.pyplot import axvspan, plot, show
+from numpy import loadtxt, log10
 
 if len(argv) < 2:
 	print('Plot line chart for timestamps vs anomaly scores, with optional vertical lines for important events')
