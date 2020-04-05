@@ -98,6 +98,7 @@ Thus, each line represents an edge. Edges should be sorted in non-decreasing ord
 ## MIDAS in other Languages
 1. [Rust](https://github.com/scooter-dangle/midas_rs) and [Python](https://github.com/scooter-dangle/midas_rs/tree/master/python) by [Scott Steele](https://github.com/scooter-dangle)
 2. [Ruby](https://github.com/ankane/midas) by [Andrew Kane](https://github.com/ankane)
+3. [R](https://github.com/pteridin/MIDASwrappeR) by [Tobias Heidler](https://github.com/pteridin)
 
 ## Online Articles
 1. KDnuggets: [Introducing MIDAS: A New Baseline for Anomaly Detection in Graphs](https://www.kdnuggets.com/2020/04/midas-new-baseline-anomaly-detection-graphs.html)
