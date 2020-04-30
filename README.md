@@ -8,16 +8,16 @@
   <a href="https://aaai.org/Conferences/AAAI-20/">
     <img src="http://img.shields.io/badge/AAAI-2020-red.svg">
   </a>
-  <a href="https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midas.pdf"><img src="http://img.shields.io/badge/Paper-pdf-brightgreen.svg"></a>
+  <a href="https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midas.pdf"><img src="http://img.shields.io/badge/Paper-PDF-brightgreen.svg"></a>
   <a href="https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midasslides.pdf">
-      <img src="http://img.shields.io/badge/Slides-pdf-ff9e18.svg">
+      <img src="http://img.shields.io/badge/Slides-PDF-ff9e18.svg">
   </a>
-<!--   <a href="https://lionbridge.ai/articles/introducing-midas-a-new-baseline-for-anomaly-detection-in-graphs/">
-    <img src="http://img.shields.io/badge/Press-article-ff69b4.svg">
+  <a href="https://youtu.be/Bd4PyLCHrto">
+    <img src="http://img.shields.io/badge/Talk-Youtube-ff69b4.svg">
+  </a>
+  <!-- <a href="#midas-in-other-languages"> 
+    <img src="https://img.shields.io/badge/contributions-welcome-orange.svg">
   </a> -->
-<!--   <a href="#midas-in-other-languages"> -->
-<!--     <img src="https://img.shields.io/badge/contributions-welcome-orange.svg"> -->
-<!--   </a> -->
   <a href="https://github.com/bhatiasiddharth/MIDAS/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg">
   </a>
