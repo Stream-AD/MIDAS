@@ -12,7 +12,7 @@ struct NodeHash {
 	int* const param1;
 	int* const param2;
 	float* const data;
-	constexpr static float Infinity = std::numeric_limits<float>::infinity();
+	constexpr static float infinity = std::numeric_limits<float>::infinity();
 
 	// Methods
 	// --------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ struct NodeHash {
 	}
 
 	float operator()(const int index[]) const {
-		float least = Infinity;
+		float least = infinity;
 		for (int i = 0; i < r; i++)
 			least = std::min(least, data[index[i]]);
 		return least;
