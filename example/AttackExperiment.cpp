@@ -62,7 +62,7 @@ void TestSpeed(int n, int numColumn, const std::vector<float>& thresholds, int n
 			const auto timeBegin = clock();
 			for (int k = 0; k < n; k++)
 				midas(source[k], destination[k], timestamp[k]);
-			printf("Time%02d = %dms\n", j, time[i * numRepeat + j] = clock() - timeBegin);
+			printf("Time%02d = %dms\n", j, time[i * numRepeat + j] = (clock() - timeBegin) * 1000 / CLOCKS_PER_SEC);
 		}
 		printf("// Above results use threshold = %g\n", thresholds[i]);
 	}

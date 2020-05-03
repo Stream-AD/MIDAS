@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
 	const auto time = clock();
 	for (int i = 0; i < n; i++)
 		score[i] = midas(source[i], destination[i], timestamp[i]);
-	printf("Time = %ldms\t// Algorithm is finished\n", clock() - time);
+	printf("Time = %ldms\t// Algorithm is finished\n", (clock() - time) * 1000 / CLOCKS_PER_SEC);
 
 	// Write output scores
 
