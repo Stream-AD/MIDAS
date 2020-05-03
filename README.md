@@ -27,7 +27,7 @@ The demo runs on the `RejectMIDAS/data/final_dataset_processed.csv`, which has 1
 
 The scores will be exported to `RejectMIDAS/temp/score.txt`, higher means more anomalous.
 
-All file paths are absolute and "hardcoded", but if you double click to run, you may miss the ROC-AUC metric.
+All file paths are absolute and "hardcoded", but if you double-click to run, you may miss the ROC-AUC metric.
 
 ## Environment
 
@@ -48,7 +48,7 @@ Below is my Windows environment.
 
 ### Switch Cores
 
-Cores are instantiated at `Demo.cpp:49-50`, uncomment the chosen one.
+Cores are instantiated at `RejectMIDAS/example/Demo.cpp:53-54`, uncomment the chosen one.
 
 ### Other Provided Datasets
 
@@ -56,7 +56,7 @@ Cores are instantiated at `Demo.cpp:49-50`, uncomment the chosen one.
 1. Move it to `RejectMIDAS/data/`
 1. Uncomment corresponding function in `RejectMIDAS/util/PreprocessData.py`
 1. Run the script
-1. Uncomment the corresponding group of `pathMeta` and `pathData` within `RejectMIDAS/example/Demo.cpp:9-17`
+1. Uncomment the corresponding group of `pathMeta` and `pathData` within `RejectMIDAS/example/Demo.cpp:12-18`
 1. Compile and run
 
 ### Custom Datasets + `Demo.cpp`
@@ -75,4 +75,4 @@ Then, instantiate the core and use `operator()` to process one record and obtain
 
 ## Contact
 
-If you have any questions, please consider opening a issue instead of directly sending emails to me.
+If you have any questions, please consider opening an issue instead of directly sending emails to me.
