@@ -37,7 +37,9 @@ Below is my Windows environment.
 - MSVC: v142, x64, c++20
 - Windows 10 SDK: 10.0.183622.0
 - Python: 3.7.6
-	- Optional, only for evaluating scores
+  - Optional, only for evaluating scores
+- VCPKG: 2020.02.04-nohash
+  - Optional, it loads `tbb` for `RejectMIDAS/example/AttackExperiment.cpp`
 
 ## Dataset
 
