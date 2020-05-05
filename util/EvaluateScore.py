@@ -11,12 +11,7 @@ if len(argv) < 3:
 	print('Print ROC-AUC to stdout and RejectMIDAS/temp/AUC[<indexRun>].txt')
 	print('Usage: python EvaluateScore.py <pathGroundTruth> <pathScore> [<indexRun>]')
 else:
-	pathGroundTruth = Path(argv[1]).with_suffix('.bin')
-	if pathGroundTruth.exists():
-		y = load(pathGroundTruth)
-	else:
-		y = read_csv(argv[1], header=None)
-		dump(y, pathGroundTruth)
+	y = read_csv(argv[1], header=None)
 	z = read_csv(argv[2], header=None)
 	indexRun = argv[3] if len(argv) >= 4 else ''
 	auc = roc_auc_score(y, z)
