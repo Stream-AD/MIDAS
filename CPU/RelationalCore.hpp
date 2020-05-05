@@ -24,7 +24,7 @@ struct RelationalCore {
 	// Methods
 	// --------------------------------------------------------------------------------
 
-	RelationalCore(int numRow, int numColumn, float threshold, float factor = 0.5f):
+	RelationalCore(int numRow, int numColumn, float threshold, float factor = 0.5):
 		threshold(threshold),
 		factor(factor),
 		indexEdge(new int[numRow]),
