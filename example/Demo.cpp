@@ -13,9 +13,13 @@ int main(int argc, char* argv[]) {
 	// const auto pathData = SOLUTION_DIR"data/darpa_processed.csv";
 	// const auto pathGroundTruth = SOLUTION_DIR"data/darpa_ground_truth.csv";
 
-	const auto pathMeta = SOLUTION_DIR"data/final_dataset_shape.txt";
-	const auto pathData = SOLUTION_DIR"data/final_dataset_processed.csv";
-	const auto pathGroundTruth = SOLUTION_DIR"data/final_dataset_ground_truth.csv";
+	// const auto pathMeta = SOLUTION_DIR"data/DDoS/Balanced/final_dataset_shape.txt";
+	// const auto pathData = SOLUTION_DIR"data/DDoS/Balanced/final_dataset_processed.csv";
+	// const auto pathGroundTruth = SOLUTION_DIR"data/DDoS/Balanced/final_dataset_ground_truth.csv";
+
+	const auto pathMeta = SOLUTION_DIR"data/DDoS/Unbalanced/unbalaced_20_80_dataset_shape.txt";
+	const auto pathData = SOLUTION_DIR"data/DDoS/Unbalanced/unbalaced_20_80_dataset_processed.csv";
+	const auto pathGroundTruth = SOLUTION_DIR"data/DDoS/Unbalanced/unbalaced_20_80_dataset_ground_truth.csv";
 
 	// Implementation
 	// --------------------------------------------------------------------------------

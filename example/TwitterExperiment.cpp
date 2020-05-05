@@ -5,8 +5,8 @@
 #include "CPU/RelationalCore.hpp"
 
 int main(int argc, char* argv[]) {
-	const auto pathData = SOLUTION_DIR"data/twitter_security_processed.csv";
-	const auto pathEvent = SOLUTION_DIR"data/twitter_security_ground_truth.csv";
+	const auto pathData = SOLUTION_DIR"data/TwitterSecurity/twitter_security_processed.csv";
+	const auto pathEvent = SOLUTION_DIR"data/TwitterSecurity/twitter_security_ground_truth.csv";
 
 	// --------------------------------------------------------------------------------
 

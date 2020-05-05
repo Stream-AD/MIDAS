@@ -9,7 +9,7 @@
 #include "CPU/NormalCore.hpp"
 #include "CPU/RelationalCore.hpp"
 
-void TestAUC(int n, const char pathGroundTruth[], int numColumn, const std::vector<float>& thresholds, int numRepeat, const int source[], const int destination[], const int timestamp[]) {
+void ThresholdVsAUC(int n, const char pathGroundTruth[], int numColumn, const std::vector<float>& thresholds, int numRepeat, const int source[], const int destination[], const int timestamp[]) {
 	const auto seed = new int[numRepeat];
 	const auto auc = new float[thresholds.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
@@ -50,7 +50,7 @@ void TestAUC(int n, const char pathGroundTruth[], int numColumn, const std::vect
 	delete[] auc;
 }
 
-void TestSpeed(int n, int numColumn, const std::vector<float>& thresholds, int numRepeat, const int source[], const int destination[], const int timestamp[]) {
+void ThresholdVsTime(int n, int numColumn, const std::vector<float>& thresholds, int numRepeat, const int* source, const int* destination, const int* timestamp) {
 	const auto time = new int[thresholds.size() * numRepeat];
 	const auto seed = new int[numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
@@ -100,7 +100,7 @@ void ReproduceROC(int n, const char pathGroundTruth[], int numColumn, float thre
 	delete[] score;
 }
 
-void TestEdgeScalability(int numColumn, float threshold, const std::vector<int>& numsRecord, int numRepeat, const int source[], const int destination[], const int timestamp[]) {
+void NumRecordVsTime(int numColumn, float threshold, const std::vector<int>& numsRecord, int numRepeat, const int* source, const int* destination, const int* timestamp) {
 	const auto time = new long long[numsRecord.size() * numRepeat];
 	const auto seed = new int[numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
@@ -126,7 +126,7 @@ void TestEdgeScalability(int numColumn, float threshold, const std::vector<int>&
 	delete[] seed;
 }
 
-void TestColumnScalability(int n, const std::vector<int>& numsColumn, float threshold, int numRepeat, const int source[], const int destination[], const int timestamp[]) {
+void NumColumnVsTime(int n, const std::vector<int>& numsColumn, float threshold, int numRepeat, const int* source, const int* destination, const int* timestamp) {
 	const auto time = new long long[numsColumn.size() * numRepeat];
 	const auto seed = new int[numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
@@ -152,17 +152,62 @@ void TestColumnScalability(int n, const std::vector<int>& numsColumn, float thre
 	delete[] seed;
 }
 
+void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float threshold, const std::vector<float>& factors, int numRepeat, const int* source, const int* destination, const int* timestamp) {
+	const auto seed = new int[numRepeat];
+	const auto auc = new float[factors.size() * numRepeat];
+	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
+
+	tbb::parallel_for<int>(0, factors.size(), [&](int i) {
+		tbb::parallel_for(0, numRepeat, [&](int j) {
+			srand(seed[j]);
+
+			char pathScore[260];
+			sprintf(pathScore, SOLUTION_DIR"temp/Score%03d.txt", i * numRepeat + j);
+			const auto fileScore = fopen(pathScore, "w");
+			// RejectMIDAS::CPU::NormalCore midas(2, numColumn, factors[i]);
+			RejectMIDAS::CPU::RelationalCore midas(2, numColumn, factors[i]);
+			for (int k = 0; k < n; k++)
+				fprintf(fileScore, "%f\n", midas(source[k], destination[k], timestamp[k]));
+			fclose(fileScore);
+
+			char command[1024];
+			sprintf(command, "python %s %s %s %03d", SOLUTION_DIR"util/EvaluateScore.py", pathGroundTruth, pathScore, i * numRepeat + j);
+			system(command);
+
+			char pathAUC[260];
+			sprintf(pathAUC, SOLUTION_DIR"temp/AUC%03d.txt", i * numRepeat + j);
+			const auto fileAUC = fopen(pathAUC, "r");
+			fscanf(fileAUC, "%f", auc + i * numRepeat + j);
+			fclose(fileAUC);
+		});
+	});
+
+	const auto fileResult = fopen(SOLUTION_DIR"temp/Experiment.csv", "w");
+	fprintf(fileResult, "numColumn,threshold,factor,seed,auc\n");
+	for (int i = 0; i < factors.size(); i++)
+		for (int j = 0; j < numRepeat; j++)
+			fprintf(fileResult, "%d,%g,%g,%d,%f\n", numColumn, threshold, factors[i], seed[j], auc[i * numRepeat + j]);
+	fclose(fileResult);
+
+	delete[] seed;
+	delete[] auc;
+}
+
 int main(int argc, char* argv[]) {
 	// Parameter
 	// --------------------------------------------------------------------------------
 
-	// const auto pathMeta = SOLUTION_DIR"data/darpa_shape.txt";
-	// const auto pathData = SOLUTION_DIR"data/darpa_processed.csv";
-	// const auto pathGroundTruth = SOLUTION_DIR"data/darpa_ground_truth.csv";
+	const auto pathMeta = SOLUTION_DIR"data/DARPA/darpa_shape.txt";
+	const auto pathData = SOLUTION_DIR"data/DARPA/darpa_processed.csv";
+	const auto pathGroundTruth = SOLUTION_DIR"data/DARPA/darpa_ground_truth.csv";
 
-	const auto pathMeta = SOLUTION_DIR"data/final_dataset_shape.txt";
-	const auto pathData = SOLUTION_DIR"data/final_dataset_processed.csv";
-	const auto pathGroundTruth = SOLUTION_DIR"data/final_dataset_ground_truth.csv";
+	// const auto pathMeta = SOLUTION_DIR"data/DDoS/Balanced/final_dataset_shape.txt";
+	// const auto pathData = SOLUTION_DIR"data/DDoS/Balanced/final_dataset_processed.csv";
+	// const auto pathGroundTruth = SOLUTION_DIR"data/DDoS/Balanced/final_dataset_ground_truth.csv";
+
+	// const auto pathMeta = SOLUTION_DIR"data/DDoS/Unbalanced/unbalaced_20_80_dataset_shape.txt";
+	// const auto pathData = SOLUTION_DIR"data/DDoS/Unbalanced/unbalaced_20_80_dataset_processed.csv";
+	// const auto pathGroundTruth = SOLUTION_DIR"data/DDoS/Unbalanced/unbalaced_20_80_dataset_ground_truth.csv";
 
 	// Implementation
 	// --------------------------------------------------------------------------------
@@ -192,16 +237,20 @@ int main(int argc, char* argv[]) {
 
 	const int numRepeat = 21;
 	const auto numColumn = 1024;
+
 	const auto thresholds = {1e0f, 1e1f, 1e2f, 1e3f, 1e4f, 1e5f, 1e6f, 1e7f};
-	TestAUC(n, pathGroundTruth, numColumn, thresholds, numRepeat, source, destination, timestamp);
-	// TestSpeed(n, numColumn, thresholds, numRepeat, source, destination, timestamp);
+	ThresholdVsAUC(n, pathGroundTruth, numColumn, thresholds, numRepeat, source, destination, timestamp);
+	// ThresholdVsTime(n, numColumn, thresholds, numRepeat, source, destination, timestamp);
 	// ReproduceROC(n, pathGroundTruth, numColumn, 1000, 8918, source, destination, timestamp);
 
+	const auto factors = {.1f, .2f, .3f, .4f, .5f, .6f, .7f, .8f, .9f, 1.f};
+	// FactorVsAUC(n, pathGroundTruth, numColumn, 1e4f, factors, numRepeat, source, destination, timestamp);
+
 	const auto numsRecord = {1 << 10, 1 << 11, 1 << 12, 1 << 13, 1 << 14, 1 << 15, 1 << 16, 1 << 17, 1 << 18, 1 << 19, 1 << 20, 1 << 21, 1 << 22, 1 << 23};
-	// TestEdgeScalability(numColumn, 10000, numsRecord, numRepeat, source, destination, timestamp);
+	// NumRecordVsTime(numColumn, 10000, numsRecord, numRepeat, source, destination, timestamp);
 
 	const auto numsColumn = {600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000};
-	// TestColumnScalability(n, numsColumn, 10000, numRepeat, source, destination, timestamp);
+	// NumColumnVsTime(n, numsColumn, 10000, numRepeat, source, destination, timestamp);
 
 	// Clean up
 
