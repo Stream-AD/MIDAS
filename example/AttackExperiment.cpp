@@ -5,6 +5,7 @@
 #include <chrono>
 
 #include <tbb/parallel_for.h>
+#include <tbb/task_scheduler_init.h>
 
 #include "CPU/NormalCore.hpp"
 #include "CPU/RelationalCore.hpp"
@@ -18,12 +19,17 @@ void ThresholdVsAUC(int n, const char pathGroundTruth[], int numColumn, const st
 	const auto auc = new float[thresholds.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
 
+#ifndef NDEBUG // @formatter:off
+	for (int i = 0; i < thresholds.size(); i++) {
+		for (int j = 0; j < numRepeat; j++) {
+#else
 	tbb::parallel_for<int>(0, thresholds.size(), [&](int i) {
 		tbb::parallel_for(0, numRepeat, [&](int j) {
+#endif // @formatter:on
 			srand(seed[j]);
 
 			char pathScore[260];
-			sprintf(pathScore, SOLUTION_DIR"temp/Score%03d.txt", i * numRepeat + j);
+			sprintf(pathScore, SOLUTION_DIR"temp/Score%d.txt", i * numRepeat + j);
 			const auto fileScore = fopen(pathScore, "w");
 			RejectMIDAS::CPU::NormalCore midas(2, numColumn, thresholds[i]);
 			// RejectMIDAS::CPU::RelationalCore midas(2, numColumn, thresholds[i]);
@@ -40,9 +46,13 @@ void ThresholdVsAUC(int n, const char pathGroundTruth[], int numColumn, const st
 			const auto fileAUC = fopen(pathAUC, "r");
 			fscanf(fileAUC, "%f", auc + i * numRepeat + j);
 			fclose(fileAUC);
+#ifndef NDEBUG // @formatter:off
+		}
+	}
+#else
 		});
 	});
-
+#endif // @formatter:on
 	const auto fileResult = fopen(SOLUTION_DIR"temp/Experiment.csv", "w");
 	fprintf(fileResult, "numColumn,threshold,seed,auc\n");
 	for (int i = 0; i < thresholds.size(); i++)
@@ -165,12 +175,17 @@ void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float thresh
 	const auto auc = new float[factors.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
 
+#ifndef NDEBUG // @formatter:off
+	for (int i = 0; i < factors.size(); i++) {
+		for (int j = 0; j < numRepeat; j++) {
+#else
 	tbb::parallel_for<int>(0, factors.size(), [&](int i) {
 		tbb::parallel_for(0, numRepeat, [&](int j) {
+#endif // @formatter:on
 			srand(seed[j]);
 
 			char pathScore[260];
-			sprintf(pathScore, SOLUTION_DIR"temp/Score%03d.txt", i * numRepeat + j);
+			sprintf(pathScore, SOLUTION_DIR"temp/Score%d.txt", i * numRepeat + j);
 			const auto fileScore = fopen(pathScore, "w");
 			// RejectMIDAS::CPU::NormalCore midas(2, numColumn, threshold, factors[i]);
 			RejectMIDAS::CPU::RelationalCore midas(2, numColumn, threshold, factors[i]);
@@ -187,8 +202,13 @@ void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float thresh
 			const auto fileAUC = fopen(pathAUC, "r");
 			fscanf(fileAUC, "%f", auc + i * numRepeat + j);
 			fclose(fileAUC);
+#ifndef NDEBUG // @formatter:off
+		}
+	}
+#else
 		});
 	});
+#endif // @formatter:on
 
 	const auto fileResult = fopen(SOLUTION_DIR"temp/Experiment.csv", "w");
 	fprintf(fileResult, "numColumn,threshold,factor,seed,auc\n");

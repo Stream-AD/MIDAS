@@ -1,7 +1,6 @@
 from pathlib import Path
 from sys import argv
 
-from joblib import dump, load
 from pandas import read_csv
 from sklearn.metrics import roc_auc_score
 

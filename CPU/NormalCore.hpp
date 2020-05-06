@@ -13,9 +13,7 @@ struct NormalCore {
 	int timestampCurrent = 1;
 	const float factor;
 	int* const indexEdge;
-	EdgeHash numCurrentEdge;
-	EdgeHash numTotalEdge;
-	EdgeHash scoreEdge;
+	EdgeHash numCurrentEdge, numTotalEdge, scoreEdge;
 
 	// Methods
 	// --------------------------------------------------------------------------------
