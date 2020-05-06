@@ -10,6 +10,10 @@
 #include "CPU/RelationalCore.hpp"
 
 void ThresholdVsAUC(int n, const char pathGroundTruth[], int numColumn, const std::vector<float>& thresholds, int numRepeat, const int source[], const int destination[], const int timestamp[]) {
+	/**
+	 * If threshold is 0, then all edges will be rejected, and all edges will get 0 score.
+	 * */
+
 	const auto seed = new int[numRepeat];
 	const auto auc = new float[thresholds.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
@@ -28,11 +32,11 @@ void ThresholdVsAUC(int n, const char pathGroundTruth[], int numColumn, const st
 			fclose(fileScore);
 
 			char command[1024];
-			sprintf(command, "python %s %s %s %03d", SOLUTION_DIR"util/EvaluateScore.py", pathGroundTruth, pathScore, i * numRepeat + j);
+			sprintf(command, "python %s %s %s %d", SOLUTION_DIR"util/EvaluateScore.py", pathGroundTruth, pathScore, i * numRepeat + j);
 			system(command);
 
 			char pathAUC[260];
-			sprintf(pathAUC, SOLUTION_DIR"temp/AUC%03d.txt", i * numRepeat + j);
+			sprintf(pathAUC, SOLUTION_DIR"temp/AUC%d.txt", i * numRepeat + j);
 			const auto fileAUC = fopen(pathAUC, "r");
 			fscanf(fileAUC, "%f", auc + i * numRepeat + j);
 			fclose(fileAUC);
@@ -153,6 +157,10 @@ void NumColumnVsTime(int n, const std::vector<int>& numsColumn, float threshold,
 }
 
 void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float threshold, const std::vector<float>& factors, int numRepeat, const int* source, const int* destination, const int* timestamp) {
+	/**
+	 * This experiment only repeats 11 time due to the large number of factors
+	 * */
+
 	const auto seed = new int[numRepeat];
 	const auto auc = new float[factors.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
@@ -164,18 +172,18 @@ void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float thresh
 			char pathScore[260];
 			sprintf(pathScore, SOLUTION_DIR"temp/Score%03d.txt", i * numRepeat + j);
 			const auto fileScore = fopen(pathScore, "w");
-			// RejectMIDAS::CPU::NormalCore midas(2, numColumn, factors[i]);
-			RejectMIDAS::CPU::RelationalCore midas(2, numColumn, factors[i]);
+			// RejectMIDAS::CPU::NormalCore midas(2, numColumn, threshold, factors[i]);
+			RejectMIDAS::CPU::RelationalCore midas(2, numColumn, threshold, factors[i]);
 			for (int k = 0; k < n; k++)
 				fprintf(fileScore, "%f\n", midas(source[k], destination[k], timestamp[k]));
 			fclose(fileScore);
 
 			char command[1024];
-			sprintf(command, "python %s %s %s %03d", SOLUTION_DIR"util/EvaluateScore.py", pathGroundTruth, pathScore, i * numRepeat + j);
+			sprintf(command, "python %s %s %s %d", SOLUTION_DIR"util/EvaluateScore.py", pathGroundTruth, pathScore, i * numRepeat + j);
 			system(command);
 
 			char pathAUC[260];
-			sprintf(pathAUC, SOLUTION_DIR"temp/AUC%03d.txt", i * numRepeat + j);
+			sprintf(pathAUC, SOLUTION_DIR"temp/AUC%d.txt", i * numRepeat + j);
 			const auto fileAUC = fopen(pathAUC, "r");
 			fscanf(fileAUC, "%f", auc + i * numRepeat + j);
 			fclose(fileAUC);
@@ -239,12 +247,12 @@ int main(int argc, char* argv[]) {
 	const auto numColumn = 1024;
 
 	const auto thresholds = {1e0f, 1e1f, 1e2f, 1e3f, 1e4f, 1e5f, 1e6f, 1e7f};
-	ThresholdVsAUC(n, pathGroundTruth, numColumn, thresholds, numRepeat, source, destination, timestamp);
+	// ThresholdVsAUC(n, pathGroundTruth, numColumn, thresholds, numRepeat, source, destination, timestamp);
 	// ThresholdVsTime(n, numColumn, thresholds, numRepeat, source, destination, timestamp);
 	// ReproduceROC(n, pathGroundTruth, numColumn, 1000, 8918, source, destination, timestamp);
 
-	const auto factors = {.1f, .2f, .3f, .4f, .5f, .6f, .7f, .8f, .9f, 1.f};
-	// FactorVsAUC(n, pathGroundTruth, numColumn, 1e4f, factors, numRepeat, source, destination, timestamp);
+	const auto factors = {0.0f, 0.2f, 0.4f, 0.6f, 0.8f, 0.9f, 0.99f, 0.992f, 0.994f, 0.996f, 0.998f, 0.999f, 0.9992f, 0.9994f, 0.9996f, 0.9998f, 1.0f};
+	FactorVsAUC(n, pathGroundTruth, numColumn, 1e3f, factors, numRepeat, source, destination, timestamp);
 
 	const auto numsRecord = {1 << 10, 1 << 11, 1 << 12, 1 << 13, 1 << 14, 1 << 15, 1 << 16, 1 << 17, 1 << 18, 1 << 19, 1 << 20, 1 << 21, 1 << 22, 1 << 23};
 	// NumRecordVsTime(numColumn, 10000, numsRecord, numRepeat, source, destination, timestamp);
