@@ -29,7 +29,7 @@ struct EdgeList {
 		std::for_each(data.begin(), data.end(), [&](float& a) { a *= by; });
 	}
 
-	void Hash(int a, int b, int indexOut[]) {
+	void Hash(int a, int b, int* indexOut) {
 		if (a >= hash.size()) { // If a does not exist
 			hash.resize(a + 1);
 			indexOut[0] = hash[a][b] = data.size();
@@ -44,19 +44,19 @@ struct EdgeList {
 		}
 	}
 
-	float operator()(const int index[]) {
+	float operator()(const int* index) {
 		if (index[0] >= data.size())
 			data.resize(index[0] + 1);
 		return data[index[0]];
 	}
 
-	float Assign(const int index[], float to) {
+	float Assign(const int* index, float to) {
 		if (index[0] >= data.size())
 			data.resize(index[0] + 1);
 		return data[index[0]] = to;
 	}
 
-	void Add(const int index[], float by = 1) {
+	void Add(const int* index, float by = 1) {
 		if (index[0] >= data.size())
 			data.resize(index[0] + 1);
 		data[index[0]] += by;

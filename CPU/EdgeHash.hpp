@@ -56,27 +56,27 @@ struct EdgeHash {
 		std::for_each(data, data + lenData, [&](float& a) { a *= by; }); // Magic of vectorization
 	}
 
-	void Hash(int a, int b, int indexOut[]) const {
+	void Hash(int a, int b, int* indexOut) const {
 		for (int i = 0; i < r; i++) {
 			indexOut[i] = ((a + m * b) * param1[i] + param2[i]) % c;
 			indexOut[i] = i * c + indexOut[i] + (indexOut[i] < 0 ? c : 0);
 		}
 	}
 
-	float operator()(const int index[]) const {
+	float operator()(const int* index) const {
 		float least = infinity;
 		for (int i = 0; i < r; i++)
 			least = std::min(least, data[index[i]]);
 		return least;
 	}
 
-	float Assign(const int index[], float to) const {
+	float Assign(const int* index, float to) const {
 		for (int i = 0; i < r; i++)
 			data[index[i]] = to;
 		return to;
 	}
 
-	void Add(const int index[], float by = 1) const {
+	void Add(const int* index, float by = 1) const {
 		for (int i = 0; i < r; i++)
 			data[index[i]] += by;
 	}
