@@ -8,9 +8,6 @@
 
 namespace RejectMIDAS::CPU {
 struct RelationalCore {
-	// Fields
-	// --------------------------------------------------------------------------------
-
 	const float threshold;
 	int timestampCurrent = 1;
 	const float factor;
@@ -20,9 +17,6 @@ struct RelationalCore {
 	EdgeHash numCurrentEdge, numTotalEdge, scoreEdge;
 	NodeHash numCurrentSource, numTotalSource, scoreSource;
 	NodeHash numCurrentDestination, numTotalDestination, scoreDestination;
-
-	// Methods
-	// --------------------------------------------------------------------------------
 
 	RelationalCore(int numRow, int numColumn, float threshold, float factor = 0.5):
 		threshold(threshold),

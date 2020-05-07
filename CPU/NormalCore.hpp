@@ -6,17 +6,11 @@
 
 namespace RejectMIDAS::CPU {
 struct NormalCore {
-	// Fields
-	// --------------------------------------------------------------------------------
-
 	const float threshold;
 	int timestampCurrent = 1;
 	const float factor;
 	int* const indexEdge;
 	EdgeHash numCurrentEdge, numTotalEdge, scoreEdge;
-
-	// Methods
-	// --------------------------------------------------------------------------------
 
 	NormalCore(int numRow, int numColumn, float threshold, float factor = 0.5):
 		threshold(threshold),
