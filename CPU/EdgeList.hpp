@@ -10,15 +10,9 @@ struct EdgeList {
 	 * But exact same usage as hashing version.
 	 * */
 
-	// Fields
-	// --------------------------------------------------------------------------------
-
 	int lenData = 0;
 	std::vector<float> data;
 	std::vector<std::unordered_map<int, int>> hash;
-
-	// Methods
-	// --------------------------------------------------------------------------------
 
 	EdgeList() = delete;
 	EdgeList& operator=(const EdgeList& b) = delete;

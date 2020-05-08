@@ -4,14 +4,8 @@
 
 namespace RejectMIDAS::CPU {
 struct NodeList {
-	// Fields
-	// --------------------------------------------------------------------------------
-
 	int lenData = 0;
 	std::vector<float> data;
-
-	// Methods
-	// --------------------------------------------------------------------------------
 
 	NodeList() = delete;
 	NodeList& operator=(const NodeList& b) = delete;
