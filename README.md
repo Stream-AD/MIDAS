@@ -15,9 +15,9 @@
   <a href="https://youtu.be/Bd4PyLCHrto">
     <img src="http://img.shields.io/badge/Talk-Youtube-ff69b4.svg">
   </a>
-  <!-- <a href="#midas-in-other-languages"> 
-    <img src="https://img.shields.io/badge/contributions-welcome-orange.svg">
-  </a> -->
+  <a href="https://www.kdnuggets.com/2020/04/midas-new-baseline-anomaly-detection-graphs.html"> 
+    <img src="https://img.shields.io/badge/Press-KDnuggets-orange.svg">
+  </a>
   <a href="https://github.com/bhatiasiddharth/MIDAS/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg">
   </a>
@@ -38,8 +38,8 @@
 - [Command-Line Options](#command-line-options)
 - [Input File Format](#input-file-format)
 - [Datasets](#datasets)
-- [MIDAS in other Languages](#midas-in-other-languages)
 - [Online Articles](#online-articles)
+- [MIDAS in other Languages](#midas-in-other-languages)
 - [Citation](#citation)
 
 <!-- - [See Also](#see-also) -->
@@ -95,19 +95,19 @@ Thus, each line represents an edge. Edges should be sorted in non-decreasing ord
 2. [TwitterWorldCup2014](http://odds.cs.stonybrook.edu/twitterworldcup2014-dataset)
 3. [TwitterSecurity](http://odds.cs.stonybrook.edu/twittersecurity-dataset)
 
-## MIDAS in other Languages
-1. [Ruby](https://github.com/ankane/midas) by [Andrew Kane](https://github.com/ankane)
-2. [Rust](https://github.com/scooter-dangle/midas_rs) by [Scott Steele](https://github.com/scooter-dangle)
-3. [R](https://github.com/pteridin/MIDASwrappeR) by [Tobias Heidler](https://github.com/pteridin)
-4. [Python](https://github.com/ritesh99rakesh/pyMIDAS) by [Ritesh Kumar](https://github.com/ritesh99rakesh)
-5. [Golang](https://github.com/steve0hh/midas) by [Steve Tan](https://github.com/steve0hh)
-
 ## Online Articles
 1. KDnuggets: [Introducing MIDAS: A New Baseline for Anomaly Detection in Graphs](https://www.kdnuggets.com/2020/04/midas-new-baseline-anomaly-detection-graphs.html)
 2. Towards Data Science: [Controlling Fake News using Graphs and Statistics](https://towardsdatascience.com/controlling-fake-news-using-graphs-and-statistics-31ed116a986f)
 2. Towards Data Science: [Anomaly detection in dynamic graphs using MIDAS](https://towardsdatascience.com/anomaly-detection-in-dynamic-graphs-using-midas-e4f8d0b1db45)
 4. Towards AI: [Anomaly Detection with MIDAS](https://medium.com/towards-artificial-intelligence/anomaly-detection-with-midas-2735a2e6dce8)
 5. [AIhub Interview](https://aihub.org/2020/05/01/interview-with-siddharth-bhatia-a-new-approach-for-anomaly-detection/)
+
+## MIDAS in other Languages
+1. [Ruby](https://github.com/ankane/midas) by [Andrew Kane](https://github.com/ankane)
+2. [Rust](https://github.com/scooter-dangle/midas_rs) by [Scott Steele](https://github.com/scooter-dangle)
+3. [R](https://github.com/pteridin/MIDASwrappeR) by [Tobias Heidler](https://github.com/pteridin)
+4. [Python](https://github.com/ritesh99rakesh/pyMIDAS) by [Ritesh Kumar](https://github.com/ritesh99rakesh)
+5. [Golang](https://github.com/steve0hh/midas) by [Steve Tan](https://github.com/steve0hh)
 
 ## Citation
 If you use this code for your research, please consider citing our paper.
