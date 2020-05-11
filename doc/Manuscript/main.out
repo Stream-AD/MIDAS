@@ -1,0 +1,20 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Related Works}{}% 2
+\BOOKMARK [1][-]{section.3}{Preliminaries}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Notations}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{MIDAS Algorithm}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{Analysis}{section.3}% 6
+\BOOKMARK [1][-]{section.4}{Proposed Method}{}% 7
+\BOOKMARK [2][-]{subsection.4.1}{Definitions}{section.4}% 8
+\BOOKMARK [2][-]{subsection.4.2}{Algorithm Procedure}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.3}{Complexity}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.4}{Implementation Details}{section.4}% 11
+\BOOKMARK [1][-]{section.5}{Experiments}{}% 12
+\BOOKMARK [2][-]{subsection.5.1}{Preparation}{section.5}% 13
+\BOOKMARK [3][-]{subsubsection.5.1.1}{Dataset}{subsection.5.1}% 14
+\BOOKMARK [3][-]{subsubsection.5.1.2}{Baseline}{subsection.5.1}% 15
+\BOOKMARK [3][-]{subsubsection.5.1.3}{Metric}{subsection.5.1}% 16
+\BOOKMARK [3][-]{subsubsection.5.1.4}{Setup}{subsection.5.1}% 17
+\BOOKMARK [2][-]{subsection.5.2}{Result}{section.5}% 18
+\BOOKMARK [2][-]{subsection.5.3}{Discussion}{section.5}% 19
+\BOOKMARK [1][-]{section.6}{Conclusion}{}% 20

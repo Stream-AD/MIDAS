@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (MiKTeX 2.9.7380 64-bit)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: elsarticle-num.bst
+Database file #1: Reference.bib
+Warning--empty pages in bhatia2020midas
+Warning--empty pages in lippmann1999results
+You've used 20 entries,
+            2952 wiz_defined-function locations,
+            788 strings with 9490 characters,
+and the built_in function-call counts, 7411 in all, are:
+= -- 686
+> -- 236
+< -- 10
++ -- 92
+- -- 72
+* -- 465
+:= -- 939
+add.period$ -- 20
+call.type$ -- 20
+change.case$ -- 20
+chr.to.int$ -- 0
+cite$ -- 22
+duplicate$ -- 277
+empty$ -- 860
+format.name$ -- 91
+if$ -- 1953
+int.to.chr$ -- 0
+int.to.str$ -- 20
+missing$ -- 20
+newline$ -- 68
+num.names$ -- 20
+pop$ -- 157
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 535
+stack$ -- 0
+substring$ -- 460
+swap$ -- 95
+text.length$ -- 10
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 2
+while$ -- 62
+width$ -- 22
+write$ -- 176
+(There were 2 warnings)
