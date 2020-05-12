@@ -2,23 +2,17 @@
 #include <ctime>
 #include <cstdlib>
 
+#include "CPU/NormalCore.hpp"
+#include "CPU/RelationalCore.h"
 #include "CPU/RejectCore.hpp"
 
 int main(int argc, char* argv[]) {
 	// Parameter
 	// --------------------------------------------------------------------------------
 
-	// const auto pathMeta = SOLUTION_DIR"data/darpa_shape.txt";
-	// const auto pathData = SOLUTION_DIR"data/darpa_processed.csv";
-	// const auto pathGroundTruth = SOLUTION_DIR"data/darpa_ground_truth.csv";
-
-	// const auto pathMeta = SOLUTION_DIR"data/DDoS/Balanced/final_dataset_shape.txt";
-	// const auto pathData = SOLUTION_DIR"data/DDoS/Balanced/final_dataset_processed.csv";
-	// const auto pathGroundTruth = SOLUTION_DIR"data/DDoS/Balanced/final_dataset_ground_truth.csv";
-
-	const auto pathMeta = SOLUTION_DIR"data/DDoS/Unbalanced/unbalaced_20_80_dataset_shape.txt";
-	const auto pathData = SOLUTION_DIR"data/DDoS/Unbalanced/unbalaced_20_80_dataset_processed.csv";
-	const auto pathGroundTruth = SOLUTION_DIR"data/DDoS/Unbalanced/unbalaced_20_80_dataset_ground_truth.csv";
+	const auto pathMeta = SOLUTION_DIR"data/darpa_shape.txt";
+	const auto pathData = SOLUTION_DIR"data/darpa_processed.csv";
+	const auto pathGroundTruth = SOLUTION_DIR"data/darpa_ground_truth.csv";
 
 	// Implementation
 	// --------------------------------------------------------------------------------
@@ -30,14 +24,10 @@ int main(int argc, char* argv[]) {
 	// Read meta (total number of records)
 	// PreprocessData.py will generate those meta files
 
-	#ifndef NDEBUG
-	const int n = 100000;
-	#else
 	const auto fileMeta = fopen(pathMeta, "r");
 	int n;
 	fscanf(fileMeta, "%d", &n);
 	fclose(fileMeta);
-	#endif
 
 	// Read dataset
 
@@ -53,6 +43,8 @@ int main(int argc, char* argv[]) {
 	// Do the magic
 	// Of course, I can merge loading and processing together, but this demo is also for benchmarking.
 
+	// RejectMIDAS::CPU::NormalCore midas(2, 1024);
+	// RejectMIDAS::CPU::RelationalCore midas(2, 1024);
 	RejectMIDAS::CPU::RejectCore midas(2, 1024, 1e2f);
 	const auto score = new float[n];
 	const auto time = clock();
@@ -62,7 +54,6 @@ int main(int argc, char* argv[]) {
 
 	// Write output scores
 
-	#ifdef NDEBUG
 	const char* pathScore = SOLUTION_DIR"temp/Score.txt";
 	const auto fileScore = fopen(pathScore, "w");
 	for (int i = 0; i < n; i++)
@@ -75,7 +66,6 @@ int main(int argc, char* argv[]) {
 	char command[1024];
 	sprintf(command, "python %s %s %s", SOLUTION_DIR"util/EvaluateScore.py", pathGroundTruth, pathScore);
 	system(command);
-	#endif
 
 	// Clean up
 
