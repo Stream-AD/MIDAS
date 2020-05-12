@@ -7,9 +7,7 @@
 #include "CPU/RelationalCore.hpp"
 
 void ThresholdVsAUC(int n, const char* pathGroundTruth, int numColumn, const std::vector<float>& thresholds, int numRepeat, const int* source, const int* destination, const int* timestamp) {
-	/**
-	 * If threshold is 0, then all edges will be rejected, and all edges will get 0 score.
-	 * */
+	 // If threshold is 0, then all edges will be rejected, and all edges will get 0 score.
 
 	const auto seed = new int[numRepeat];
 	const auto auc = new float[thresholds.size() * numRepeat];
@@ -148,10 +146,6 @@ void NumColumnVsTime(int n, const std::vector<int>& numsColumn, float threshold,
 }
 
 void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float threshold, const std::vector<float>& factors, int numRepeat, const int* source, const int* destination, const int* timestamp) {
-	/**
-	 * This experiment only repeats 11 time due to the large number of factors
-	 * */
-
 	const auto seed = new int[numRepeat];
 	const auto auc = new float[factors.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
@@ -204,15 +198,7 @@ int main(int argc, char* argv[]) {
 	const auto pathData = SOLUTION_DIR"data/DARPA/darpa_processed.csv";
 	const auto pathGroundTruth = SOLUTION_DIR"data/DARPA/darpa_ground_truth.csv";
 
-	// const auto pathMeta = SOLUTION_DIR"data/DDoS/Balanced/final_dataset_shape.txt";
-	// const auto pathData = SOLUTION_DIR"data/DDoS/Balanced/final_dataset_processed.csv";
-	// const auto pathGroundTruth = SOLUTION_DIR"data/DDoS/Balanced/final_dataset_ground_truth.csv";
-
-	// const auto pathMeta = SOLUTION_DIR"data/DDoS/Unbalanced/unbalaced_20_80_dataset_shape.txt";
-	// const auto pathData = SOLUTION_DIR"data/DDoS/Unbalanced/unbalaced_20_80_dataset_processed.csv";
-	// const auto pathGroundTruth = SOLUTION_DIR"data/DDoS/Unbalanced/unbalaced_20_80_dataset_ground_truth.csv";
-
-	// Implementation
+	// Read dataset
 	// --------------------------------------------------------------------------------
 
 	srand(time(nullptr));
@@ -225,8 +211,6 @@ int main(int argc, char* argv[]) {
 	fscanf(fileMeta, "%d", &n);
 	fclose(fileMeta);
 
-	// Read dataset
-
 	const auto fileData = fopen(pathData, "r");
 	const auto source = new int[n];
 	const auto destination = new int[n];
@@ -237,17 +221,20 @@ int main(int argc, char* argv[]) {
 	printf("# Records = %d\t// Dataset is loaded\n", n);
 
 	// Call runner
+	// --------------------------------------------------------------------------------
+	// Only keep one uncommented
+	// Results will be printed and placed at RejectMIDAS/temp/
 
 	const int numRepeat = 21;
-	const auto numColumn = 1024;
+	const int numColumn = 1024;
 
 	const auto thresholds = {1e0f, 1e1f, 1e2f, 1e3f, 1e4f, 1e5f, 1e6f, 1e7f};
-	// ThresholdVsAUC(n, pathGroundTruth, numColumn, thresholds, numRepeat, source, destination, timestamp);
+	ThresholdVsAUC(n, pathGroundTruth, numColumn, thresholds, numRepeat, source, destination, timestamp);
 	// ThresholdVsTime(n, numColumn, thresholds, numRepeat, source, destination, timestamp);
 	// ReproduceROC(n, pathGroundTruth, numColumn, 1000, 8918, source, destination, timestamp);
 
 	const auto factors = {0.0f, 0.2f, 0.4f, 0.6f, 0.8f, 0.9f, 0.99f, 0.992f, 0.994f, 0.996f, 0.998f, 0.999f, 0.9992f, 0.9994f, 0.9996f, 0.9998f, 1.0f};
-	FactorVsAUC(n, pathGroundTruth, numColumn, 1e3f, factors, numRepeat, source, destination, timestamp);
+	// FactorVsAUC(n, pathGroundTruth, numColumn, 1e3f, factors, numRepeat, source, destination, timestamp);
 
 	const auto numsRecord = {1 << 10, 1 << 11, 1 << 12, 1 << 13, 1 << 14, 1 << 15, 1 << 16, 1 << 17, 1 << 18, 1 << 19, 1 << 20, 1 << 21, 1 << 22, 1 << 23};
 	// NumRecordVsTime(numColumn, 10000, numsRecord, numRepeat, source, destination, timestamp);
@@ -256,6 +243,9 @@ int main(int argc, char* argv[]) {
 	// NumColumnVsTime(n, numsColumn, 10000, numRepeat, source, destination, timestamp);
 
 	// Clean up
+	// --------------------------------------------------------------------------------
+	// All data exchanges are via files, so delete them after experiments
+	// If you wish to keep them, comment the lines below
 
 	char command[1024];
 	sprintf(command, "python %s %s", SOLUTION_DIR"util/DeleteTempFile.py", "Score*.txt AUC*.txt");
