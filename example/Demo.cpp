@@ -10,9 +10,9 @@ int main(int argc, char* argv[]) {
 	// Parameter
 	// --------------------------------------------------------------------------------
 
-	const auto pathMeta = SOLUTION_DIR"data/darpa_shape.txt";
-	const auto pathData = SOLUTION_DIR"data/darpa_processed.csv";
-	const auto pathGroundTruth = SOLUTION_DIR"data/darpa_ground_truth.csv";
+	const auto pathMeta = SOLUTION_DIR"data/DARPA/darpa_shape.txt";
+	const auto pathData = SOLUTION_DIR"data/DARPA/darpa_processed.csv";
+	const auto pathGroundTruth = SOLUTION_DIR"data/DARPA/darpa_ground_truth.csv";
 
 	// Implementation
 	// --------------------------------------------------------------------------------

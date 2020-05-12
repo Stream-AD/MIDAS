@@ -9,7 +9,7 @@
 #include "CPU/RejectCore.hpp"
 
 void ThresholdVsAUC(int n, const char* pathGroundTruth, int numColumn, const std::vector<float>& thresholds, int numRepeat, const int* source, const int* destination, const int* timestamp) {
-	 // If threshold is 0, then all edges will be rejected, and all edges will get 0 score.
+	// If threshold is 0, then all edges will be rejected, and all edges will get 0 score.
 
 	const auto seed = new int[numRepeat];
 	const auto auc = new float[thresholds.size() * numRepeat];

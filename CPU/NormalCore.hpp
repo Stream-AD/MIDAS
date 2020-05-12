@@ -20,7 +20,7 @@ struct NormalCore {
 	}
 
 	static float ComputeScore(float a, float s, float t) {
-		return s == 0 ? 0 : pow((a - s / t) * t, 2) / (s * (t - 1)); // If t == 1, then s == 0, so no need to check twice
+		return s == 0 || t - 1 == 0 ? 0 : pow((a - s / t) * t, 2) / (s * (t - 1)); // If t == 1, then s == 0, so no need to check twice
 	}
 
 	float operator()(int source, int destination, int timestamp) {

@@ -59,7 +59,7 @@ struct EdgeHash {
 	void Hash(int a, int b, int* indexOut) const {
 		for (int i = 0; i < r; i++) {
 			indexOut[i] = ((a + m * b) * param1[i] + param2[i]) % c;
-			indexOut[i] = i * c + indexOut[i] + (indexOut[i] < 0 ? c : 0);
+			indexOut[i] += i * c + (indexOut[i] < 0 ? c : 0);
 		}
 	}
 
