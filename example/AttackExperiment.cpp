@@ -6,7 +6,7 @@
 
 #include "CPU/RelationalCore.hpp"
 
-void ThresholdVsAUC(int n, const char pathGroundTruth[], int numColumn, const std::vector<float>& thresholds, int numRepeat, const int source[], const int destination[], const int timestamp[]) {
+void ThresholdVsAUC(int n, const char* pathGroundTruth, int numColumn, const std::vector<float>& thresholds, int numRepeat, const int* source, const int* destination, const int* timestamp) {
 	/**
 	 * If threshold is 0, then all edges will be rejected, and all edges will get 0 score.
 	 * */
@@ -74,7 +74,7 @@ void ThresholdVsTime(int n, int numColumn, const std::vector<float>& thresholds,
 	delete[] seed;
 }
 
-void ReproduceROC(int n, const char pathGroundTruth[], int numColumn, float threshold, int seed, const int source[], const int destination[], const int timestamp[]) {
+void ReproduceROC(int n, const char* pathGroundTruth, int numColumn, float threshold, int seed, const int* source, const int* destination, const int* timestamp) {
 	srand(seed);
 
 	const auto score = new float[n];
@@ -190,6 +190,10 @@ void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float thresh
 
 	delete[] seed;
 	delete[] auc;
+}
+
+void TimePerEdgeHistogram() {
+
 }
 
 int main(int argc, char* argv[]) {
