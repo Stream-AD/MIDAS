@@ -7,7 +7,7 @@
 #include "NodeHash.hpp"
 
 namespace RejectMIDAS::CPU {
-struct RelationalCore {
+struct RejectCore {
 	const float threshold;
 	int timestampCurrent = 1;
 	const float factor;
@@ -18,7 +18,7 @@ struct RelationalCore {
 	NodeHash numCurrentSource, numTotalSource, scoreSource;
 	NodeHash numCurrentDestination, numTotalDestination, scoreDestination;
 
-	RelationalCore(int numRow, int numColumn, float threshold, float factor = 0.5):
+	RejectCore(int numRow, int numColumn, float threshold, float factor = 0.5):
 		threshold(threshold),
 		factor(factor),
 		indexEdge(new int[numRow]),
@@ -34,7 +34,7 @@ struct RelationalCore {
 		numTotalDestination(numCurrentDestination),
 		scoreDestination(numCurrentDestination) { }
 
-	virtual ~RelationalCore() {
+	virtual ~RejectCore() {
 		delete[] indexEdge;
 		delete[] indexSource;
 		delete[] indexDestination;
