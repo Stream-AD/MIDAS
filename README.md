@@ -38,8 +38,6 @@ Below is my Windows environment.
 - Windows 10 SDK: 10.0.183622.0
 - Python: 3.7.6
   - Optional, only for evaluating scores
-- VCPKG: 2020.02.04-nohash
-  - Optional, it loads `tbb` for `MIDAS/example/AttackExperiment.cpp`
 
 ## Dataset
 
