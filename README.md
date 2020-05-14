@@ -1,31 +1,31 @@
-# RejectMIDAS
+# MIDAS
 
-C++ implementation of the RejectMIDAS algorithm.
+C++ implementation of the MIDAS algorithm.
 
 ## Demo
 
 Due to the file size limitation, you need to download the dataset manually:
 
 1. Download `final_dataset.csv` using the link below
-2. Move `final_dataset.csv` to `RejectMIDAS/data/`
-3. Run `RejectMIDAS/util/PreprocessData.py`, the script can detect the correct file path
+2. Move `final_dataset.csv` to `MIDAS/data/`
+3. Run `MIDAS/util/PreprocessData.py`, the script can detect the correct file path
 
 To run the demo, if you have a CMake-based IDE, you can build the target `CPU_Demo` and enjoy.
 
 Otherwise, if you use Windows:
 
 1. Open a Visual Studio developer command prompt, we want their toolchain
-2. `cd` to the project root `RejectMIDAS/`
+2. `cd` to the project root `MIDAS/`
 3. `cmake -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles" -S . -B build/release`
 4. `cmake --build build/release --target CPU_Demo`
-5. `cd` to `RejectMIDAS/build/release/CPU/`
+5. `cd` to `MIDAS/build/release/CPU/`
 6. `.\CPU_Demo`
 
 The code should be compatible with Linux, but I only tested with WSL.
 
-The demo runs on the `RejectMIDAS/data/final_dataset_processed.csv`, which has 12M records, with the relational core.
+The demo runs on the `MIDAS/data/final_dataset_processed.csv`, which has 12M records, with the relational core.
 
-The scores will be exported to `RejectMIDAS/temp/score.txt`, higher means more anomalous.
+The scores will be exported to `MIDAS/temp/score.txt`, higher means more anomalous.
 
 All file paths are absolute and "hardcoded", but if you double-click to run, you may miss the ROC-AUC metric.
 
@@ -39,7 +39,7 @@ Below is my Windows environment.
 - Python: 3.7.6
   - Optional, only for evaluating scores
 - VCPKG: 2020.02.04-nohash
-  - Optional, it loads `tbb` for `RejectMIDAS/example/AttackExperiment.cpp`
+  - Optional, it loads `tbb` for `MIDAS/example/AttackExperiment.cpp`
 
 ## Dataset
 
@@ -50,15 +50,15 @@ Below is my Windows environment.
 
 ### Switch Cores
 
-Cores are instantiated at `RejectMIDAS/example/Demo.cpp:53-54`, uncomment the chosen one.
+Cores are instantiated at `MIDAS/example/Demo.cpp:53-54`, uncomment the chosen one.
 
 ### Other Provided Datasets
 
 1. Download the dataset from links above, the file name should be exactly the same
-1. Move it to `RejectMIDAS/data/`
-1. Uncomment corresponding function in `RejectMIDAS/util/PreprocessData.py`
+1. Move it to `MIDAS/data/`
+1. Uncomment corresponding function in `MIDAS/util/PreprocessData.py`
 1. Run the script
-1. Uncomment the corresponding group of `pathMeta` and `pathData` within `RejectMIDAS/example/Demo.cpp:12-18`
+1. Uncomment the corresponding group of `pathMeta` and `pathData` within `MIDAS/example/Demo.cpp:12-18`
 1. Compile and run
 
 ### Custom Datasets + `Demo.cpp`
@@ -71,7 +71,7 @@ Then you can change the `pathMeta` and `pathData` to your file paths, and run th
 
 ### Custom Datasets + Custom Runner
 
-Include the header `RejectMIDAS/CPU/NormalCore.hpp` or `RejectMIDAS/CPU/FilteringCore.hpp`, the implementations are all in-place.
+Include the header `MIDAS/CPU/NormalCore.hpp` or `MIDAS/CPU/FilteringCore.hpp`, the implementations are all in-place.
 
 Then, instantiate the core and use `operator()` to process one record and obtain the score.
 

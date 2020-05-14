@@ -4,7 +4,7 @@
 
 #include "EdgeHash.hpp"
 
-namespace RejectMIDAS::CPU {
+namespace MIDAS::CPU {
 struct NormalCore {
 	int timestampCurrent = 1;
 	int* const index; // Pre-compute the index to-be-modified, thanks to the same structure of CMSs

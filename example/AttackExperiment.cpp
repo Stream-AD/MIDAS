@@ -24,7 +24,7 @@ void ThresholdVsAUC(int n, const char* pathGroundTruth, int numColumn, const std
 			const auto fileScore = fopen(pathScore, "w");
 			// RejectMIDAS::CPU::NormalCore midas(2, numColumn); // These two cores do not use thresholds
 			// RejectMIDAS::CPU::RelationalCore midas(2, numColumn);
-			RejectMIDAS::CPU::FilteringCore midas(2, numColumn, thresholds[i]);
+			MIDAS::CPU::FilteringCore midas(2, numColumn, thresholds[i]);
 			for (int k = 0; k < n; k++)
 				fprintf(fileScore, "%f\n", midas(source[k], destination[k], timestamp[k]));
 			fclose(fileScore);
@@ -60,7 +60,7 @@ void ThresholdVsTime(int n, int numColumn, const std::vector<float>& thresholds,
 			srand(seed[j]);
 			// RejectMIDAS::CPU::NormalCore midas(2, numColumn); // These two cores do not use thresholds
 			// RejectMIDAS::CPU::RelationalCore midas(2, numColumn);
-			RejectMIDAS::CPU::FilteringCore midas(2, numColumn, thresholds[i]);
+			MIDAS::CPU::FilteringCore midas(2, numColumn, thresholds[i]);
 			const auto timeBegin = clock();
 			for (int k = 0; k < n; k++)
 				midas(source[k], destination[k], timestamp[k]);
@@ -84,7 +84,7 @@ void ReproduceROC(int n, const char* pathGroundTruth, int numColumn, float thres
 	const auto score = new float[n];
 	// RejectMIDAS::CPU::NormalCore midas(2, numColumn);
 	// RejectMIDAS::CPU::RelationalCore midas(2, numColumn);
-	RejectMIDAS::CPU::FilteringCore midas(2, numColumn, threshold);
+	MIDAS::CPU::FilteringCore midas(2, numColumn, threshold);
 	for (int i = 0; i < n; i++)
 		score[i] = midas(source[i], destination[i], timestamp[i]);
 
@@ -112,7 +112,7 @@ void NumRecordVsTime(int numColumn, float threshold, const std::vector<int>& num
 			srand(seed[j]);
 			// RejectMIDAS::CPU::NormalCore midas(2, numColumn);
 			// RejectMIDAS::CPU::RelationalCore midas(2, numColumn);
-			RejectMIDAS::CPU::FilteringCore midas(2, numColumn, threshold);
+			MIDAS::CPU::FilteringCore midas(2, numColumn, threshold);
 			const auto timeBegin = std::chrono::high_resolution_clock::now();
 			for (int k = 0; k < numsRecord[i]; k++)
 				midas(source[k], destination[k], timestamp[k]);
@@ -139,7 +139,7 @@ void NumColumnVsTime(int n, const std::vector<int>& numsColumn, float threshold,
 			srand(seed[j]);
 			// RejectMIDAS::CPU::NormalCore midas(2, numsColumn[i]);
 			// RejectMIDAS::CPU::RelationalCore midas(2, numsColumn[i]);
-			RejectMIDAS::CPU::FilteringCore midas(2, numsColumn[i], threshold);
+			MIDAS::CPU::FilteringCore midas(2, numsColumn[i], threshold);
 			const auto timeBegin = std::chrono::high_resolution_clock::now();
 			for (int k = 0; k < n; k++)
 				midas(source[k], destination[k], timestamp[k]);
@@ -171,7 +171,7 @@ void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float thresh
 			const auto fileScore = fopen(pathScore, "w");
 			// RejectMIDAS::CPU::NormalCore midas(2, numColumn); // This core does not use factors
 			// RejectMIDAS::CPU::RelationalCore midas(2, numColumn, factors[i]);
-			RejectMIDAS::CPU::FilteringCore midas(2, numColumn, threshold, factors[i]);
+			MIDAS::CPU::FilteringCore midas(2, numColumn, threshold, factors[i]);
 			for (int k = 0; k < n; k++)
 				fprintf(fileScore, "%f\n", midas(source[k], destination[k], timestamp[k]));
 			fclose(fileScore);

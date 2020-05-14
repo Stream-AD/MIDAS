@@ -6,7 +6,7 @@
 #include "EdgeHash.hpp"
 #include "NodeHash.hpp"
 
-namespace RejectMIDAS::CPU {
+namespace MIDAS::CPU {
 struct FilteringCore {
 	const float threshold;
 	int timestampCurrent = 1;

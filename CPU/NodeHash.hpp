@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace RejectMIDAS::CPU {
+namespace MIDAS::CPU {
 struct NodeHash {
 	// Fields
 	// --------------------------------------------------------------------------------

@@ -6,7 +6,7 @@
 #include "EdgeHash.hpp"
 #include "NodeHash.hpp"
 
-namespace RejectMIDAS::CPU {
+namespace MIDAS::CPU {
 struct RelationalCore {
 	int timestampCurrent = 1;
 	const float factor;
