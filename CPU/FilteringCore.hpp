@@ -7,7 +7,7 @@
 #include "NodeHash.hpp"
 
 namespace RejectMIDAS::CPU {
-struct RejectCore {
+struct FilteringCore {
 	const float threshold;
 	int timestampCurrent = 1;
 	const float factor;
@@ -18,7 +18,7 @@ struct RejectCore {
 	NodeHash numCurrentSource, numTotalSource, scoreSource;
 	NodeHash numCurrentDestination, numTotalDestination, scoreDestination;
 
-	RejectCore(int numRow, int numColumn, float threshold, float factor = 0.5):
+	FilteringCore(int numRow, int numColumn, float threshold, float factor = 0.5):
 		threshold(threshold),
 		factor(factor),
 		indexEdge(new int[numRow]),
@@ -34,7 +34,7 @@ struct RejectCore {
 		numTotalDestination(numCurrentDestination),
 		scoreDestination(numCurrentDestination) { }
 
-	virtual ~RejectCore() {
+	virtual ~FilteringCore() {
 		delete[] indexEdge;
 		delete[] indexSource;
 		delete[] indexDestination;

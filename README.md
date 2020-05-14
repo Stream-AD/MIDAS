@@ -71,7 +71,7 @@ Then you can change the `pathMeta` and `pathData` to your file paths, and run th
 
 ### Custom Datasets + Custom Runner
 
-Include the header `RejectMIDAS/CPU/NormalCore.hpp` or `RejectMIDAS/CPU/RejectCore.hpp`, the implementations are all in-place.
+Include the header `RejectMIDAS/CPU/NormalCore.hpp` or `RejectMIDAS/CPU/FilteringCore.hpp`, the implementations are all in-place.
 
 Then, instantiate the core and use `operator()` to process one record and obtain the score.
 

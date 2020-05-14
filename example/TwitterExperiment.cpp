@@ -3,7 +3,7 @@
 
 #include "CPU/NormalCore.hpp"
 #include "CPU/RelationalCore.h"
-#include "CPU/RejectCore.hpp"
+#include "CPU/FilteringCore.hpp"
 
 int main(int argc, char* argv[]) {
 	const auto pathData = SOLUTION_DIR"data/TwitterSecurity/twitter_security_processed.csv";
@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
 	float scoreMost = -std::numeric_limits<float>::infinity(); // Highest
 	// RejectMIDAS::CPU::NormalCore midas(2, 1024);
 	// RejectMIDAS::CPU::RelationalCore midas(2, 1024);
-	RejectMIDAS::CPU::RejectCore midas(2, 1024, 1e3f);
+	RejectMIDAS::CPU::FilteringCore midas(2, 1024, 1e3f);
 	int source, destination, timestamp;
 	while (~fscanf(fileData, "%d,%d,%d", &timestamp, &source, &destination)) {
 		if (timestamp > timestampCurrent) {

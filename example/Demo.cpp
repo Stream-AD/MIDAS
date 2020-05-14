@@ -4,7 +4,7 @@
 
 #include "CPU/NormalCore.hpp"
 #include "CPU/RelationalCore.h"
-#include "CPU/RejectCore.hpp"
+#include "CPU/FilteringCore.hpp"
 
 int main(int argc, char* argv[]) {
 	// Parameter
@@ -44,8 +44,8 @@ int main(int argc, char* argv[]) {
 	// Of course, I can merge loading and processing together, but this demo is also for benchmarking.
 
 	// RejectMIDAS::CPU::NormalCore midas(2, 1024);
-	// RejectMIDAS::CPU::RelationalCore midas(2, 1024);
-	RejectMIDAS::CPU::RejectCore midas(2, 1024, 1e2f);
+	RejectMIDAS::CPU::RelationalCore midas(2, 1024);
+	// RejectMIDAS::CPU::RejectCore midas(2, 1024, 1e2f);
 	const auto score = new float[n];
 	const auto time = clock();
 	for (int i = 0; i < n; i++)
