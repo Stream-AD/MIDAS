@@ -1,5 +1,4 @@
 #include <cstdio>
-#include <ctime>
 #include <cstdlib>
 #include <vector>
 #include <chrono>
@@ -8,6 +7,8 @@
 #include "CPU/RelationalCore.h"
 #include "CPU/FilteringCore.hpp"
 
+using namespace std::chrono; // Only for time-related functions, otherwise the statements are too long
+
 void ThresholdVsAUC(int n, const char* pathGroundTruth, int numColumn, const std::vector<float>& thresholds, int numRepeat, const int* source, const int* destination, const int* timestamp) {
 	// If threshold is 0, then all edges will be rejected, and all edges will get 0 score.
 
@@ -15,6 +16,9 @@ void ThresholdVsAUC(int n, const char* pathGroundTruth, int numColumn, const std
 	const auto auc = new float[thresholds.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
 
+	// If you want, you can put `omp parallel for` or `tbb::parallel_for` here
+	// After all, this is not the time benchmarking like the next function
+	// Me? I only want to keep maximum simplicity and compatibility for all platforms
 	for (int i = 0; i < thresholds.size(); i++) {
 		for (int j = 0; j < numRepeat; j++) {
 			srand(seed[j]);
@@ -52,7 +56,7 @@ void ThresholdVsAUC(int n, const char* pathGroundTruth, int numColumn, const std
 }
 
 void ThresholdVsTime(int n, int numColumn, const std::vector<float>& thresholds, int numRepeat, const int* source, const int* destination, const int* timestamp) {
-	const auto time = new int[thresholds.size() * numRepeat];
+	const auto time = new long long[thresholds.size() * numRepeat];
 	const auto seed = new int[numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
 	for (int i = 0; i < thresholds.size(); i++) {
@@ -61,10 +65,10 @@ void ThresholdVsTime(int n, int numColumn, const std::vector<float>& thresholds,
 			// MIDAS::CPU::NormalCore midas(2, numColumn); // These two cores do not use thresholds
 			// MIDAS::CPU::RelationalCore midas(2, numColumn);
 			MIDAS::CPU::FilteringCore midas(2, numColumn, thresholds[i]);
-			const auto timeBegin = clock();
+			const auto timeBegin = high_resolution_clock::now();
 			for (int k = 0; k < n; k++)
 				midas(source[k], destination[k], timestamp[k]);
-			printf("Time%02d = %dms\n", j, time[i * numRepeat + j] = (clock() - timeBegin) * 1000 / CLOCKS_PER_SEC);
+			printf("Time%03d = %lldms\n", j, time[i * numRepeat + j] = duration_cast<milliseconds>(high_resolution_clock::now() - timeBegin).count());
 		}
 		printf("// Above results use threshold = %g\n", thresholds[i]);
 	}
@@ -72,7 +76,7 @@ void ThresholdVsTime(int n, int numColumn, const std::vector<float>& thresholds,
 	fprintf(fileExperimentResult, "numColumn,threshold,seed,time\n");
 	for (int i = 0; i < thresholds.size(); i++)
 		for (int j = 0; j < numRepeat; j++)
-			fprintf(fileExperimentResult, "%d,%g,%d,%d\n", numColumn, thresholds[i], seed[j], time[i * numRepeat + j]);
+			fprintf(fileExperimentResult, "%d,%g,%d,%lld\n", numColumn, thresholds[i], seed[j], time[i * numRepeat + j]);
 	fclose(fileExperimentResult);
 	delete[] time;
 	delete[] seed;
@@ -116,7 +120,7 @@ void NumRecordVsTime(int numColumn, float threshold, const std::vector<int>& num
 			const auto timeBegin = std::chrono::high_resolution_clock::now();
 			for (int k = 0; k < numsRecord[i]; k++)
 				midas(source[k], destination[k], timestamp[k]);
-			printf("Time%02d = %lldus\n", j, time[i * numRepeat + j] = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - timeBegin).count());
+			printf("Time%03d = %lldus\n", j, time[i * numRepeat + j] = duration_cast<microseconds>(high_resolution_clock::now() - timeBegin).count());
 		}
 		printf("// Above results use numRecord = %d\n", numsRecord[i]);
 	}
@@ -140,10 +144,10 @@ void NumColumnVsTime(int n, const std::vector<int>& numsColumn, float threshold,
 			// MIDAS::CPU::NormalCore midas(2, numsColumn[i]);
 			// MIDAS::CPU::RelationalCore midas(2, numsColumn[i]);
 			MIDAS::CPU::FilteringCore midas(2, numsColumn[i], threshold);
-			const auto timeBegin = std::chrono::high_resolution_clock::now();
+			const auto timeBegin = high_resolution_clock::now();
 			for (int k = 0; k < n; k++)
 				midas(source[k], destination[k], timestamp[k]);
-			printf("Time%02d = %lldus\n", j, time[i * numRepeat + j] = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - timeBegin).count());
+			printf("Time%03d = %lldus\n", j, time[i * numRepeat + j] = duration_cast<microseconds>(high_resolution_clock::now() - timeBegin).count());
 		}
 		printf("// Above results use numColumn = %d\n", numsColumn[i]);
 	}
@@ -162,6 +166,7 @@ void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float thresh
 	const auto auc = new float[factors.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
 
+	// Also, you can put a parallel for here
 	for (int i = 0; i < factors.size(); i++) {
 		for (int j = 0; j < numRepeat; j++) {
 			srand(seed[j]);

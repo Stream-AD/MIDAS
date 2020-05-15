@@ -1,10 +1,12 @@
 #include <cstdio>
-#include <ctime>
 #include <cstdlib>
+#include <chrono>
 
 #include "CPU/NormalCore.hpp"
 #include "CPU/RelationalCore.h"
 #include "CPU/FilteringCore.hpp"
+
+using namespace std::chrono;
 
 int main(int argc, char* argv[]) {
 	// Parameter
@@ -47,10 +49,10 @@ int main(int argc, char* argv[]) {
 	// MIDAS::CPU::RelationalCore midas(2, 1024);
 	MIDAS::CPU::FilteringCore midas(2, 1024, 1e2f);
 	const auto score = new float[n];
-	const auto time = clock();
+	const auto time = high_resolution_clock::now();
 	for (int i = 0; i < n; i++)
 		score[i] = midas(source[i], destination[i], timestamp[i]);
-	printf("Time = %ldms\t// Algorithm is finished\n", (clock() - time) * 1000 / CLOCKS_PER_SEC);
+	printf("Time = %lldms\t// Algorithm is finished\n", duration_cast<milliseconds>(high_resolution_clock::now() - time).count());
 
 	// Write output scores
 
