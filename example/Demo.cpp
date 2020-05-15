@@ -43,9 +43,9 @@ int main(int argc, char* argv[]) {
 	// Do the magic
 	// Of course, I can merge loading and processing together, but this demo is also for benchmarking.
 
-	// RejectMIDAS::CPU::NormalCore midas(2, 1024);
-	MIDAS::CPU::RelationalCore midas(2, 1024);
-	// RejectMIDAS::CPU::RejectCore midas(2, 1024, 1e2f);
+	// MIDAS::CPU::NormalCore midas(2, 1024);
+	// MIDAS::CPU::RelationalCore midas(2, 1024);
+	MIDAS::CPU::FilteringCore midas(2, 1024, 1e2f);
 	const auto score = new float[n];
 	const auto time = clock();
 	for (int i = 0; i < n; i++)

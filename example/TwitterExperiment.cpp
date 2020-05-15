@@ -17,8 +17,8 @@ int main(int argc, char* argv[]) {
 	const auto fileScore = fopen(pathScore, "w");
 	int timestampCurrent = 1; // Always starts from 1
 	float scoreMost = -std::numeric_limits<float>::infinity(); // Highest
-	// RejectMIDAS::CPU::NormalCore midas(2, 1024);
-	// RejectMIDAS::CPU::RelationalCore midas(2, 1024);
+	// MIDAS::CPU::NormalCore midas(2, 1024);
+	// MIDAS::CPU::RelationalCore midas(2, 1024);
 	MIDAS::CPU::FilteringCore midas(2, 1024, 1e3f);
 	int source, destination, timestamp;
 	while (~fscanf(fileData, "%d,%d,%d", &timestamp, &source, &destination)) {
