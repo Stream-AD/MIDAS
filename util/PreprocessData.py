@@ -7,14 +7,15 @@ def darpa_original(prefix: Path) -> None:
 	data = pd.read_csv(prefix / 'data/DARPA/darpa_original.csv', header=None, names=['src', 'dst', 'ts', 'atk'], dtype='category')
 	data.atk = data.atk != '-'
 	data.atk = data.atk.astype('int')
+	# data.ts = data.ts.apply(lambda a: a[:-3]).astype('category') # Hour-based, comment this for minute-based
 	all_site = pd.concat([data.src, data.dst])
 	all_site = all_site.astype('category')
 	all_site = all_site.cat.codes
 	data.src = all_site[:data.shape[0]]
 	data.dst = all_site[data.shape[0]:]
 	data.ts = data.ts.cat.codes + 1  # Time starts from 1
-	data.iloc[:, :-1].to_csv(prefix / 'data/DARPA/darpa_processed.csv', header=False, index=False)
-	data.iloc[:, -1].to_csv(prefix / 'data/DARPA/darpa_ground_truth.csv', header=False, index=False)
+	data.iloc[:, :-1].to_csv(prefix / 'data/DARPA/darpa_processed.csv', header=False, index=False, line_terminator='\n')
+	data.iloc[:, -1].to_csv(prefix / 'data/DARPA/darpa_ground_truth.csv', header=False, index=False, line_terminator='\n')
 	with open(str(prefix / 'data/DARPA/darpa_shape.txt'), 'w') as file:
 		file.write(str(data.shape[0]))
 
@@ -32,13 +33,13 @@ def final_dataset(prefix: Path) -> None:
 	data.src = all_site[:data.shape[0]]
 	data.dst = all_site[data.shape[0]:]
 	data.ts = data.ts.cat.codes + 1  # Time starts from 1
-	data.iloc[:, :-1].to_csv(prefix / 'data/DDoS/Balanced/final_dataset_processed.csv', header=False, index=False)
-	data.iloc[:, -1].to_csv(prefix / 'data/DDoS/Balanced/final_dataset_ground_truth.csv', header=False, index=False)
+	data.iloc[:, :-1].to_csv(prefix / 'data/DDoS/Balanced/final_dataset_processed.csv', header=False, index=False, line_terminator='\n')
+	data.iloc[:, -1].to_csv(prefix / 'data/DDoS/Balanced/final_dataset_ground_truth.csv', header=False, index=False, line_terminator='\n')
 	with open(str(prefix / 'data/DDoS/Balanced/final_dataset_shape.txt'), 'w') as file:
 		file.write(str(data.shape[0]))
 
 def unbalaced_20_80_dataset(prefix: Path):
-	data = pd.read_csv(prefix/'data/DDoS/Unbalanced/unbalaced_20_80_dataset.csv', usecols=['Src IP', 'Dst IP', 'Timestamp', 'Label'], dtype='category')
+	data = pd.read_csv(prefix / 'data/DDoS/Unbalanced/unbalaced_20_80_dataset.csv', usecols=['Src IP', 'Dst IP', 'Timestamp', 'Label'], dtype='category')
 	data.rename({
 		'Src IP': 'src',
 		'Dst IP': 'dst',
@@ -51,8 +52,8 @@ def unbalaced_20_80_dataset(prefix: Path):
 	data.src = all_site[:data.shape[0]]
 	data.dst = all_site[data.shape[0]:]
 	data.ts = data.ts.cat.codes + 1  # Time starts from 1
-	data.iloc[:, :-1].to_csv(prefix / 'data/DDoS/Unbalanced/unbalaced_20_80_dataset_processed.csv', header=False, index=False)
-	data.iloc[:, -1].to_csv(prefix / 'data/DDoS/Unbalanced/unbalaced_20_80_dataset_ground_truth.csv', header=False, index=False)
+	data.iloc[:, :-1].to_csv(prefix / 'data/DDoS/Unbalanced/unbalaced_20_80_dataset_processed.csv', header=False, index=False, line_terminator='\n')
+	data.iloc[:, -1].to_csv(prefix / 'data/DDoS/Unbalanced/unbalaced_20_80_dataset_ground_truth.csv', header=False, index=False, line_terminator='\n')
 	with open(str(prefix / 'data/DDoS/Unbalanced/unbalaced_20_80_dataset_shape.txt'), 'w') as file:
 		file.write(str(data.shape[0]))
 
@@ -65,7 +66,7 @@ def Twitter_May_Aug_2014_TerrorSecurity_resolved(prefix: Path):
 	data['src'] = data['src'].astype('category').cat.codes
 	data['dst'] = data['dst'].astype('category').cat.codes
 	data.sort_values(['ts', 'src', 'dst'], inplace=True)
-	data.to_csv(prefix / 'data/TwitterSecurity/twitter_security_processed.csv', header=False, index=False)
+	data.to_csv(prefix / 'data/TwitterSecurity/twitter_security_processed.csv', header=False, index=False, line_terminator='\n')
 	# I don't need the shape
 
 	ground_truth = pd.read_excel(prefix / 'data/TwitterSecurity/Ground Truth- 2009 & 2014.xlsx', sheet_name=1, names=['ts'], usecols=[0], squeeze=True)
