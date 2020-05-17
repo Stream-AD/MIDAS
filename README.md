@@ -103,11 +103,11 @@ Thus, each line represents an edge. Edges should be sorted in non-decreasing ord
 5. [AIhub Interview](https://aihub.org/2020/05/01/interview-with-siddharth-bhatia-a-new-approach-for-anomaly-detection/)
 
 ## MIDAS in other Languages
-1. [Ruby](https://github.com/ankane/midas) by [Andrew Kane](https://github.com/ankane)
-2. [Rust](https://github.com/scooter-dangle/midas_rs) by [Scott Steele](https://github.com/scooter-dangle)
-3. [R](https://github.com/pteridin/MIDASwrappeR) by [Tobias Heidler](https://github.com/pteridin)
-4. [Python](https://github.com/ritesh99rakesh/pyMIDAS) by [Ritesh Kumar](https://github.com/ritesh99rakesh)
-5. [Golang](https://github.com/steve0hh/midas) by [Steve Tan](https://github.com/steve0hh)
+1. [Golang](https://github.com/steve0hh/midas) by [Steve Tan](https://github.com/steve0hh)
+2. [Ruby](https://github.com/ankane/midas) by [Andrew Kane](https://github.com/ankane)
+3. [Rust](https://github.com/scooter-dangle/midas_rs) by [Scott Steele](https://github.com/scooter-dangle)
+4. [R](https://github.com/pteridin/MIDASwrappeR) by [Tobias Heidler](https://github.com/pteridin)
+5. [Python](https://github.com/ritesh99rakesh/pyMIDAS) by [Ritesh Kumar](https://github.com/ritesh99rakesh)
 
 ## Citation
 If you use this code for your research, please consider citing our paper.
