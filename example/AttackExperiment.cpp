@@ -167,27 +167,27 @@ void NumColumnVsTime(int n, const std::vector<int>& numsColumn, float threshold,
 	delete[] seed;
 }
 
-void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float threshold, const std::vector<float>& factors, int numRepeat, const int* source, const int* destination, const int* timestamp) {
+void NumColumnVsAUC(int n,const char* pathGroundTruth, const std::vector<int>& numsColumn, float threshold, int numRepeat, const int* source, const int* destination, const int* timestamp) {
 	const auto seed = new int[numRepeat];
-	const auto auc = new float[factors.size() * numRepeat];
+	const auto auc = new float[numsColumn.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
 
 #ifdef ParallelProvider_IntelTBB
-	tbb::parallel_for<int>(0, factors.size(), [&](int i) {
+	tbb::parallel_for<int>(0, numsColumn.size(), [&](int i) {
 		tbb::parallel_for<int>(0, numRepeat, [&](int j) {
-#else
-#pragma omp parallel for
-	for (int i = 0; i < factors.size(); i++) {
+#else // @formatter:off
+	#pragma omp parallel for
+	for (int i = 0; i < numsColumn.size(); i++) {
 		for (int j = 0; j < numRepeat; j++) {
-#endif
+#endif // @formatter:on
 			srand(seed[j]);
 
 			char pathScore[260];
 			sprintf(pathScore, SOLUTION_DIR"temp/Score%d.txt", i * numRepeat + j);
 			const auto fileScore = fopen(pathScore, "w");
-			// MIDAS::CPU::NormalCore midas(2, numColumn); // This core does not use factors
-			MIDAS::CPU::RelationalCore midas(2, numColumn, factors[i]);
-			// MIDAS::CPU::FilteringCore midas(2, numColumn, threshold, factors[i]);
+			// MIDAS::CPU::NormalCore midas(2, numsColumn[i]);
+			// MIDAS::CPU::RelationalCore midas(2, numsColumn[i]);
+			MIDAS::CPU::FilteringCore midas(2, numsColumn[i], threshold);
 			for (int k = 0; k < n; k++)
 				fprintf(fileScore, "%f\n", midas(source[k], destination[k], timestamp[k]));
 			fclose(fileScore);
@@ -204,10 +204,63 @@ void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float thresh
 #ifdef ParallelProvider_IntelTBB
 		});
 	});
-#else
+#else // @formatter:off
 		}
 	}
-#endif
+#endif // @formatter:on
+
+	const auto fileResult = fopen(SOLUTION_DIR"temp/Experiment.csv", "w");
+	fprintf(fileResult, "numColumn,threshold,seed,auc\n");
+	for (int i = 0; i < numsColumn.size(); i++)
+		for (int j = 0; j < numRepeat; j++)
+			fprintf(fileResult, "%d,%g,%d,%f\n", numsColumn[i], threshold, seed[j], auc[i * numRepeat + j]);
+	fclose(fileResult);
+
+	delete[] seed;
+	delete[] auc;
+}
+
+void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float threshold, const std::vector<float>& factors, int numRepeat, const int* source, const int* destination, const int* timestamp) {
+	const auto seed = new int[numRepeat];
+	const auto auc = new float[factors.size() * numRepeat];
+	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
+
+#ifdef ParallelProvider_IntelTBB
+	tbb::parallel_for<int>(0, factors.size(), [&](int i) {
+		tbb::parallel_for<int>(0, numRepeat, [&](int j) {
+#else // @formatter:off
+	#pragma omp parallel for
+	for (int i = 0; i < factors.size(); i++) {
+		for (int j = 0; j < numRepeat; j++) {
+#endif // @formatter:on
+			srand(seed[j]);
+
+			char pathScore[260];
+			sprintf(pathScore, SOLUTION_DIR"temp/Score%d.txt", i * numRepeat + j);
+			const auto fileScore = fopen(pathScore, "w");
+			// MIDAS::CPU::NormalCore midas(2, numColumn); // This core does not use factors
+			// MIDAS::CPU::RelationalCore midas(2, numColumn, factors[i]);
+			MIDAS::CPU::FilteringCore midas(2, numColumn, threshold, factors[i]);
+			for (int k = 0; k < n; k++)
+				fprintf(fileScore, "%f\n", midas(source[k], destination[k], timestamp[k]));
+			fclose(fileScore);
+
+			char command[1024];
+			sprintf(command, "python %s %s %s %d", SOLUTION_DIR"util/EvaluateScore.py", pathGroundTruth, pathScore, i * numRepeat + j);
+			system(command);
+
+			char pathAUC[260];
+			sprintf(pathAUC, SOLUTION_DIR"temp/AUC%d.txt", i * numRepeat + j);
+			const auto fileAUC = fopen(pathAUC, "r");
+			fscanf(fileAUC, "%f", auc + i * numRepeat + j);
+			fclose(fileAUC);
+#ifdef ParallelProvider_IntelTBB
+		});
+	});
+#else // @formatter:off
+		}
+	}
+#endif // @formatter:on
 
 	const auto fileResult = fopen(SOLUTION_DIR"temp/Experiment.csv", "w");
 	fprintf(fileResult, "numColumn,threshold,factor,seed,auc\n");
@@ -256,21 +309,22 @@ int main(int argc, char* argv[]) {
 	// Results will be printed and placed at MIDAS/temp/
 
 	const int numRepeat = 21;
-	const int numColumn = 2719;
+	const int numColumn = 1024;
 
 	const auto thresholds = {1e0f, 1e1f, 1e2f, 1e3f, 1e4f, 1e5f, 1e6f, 1e7f};
-	// ThresholdVsAUC(n, pathGroundTruth, numColumn, thresholds, numRepeat, source, destination, timestamp);
+	ThresholdVsAUC(n, pathGroundTruth, numColumn, thresholds, numRepeat, source, destination, timestamp);
 	// ThresholdVsTime(n, numColumn, thresholds, numRepeat, source, destination, timestamp);
 	// ReproduceROC(n, pathGroundTruth, numColumn, 1000, 8918, source, destination, timestamp);
 
 	const auto factors = {0.0f, 0.2f, 0.4f, 0.6f, 0.8f, 0.9f, 0.99f, 0.999f, 1.0f};
-	FactorVsAUC(n, pathGroundTruth, numColumn, 1e3f, factors, numRepeat, source, destination, timestamp);
+	// FactorVsAUC(n, pathGroundTruth, numColumn, 1e3f, factors, numRepeat, source, destination, timestamp);
 
 	const auto numsRecord = {1 << 10, 1 << 11, 1 << 12, 1 << 13, 1 << 14, 1 << 15, 1 << 16, 1 << 17, 1 << 18, 1 << 19, 1 << 20, 1 << 21, 1 << 22, 1 << 23};
 	// NumRecordVsTime(numColumn, 10000, numsRecord, numRepeat, source, destination, timestamp);
 
-	const auto numsColumn = {600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000};
-	// NumColumnVsTime(n, numsColumn, 10000, numRepeat, source, destination, timestamp);
+	const auto numsColumn = {272, 544, 769, 2719, 27183};
+	// NumColumnVsTime(n, numsColumn, 1000, numRepeat, source, destination, timestamp);
+	// NumColumnVsAUC(n, pathGroundTruth, numsColumn, 1000, numRepeat, source, destination, timestamp);
 
 	// Clean up
 	// --------------------------------------------------------------------------------
