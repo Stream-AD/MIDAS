@@ -5,22 +5,22 @@
 
 #include "EdgeHash.hpp"
 #include "NodeHash.hpp"
-#include "Option.h"
 
 namespace MIDAS::CPU {
 struct FilteringCore {
 	const float threshold;
 	int timestampCurrent = 1;
+	const float factor;
 	int* const indexEdge; // Pre-compute the index to-be-modified, thanks to the same structure of CMSs
 	int* const indexSource;
 	int* const indexDestination;
 	EdgeHash numCurrentEdge, numTotalEdge, scoreEdge;
 	NodeHash numCurrentSource, numTotalSource, scoreSource;
 	NodeHash numCurrentDestination, numTotalDestination, scoreDestination;
-	const Option& option;
 
-	FilteringCore(int numRow, int numColumn, float threshold, const Option& option = { }):
+	FilteringCore(int numRow, int numColumn, float threshold, float factor = 0.5):
 		threshold(threshold),
+		factor(factor),
 		indexEdge(new int[numRow]),
 		indexSource(new int[numRow]),
 		indexDestination(new int[numRow]),
@@ -32,8 +32,7 @@ struct FilteringCore {
 		scoreSource(numCurrentSource),
 		numCurrentDestination(numRow, numColumn),
 		numTotalDestination(numCurrentDestination),
-		scoreDestination(numCurrentDestination),
-		option(option) { }
+		scoreDestination(numCurrentDestination) { }
 
 	virtual ~FilteringCore() {
 		delete[] indexEdge;
@@ -59,7 +58,6 @@ struct FilteringCore {
 				numTotalDestination.data[i] += scoreDestination.data[i] < threshold ?
 					numCurrentDestination.data[i] : timestampCurrent - 1 ?
 						numTotalDestination.data[i] / (timestampCurrent - 1) : 0;
-			const float factor = option.ScalingCoefficient(timestamp, timestampCurrent);
 			numCurrentEdge.MultiplyAll(factor);
 			numCurrentSource.MultiplyAll(factor);
 			numCurrentDestination.MultiplyAll(factor);

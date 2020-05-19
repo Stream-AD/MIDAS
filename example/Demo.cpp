@@ -3,7 +3,7 @@
 #include <chrono>
 
 #include "CPU/NormalCore.hpp"
-#include "CPU/RelationalCore.hpp"
+#include "CPU/RelationalCore.h"
 #include "CPU/FilteringCore.hpp"
 
 using namespace std::chrono;
@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 	// --------------------------------------------------------------------------------
 
 	const auto pathMeta = SOLUTION_DIR"data/DARPA/darpa_shape.txt";
-	const auto pathData = SOLUTION_DIR"data/DARPA/darpa_midas.csv";
+	const auto pathData = SOLUTION_DIR"data/DARPA/darpa_processed.csv";
 	const auto pathGroundTruth = SOLUTION_DIR"data/DARPA/darpa_ground_truth.csv";
 
 	// Implementation
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
 
 	// MIDAS::CPU::NormalCore midas(2, 1024);
 	// MIDAS::CPU::RelationalCore midas(2, 1024);
-	MIDAS::CPU::FilteringCore midas(2, 1024, 1e3f);
+	MIDAS::CPU::FilteringCore midas(2, 1024, 1e2f);
 	const auto score = new float[n];
 	const auto time = high_resolution_clock::now();
 	for (int i = 0; i < n; i++)
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
 	for (int i = 0; i < n; i++)
 		fprintf(fileScore, "%f\n", score[i]);
 	fclose(fileScore);
-	printf("// Raw anomaly scores are exported to\n// " SOLUTION_DIR"temp/Score.txt\n");
+	printf("// Exporting score is completed\n");
 
 	// Evaluate scores
 
