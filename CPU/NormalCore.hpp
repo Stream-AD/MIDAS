@@ -3,17 +3,20 @@
 #include <cmath>
 
 #include "EdgeHash.hpp"
+#include "Option.h"
 
 namespace MIDAS::CPU {
 struct NormalCore {
 	int timestampCurrent = 1;
 	int* const index; // Pre-compute the index to-be-modified, thanks to the same structure of CMSs
 	EdgeHash numCurrent, numTotal;
+	const Option& option;
 
-	NormalCore(int numRow, int numColumn):
+	NormalCore(int numRow, int numColumn, const Option& option = { }):
 		index(new int[numRow]),
 		numCurrent(numRow, numColumn),
-		numTotal(numCurrent) { }
+		numTotal(numCurrent),
+		option(option) { }
 
 	virtual ~NormalCore() {
 		delete[] index;
@@ -25,7 +28,7 @@ struct NormalCore {
 
 	float operator()(int source, int destination, int timestamp) {
 		if (timestamp > timestampCurrent) {
-			numCurrent.MultiplyAll(0);
+			numCurrent.MultiplyAll(option.ScalingCoefficient(timestamp, timestampCurrent));
 			timestampCurrent = timestamp;
 		}
 		numCurrent.Hash(source, destination, index);

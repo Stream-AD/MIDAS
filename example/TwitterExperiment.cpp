@@ -2,7 +2,7 @@
 #include <algorithm>
 
 #include "CPU/NormalCore.hpp"
-#include "CPU/RelationalCore.h"
+#include "CPU/RelationalCore.hpp"
 #include "CPU/FilteringCore.hpp"
 
 int main(int argc, char* argv[]) {
