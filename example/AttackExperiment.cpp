@@ -4,7 +4,7 @@
 #include <chrono>
 
 #include "CPU/NormalCore.hpp"
-#include "CPU/RelationalCore.h"
+#include "CPU/RelationalCore.hpp"
 #include "CPU/FilteringCore.hpp"
 
 using namespace std::chrono; // Only for time-related functions, otherwise the statements are too long
