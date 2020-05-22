@@ -4,6 +4,7 @@
 #include <chrono>
 
 #if defined(ParallelProvider_IntelTBB)
+#include <tbb/task_scheduler_init.h>
 #include <tbb/parallel_for.h>
 #elif defined(ParallelProvider_OpenMP)
 #include <omp.h>
@@ -167,7 +168,7 @@ void NumColumnVsTime(int n, const std::vector<int>& numsColumn, float threshold,
 	delete[] seed;
 }
 
-void NumColumnVsAUC(int n,const char* pathGroundTruth, const std::vector<int>& numsColumn, float threshold, int numRepeat, const int* source, const int* destination, const int* timestamp) {
+void NumColumnVsAUC(int n, const char* pathGroundTruth, const std::vector<int>& numsColumn, float threshold, int numRepeat, const int* source, const int* destination, const int* timestamp) {
 	const auto seed = new int[numRepeat];
 	const auto auc = new float[numsColumn.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
@@ -316,7 +317,7 @@ int main(int argc, char* argv[]) {
 	// ThresholdVsTime(n, numColumn, thresholds, numRepeat, source, destination, timestamp);
 	// ReproduceROC(n, pathGroundTruth, numColumn, 1000, 8918, source, destination, timestamp);
 
-	const auto factors = {0.0f, 0.2f, 0.4f, 0.6f, 0.8f, 0.9f, 0.99f, 0.999f, 1.0f};
+	const auto factors = {0.0f, 0.2f, 0.4f, 0.5f, 0.6f, 0.8f, 0.9f, 0.99f, 0.999f, 1.0f};
 	// FactorVsAUC(n, pathGroundTruth, numColumn, 1e3f, factors, numRepeat, source, destination, timestamp);
 
 	const auto numsRecord = {1 << 10, 1 << 11, 1 << 12, 1 << 13, 1 << 14, 1 << 15, 1 << 16, 1 << 17, 1 << 18, 1 << 19, 1 << 20, 1 << 21, 1 << 22, 1 << 23};
