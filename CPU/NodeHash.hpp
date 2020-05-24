@@ -68,7 +68,11 @@ struct NodeHash {
 		delete[] data;
 	}
 
-	void MultiplyAll(float by = 0) const {
+	void ClearAll(float with = 0) const {
+		std::fill(data, data + lenData, with);
+	}
+
+	void MultiplyAll(float by) const {
 		std::for_each(data, data + lenData, [&](float& a) { a *= by; }); // Magic of vectorization
 	}
 

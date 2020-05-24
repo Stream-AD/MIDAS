@@ -41,7 +41,7 @@ struct NormalCore {
 
 	float operator()(int source, int destination, int timestamp) {
 		if (timestamp > timestampCurrent) {
-			numCurrent.MultiplyAll(0);
+			numCurrent.ClearAll();
 			timestampCurrent = timestamp;
 		}
 		numCurrent.Hash(source, destination, index);
