@@ -26,7 +26,7 @@
 
 
 ![GIF demo](https://www.comp.nus.edu.sg/~sbhatia/assets/img/midas_gif.gif) 
-<img align="center" src="https://www.comp.nus.edu.sg/~sbhatia/assets/img/midasstream.jpg" alt="...">
+<img align="center" src="https://www.comp.nus.edu.sg/~sbhatia/assets/img/stream.jpg" alt="...">
 
 ## Table of Contents
 
