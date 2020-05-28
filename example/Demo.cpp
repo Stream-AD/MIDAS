@@ -18,9 +18,9 @@
 #include <cstdlib>
 #include <chrono>
 
-#include "CPU/NormalCore.hpp"
-#include "CPU/RelationalCore.hpp"
-#include "CPU/FilteringCore.hpp"
+#include "NormalCore.hpp"
+#include "RelationalCore.hpp"
+#include "FilteringCore.hpp"
 
 using namespace std::chrono;
 
@@ -61,9 +61,9 @@ int main(int argc, char* argv[]) {
 	// Do the magic
 	// Of course, I can merge loading and processing together, but this demo is also for benchmarking.
 
-	// MIDAS::CPU::NormalCore midas(2, 1024);
-	// MIDAS::CPU::RelationalCore midas(2, 1024);
-	MIDAS::CPU::FilteringCore midas(2, 1024, 1e3f);
+	// MIDAS::NormalCore midas(2, 1024);
+	// MIDAS::RelationalCore midas(2, 1024);
+	MIDAS::FilteringCore midas(2, 1024, 1e3f);
 	const auto score = new float[n];
 	const auto time = high_resolution_clock::now();
 	for (int i = 0; i < n; i++)

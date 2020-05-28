@@ -20,7 +20,7 @@
 
 #include "EdgeHash.hpp"
 
-namespace MIDAS::CPU {
+namespace MIDAS {
 struct NormalCore {
 	int timestampCurrent = 1;
 	int* const index; // Pre-compute the index to-be-modified, thanks to the same structure of CMSs

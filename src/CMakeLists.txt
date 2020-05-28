@@ -14,18 +14,16 @@
 # limitations under the License.
 # ------------------------------------------------------------------------------
 
-PROJECT(CPU)
+PROJECT(src)
 
-FIND_PACKAGE(TBB REQUIRED)
-FIND_PACKAGE(OpenMP REQUIRED)
+FIND_PACKAGE(TBB)
+FIND_PACKAGE(OpenMP)
 IF(TBB_FOUND)
 	LINK_LIBRARIES(TBB::tbb)
 	ADD_COMPILE_DEFINITIONS(ParallelProvider_IntelTBB)
 ELSEIF(OpenMP_FOUND)
 	LINK_LIBRARIES(OpenMP::OpenMP_CXX)
 	ADD_COMPILE_DEFINITIONS(ParallelProvider_OpenMP)
-ELSE()
-	ADD_COMPILE_DEFINITIONS(ParallelProvider_None)
 ENDIF()
 
 ADD_COMPILE_DEFINITIONS(
@@ -33,14 +31,10 @@ ADD_COMPILE_DEFINITIONS(
 )
 
 IF(WIN32)
-	ADD_COMPILE_OPTIONS(
-		/wd4244  # int to float may lose precision Yes, yes, I know, it is on purpose
-		/Qvec-report:1
-	)
+	ADD_COMPILE_OPTIONS(/wd4244) # int to float may lose precision Yes, yes, I know, it is on purpose
 ELSEIF(UNIX)
 	ADD_COMPILE_OPTIONS(-Wno-unused-result) # Why do we need the return value from fscanf() or system()?
 ENDIF()
 
-ADD_EXECUTABLE(${PROJECT_NAME}_Demo ${CMAKE_SOURCE_DIR}/example/Demo.cpp)
-ADD_EXECUTABLE(${PROJECT_NAME}_AttackExperiment ${CMAKE_SOURCE_DIR}/example/AttackExperiment.cpp)
-ADD_EXECUTABLE(${PROJECT_NAME}_TwitterExperiment ${CMAKE_SOURCE_DIR}/example/TwitterExperiment.cpp)
+ADD_EXECUTABLE(Demo ${CMAKE_SOURCE_DIR}/example/Demo.cpp)
+ADD_EXECUTABLE(Experiment ${CMAKE_SOURCE_DIR}/example/Experiment.cpp)

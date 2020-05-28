@@ -18,7 +18,7 @@
 
 #include <algorithm>
 
-namespace MIDAS::CPU {
+namespace MIDAS {
 struct EdgeHash {
 	// Fields
 	// --------------------------------------------------------------------------------
