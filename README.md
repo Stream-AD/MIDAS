@@ -37,6 +37,7 @@ C++ implementation of
 - [Citation](#citation)
 
 ## Features
+
 - Finds Anomalies in Dynamic/Time-Evolving Graph: (Intrusion Detection, Fake Ratings, Financial Fraud)
 - Detects Microcluster Anomalies (suddenly arriving groups of suspiciously similar edges e.g. DoS attack)
 - Theoretical Guarantees on False Positive Probability
@@ -44,9 +45,9 @@ C++ implementation of
 - Constant Update Time (real-time anomaly detection to minimize harm)
 - Up to 55% more accurate and 929 times faster than the state of the art approaches
 - Some experiments are performed on the following datasets: 
-    1. [DARPA](https://www.ll.mit.edu/r-d/datasets/1998-darpa-intrusion-detection-evaluation-dataset): [Original Format](https://www.comp.nus.edu.sg/~sbhatia/assets/datasets/darpa_original.csv), [MIDAS format](https://www.comp.nus.edu.sg/~sbhatia/assets/datasets/darpa_midas.csv)
-    2. [TwitterWorldCup2014](http://odds.cs.stonybrook.edu/twitterworldcup2014-dataset)
-    3. [TwitterSecurity](http://odds.cs.stonybrook.edu/twittersecurity-dataset)
+  - [DARPA](https://www.ll.mit.edu/r-d/datasets/1998-darpa-intrusion-detection-evaluation-dataset)
+  - [TwitterWorldCup2014](http://odds.cs.stonybrook.edu/twitterworldcup2014-dataset)
+  - [TwitterSecurity](http://odds.cs.stonybrook.edu/twittersecurity-dataset)
 
 ## Demo
 
