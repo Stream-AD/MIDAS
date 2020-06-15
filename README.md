@@ -1,78 +1,65 @@
 # MIDAS
 
-C++ implementation of the MIDAS algorithm.
+C++ implementation of MIDAS algorithms.
 
 ## Demo
 
-Due to the file size limitation, you need to download the dataset manually:
-
-1. Download `final_dataset.csv` using the link below
-2. Move `final_dataset.csv` to `MIDAS/data/`
-3. Run `MIDAS/util/PreprocessData.py`, the script can detect the correct file path
-
-To run the demo, if you have a CMake-based IDE, you can build the target `CPU_Demo` and enjoy.
+If you have a CMake-based IDE, you can build the target `Demo` and enjoy.
 
 Otherwise, if you use Windows:
 
 1. Open a Visual Studio developer command prompt, we want their toolchain
-2. `cd` to the project root `MIDAS/`
-3. `cmake -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles" -S . -B build/release`
-4. `cmake --build build/release --target CPU_Demo`
-5. `cd` to `MIDAS/build/release/CPU/`
-6. `.\CPU_Demo`
+1. `cd` to the project root `MIDAS/`
+1. `cmake -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles" -S . -B build/release`
+1. `cmake --build build/release --target Demo`
+1. `cd` to `MIDAS/build/release/src`
+1. `.\Demo.exe`
 
-The code should be compatible with Linux, but I only tested with WSL.
+If you use Unix-like systems:
 
-The demo runs on the `MIDAS/data/final_dataset_processed.csv`, which has 12M records, with the relational core.
+1. Open a terminal
+1. `cd` to the project root `MIDAS/`
+1. `cmake -DCMAKE_BUILD_TYPE=Release -S . -B build/release`
+1. `cmake --build build/release --target Demo`
+1. `cd` to `MIDAS/build/release/src`
+1. `./Demo`
 
-The scores will be exported to `MIDAS/temp/score.txt`, higher means more anomalous.
+The demo runs on `MIDAS/data/DARPA/darpa_processed.csv`, which has 4.5M records, with the filtering core.
 
-All file paths are absolute and "hardcoded", but if you double-click to run, you may miss the ROC-AUC metric.
+The scores will be exported to `MIDAS/temp/Score.txt`, higher means more anomalous.
 
-## Environment
-
-Below is my Windows environment.
-
-- CMake: 3.16.3
-- MSVC: v142, x64, c++20
-- Windows 10 SDK: 10.0.183622.0
-- Python: 3.7.6
-  - Optional, only for evaluating scores
-
-## Dataset
-
-- `darpa_original.csv`: <https://www.comp.nus.edu.sg/~sbhatia/assets/datasets/darpa_original.csv>
-- `final_dataset.csv`: <https://www.kaggle.com/devendra416/ddos-datasets>, the balanced one
+All file paths are absolute and "hardcoded" by CMake, but it's suggested NOT to run by double-click on the executable file.
 
 ## Customization
 
 ### Switch Cores
 
-Cores are instantiated at `MIDAS/example/Demo.cpp:53-54`, uncomment the chosen one.
+Cores are instantiated at `MIDAS/example/Demo.cpp:64-66`, uncomment the chosen one.
 
-### Other Provided Datasets
+### Custom Dataset + `Demo.cpp`
 
-1. Download the dataset from links above, the file name should be exactly the same
-1. Move it to `MIDAS/data/`
-1. Uncomment corresponding function in `MIDAS/util/PreprocessData.py`
-1. Run the script
-1. Uncomment the corresponding group of `pathMeta` and `pathData` within `MIDAS/example/Demo.cpp:12-18`
-1. Compile and run
+You need to prepare three files:
 
-### Custom Datasets + `Demo.cpp`
+- Meta file
+  - Only includes an integer `N`, the number of records in the dataset
+  - Use its path for `pathMeta`
+- Data file
+  - A header-less csv format file of shape `[N,3]`
+  - Columns are sources, destinations, timestamps
+  - Use its path for `pathData`
+- Label file
+  - A header-less csv format file of shape `[N,1]`
+  - The corresponding label for data records
+    - 0 means normal record
+    - 1 means anomalous record
+  - Use its path for `pathGroundTruth` 
 
-You need to prepare two files:
-- A text file only consists an integer, the number of records in the dataset
-- A csv file (without headers) consists of four columns of integers, which stand for sources, destinations, timestamps and labels, respectively
+### Custom Dataset + Custom Runner
 
-Then you can change the `pathMeta` and `pathData` to your file paths, and run the demo.
-
-### Custom Datasets + Custom Runner
-
-Include the header `MIDAS/CPU/NormalCore.hpp` or `MIDAS/CPU/FilteringCore.hpp`, the implementations are all in-place.
-
-Then, instantiate the core and use `operator()` to process one record and obtain the score.
+1. Include the header `MIDAS/CPU/NormalCore.hpp`, `MIDAS/CPU/RelationalCore.hpp` or `MIDAS/CPU/FilteringCore.hpp`
+1. Instantiate cores with required parameters
+1. Call `operator()` on individual data records, it returns the anomaly score for the input record.
 
 ## Contact
 
-If you have any questions, please consider opening an issue instead of directly sending emails to me.
+If you have any questions, please consider opening an issue instead of directly sending emails to us.
