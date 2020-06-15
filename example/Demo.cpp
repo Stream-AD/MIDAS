@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
 	const auto pathData = SOLUTION_DIR"data/DARPA/darpa_processed.csv";
 	const auto pathGroundTruth = SOLUTION_DIR"data/DARPA/darpa_ground_truth.csv";
 
-	// Implementation
+	// Random seed
 	// --------------------------------------------------------------------------------
 
 	const unsigned seed = time(nullptr);
@@ -40,6 +40,7 @@ int main(int argc, char* argv[]) {
 	srand(seed); // Many rand(), need to init
 
 	// Read meta (total number of records)
+	// --------------------------------------------------------------------------------
 	// PreprocessData.py will generate those meta files
 
 	const auto fileMeta = fopen(pathMeta, "r");
@@ -48,6 +49,7 @@ int main(int argc, char* argv[]) {
 	fclose(fileMeta);
 
 	// Read dataset
+	// --------------------------------------------------------------------------------
 
 	const auto fileData = fopen(pathData, "r");
 	const auto source = new int[n];
@@ -59,6 +61,7 @@ int main(int argc, char* argv[]) {
 	printf("# Records = %d\t// Dataset is loaded\n", n);
 
 	// Do the magic
+	// --------------------------------------------------------------------------------
 	// Of course, I can merge loading and processing together, but this demo is also for benchmarking.
 
 	// MIDAS::NormalCore midas(2, 1024);
@@ -71,6 +74,7 @@ int main(int argc, char* argv[]) {
 	printf("Time = %lldms\t// Algorithm is finished\n", duration_cast<milliseconds>(high_resolution_clock::now() - time).count());
 
 	// Write output scores
+	// --------------------------------------------------------------------------------
 
 	const char* pathScore = SOLUTION_DIR"temp/Score.txt";
 	const auto fileScore = fopen(pathScore, "w");
@@ -80,12 +84,14 @@ int main(int argc, char* argv[]) {
 	printf("// Raw anomaly scores are exported to\n// " SOLUTION_DIR"temp/Score.txt\n");
 
 	// Evaluate scores
+	// --------------------------------------------------------------------------------
 
 	char command[1024];
 	sprintf(command, "python %s %s %s", SOLUTION_DIR"util/EvaluateScore.py", pathGroundTruth, pathScore);
 	system(command);
 
 	// Clean up
+	// --------------------------------------------------------------------------------
 
 	delete[] source;
 	delete[] destination;
