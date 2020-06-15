@@ -24,6 +24,7 @@ C++ implementation of
 - Real-time Streaming Anomaly Detection in Dynamic Graphs. *Siddharth Bhatia, Rui Liu, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. (Under Review)
 - [MIDAS: Microcluster-Based Detector of Anomalies in Edge Streams](asset/Conference.pdf). *Siddharth Bhatia, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. AAAI 2020.
 
+The old implementation is in another branch `OldImplementation`, it should be considered as being archived and will hardly receive feature updates.
 
 ![](asset/Intro.png)
 
