@@ -22,7 +22,7 @@ from sys import argv
 root = (Path(__file__) / '../..').resolve()
 
 if len(argv) <= 1:
-	print('Delete RejectMIDAS/temp/<pattern>')
+	print('Delete MIDAS/temp/<pattern>')
 	print('Usage: python DeleteTempFile.py <pattern> [<pattern>...]')
 else:
 	for i in range(1, len(argv)):

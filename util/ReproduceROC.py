@@ -24,7 +24,7 @@ from sklearn.metrics import auc, roc_curve
 root = (Path(__file__) / '../..').resolve()
 
 if len(argv) < 3:
-	print('Print ROC-AUC to stdout and save points on ROC curve to RejectMIDAS/<pathROC> (default temp/ROC.csv)')
+	print('Print ROC-AUC to stdout and save points on ROC curve to MIDAS/<pathROC> (default temp/ROC.csv)')
 	print('Usage: python ReproduceROC.py <pathGroundTruth> <pathScore> [<pathROC>]')
 else:
 	y = read_csv(argv[1], header=None)

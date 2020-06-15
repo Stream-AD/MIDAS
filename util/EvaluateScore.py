@@ -23,7 +23,7 @@ from sklearn.metrics import roc_auc_score
 root = (Path(__file__) / '../..').resolve()
 
 if len(argv) < 3:
-	print('Print ROC-AUC to stdout and RejectMIDAS/temp/AUC[<indexRun>].txt')
+	print('Print ROC-AUC to stdout and MIDAS/temp/AUC[<indexRun>].txt')
 	print('Usage: python EvaluateScore.py <pathGroundTruth> <pathScore> [<indexRun>]')
 else:
 	y = read_csv(argv[1], header=None)
