@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# Copyright 2020 Rui LIU
+# Copyright 2020 Rui Liu (liurui39660) and Siddharth Bhatia (bhatiasiddharth)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
