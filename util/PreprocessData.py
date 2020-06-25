@@ -16,14 +16,14 @@
 
 from pathlib import Path
 
-import pandas as pd
+from pandas import read_csv, concat
 
 def darpa_original(prefix: Path) -> None:
-	data = pd.read_csv(prefix / 'data/DARPA/darpa_original.csv', header=None, names=['src', 'dst', 'ts', 'atk'], dtype='category')
+	data = read_csv(prefix / 'data/DARPA/darpa_original.csv', header=None, names=['src', 'dst', 'ts', 'atk'], dtype='category')
 	data.atk = data.atk != '-'
 	data.atk = data.atk.astype('int')
 	# data.ts = data.ts.apply(lambda a: a[:-3]).astype('category') # Hour-based, comment this for minute-based
-	all_site = pd.concat([data.src, data.dst])
+	all_site = concat([data.src, data.dst])
 	all_site = all_site.astype('category')
 	all_site = all_site.cat.codes
 	data.src = all_site[:data.shape[0]]
