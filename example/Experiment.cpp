@@ -38,11 +38,14 @@ void ThresholdVsAUC(int n, const char* pathGroundTruth, int numColumn, const std
 	const auto auc = new float[thresholds.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
 
-	// If you want, you can put `omp parallel for` or `tbb::parallel_for` here
-	// After all, this is not the time benchmarking like the next function
-	// Me? I only want to keep maximum simplicity and compatibility for all platforms
+#ifdef ParallelProvider_IntelTBB
+	tbb::parallel_for<int>(0, thresholds.size(), [&](int i) {
+		tbb::parallel_for<int>(0, numRepeat, [&](int j) {
+#else // @formatter:off
+	#pragma omp parallel for
 	for (int i = 0; i < thresholds.size(); i++) {
 		for (int j = 0; j < numRepeat; j++) {
+#endif // @formatter:on
 			srand(seed[j]);
 
 			char pathScore[260];
@@ -64,8 +67,13 @@ void ThresholdVsAUC(int n, const char* pathGroundTruth, int numColumn, const std
 			const auto fileAUC = fopen(pathAUC, "r");
 			fscanf(fileAUC, "%f", auc + i * numRepeat + j);
 			fclose(fileAUC);
+#ifdef ParallelProvider_IntelTBB
+		});
+	});
+#else // @formatter:off
 		}
 	}
+#endif // @formatter:on
 	const auto fileResult = fopen(SOLUTION_DIR"temp/Experiment.csv", "w");
 	fprintf(fileResult, "numColumn,threshold,seed,auc\n");
 	for (int i = 0; i < thresholds.size(); i++)
