@@ -45,7 +45,7 @@ The old implementation is in another branch `OldImplementation`, it should be co
 - Constant Memory (independent of graph size)
 - Constant Update Time (real-time anomaly detection to minimize harm)
 - Up to 55% more accurate and 929 times faster than the state of the art approaches
-- Some experiments are performed on the following datasets: 
+- Experiments are performed using the following datasets: 
   - [DARPA](https://www.ll.mit.edu/r-d/datasets/1998-darpa-intrusion-detection-evaluation-dataset)
   - [TwitterWorldCup2014](http://odds.cs.stonybrook.edu/twitterworldcup2014-dataset)
   - [TwitterSecurity](http://odds.cs.stonybrook.edu/twittersecurity-dataset)
