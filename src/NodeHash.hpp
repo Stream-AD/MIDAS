@@ -90,10 +90,10 @@ struct NodeHash {
 		return least;
 	}
 
-	float Assign(const int* index, float to) const {
+	float Assign(const int* index, float with) const {
 		for (int i = 0; i < r; i++)
-			data[index[i]] = to;
-		return to;
+			data[index[i]] = with;
+		return with;
 	}
 
 	void Add(const int* index, float by = 1) const {
