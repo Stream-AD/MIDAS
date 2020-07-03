@@ -121,6 +121,7 @@ You need to prepare three files:
 3. [Rust](https://github.com/scooter-dangle/midas_rs) by [Scott Steele](https://github.com/scooter-dangle)
 4. [R](https://github.com/pteridin/MIDASwrappeR) by [Tobias Heidler](https://github.com/pteridin)
 5. [Python](https://github.com/ritesh99rakesh/pyMIDAS) by [Ritesh Kumar](https://github.com/ritesh99rakesh)
+6. [Java](https://github.com/jotok/MIDAS-Java) by [Joshua Tokle](https://github.com/jotok)
 
 ## Citation
 
