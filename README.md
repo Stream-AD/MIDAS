@@ -122,6 +122,7 @@ You need to prepare three files:
 4. [R](https://github.com/pteridin/MIDASwrappeR) by [Tobias Heidler](https://github.com/pteridin)
 5. [Python](https://github.com/ritesh99rakesh/pyMIDAS) by [Ritesh Kumar](https://github.com/ritesh99rakesh)
 6. [Java](https://github.com/jotok/MIDAS-Java) by [Joshua Tokle](https://github.com/jotok)
+7. [Julia](https://github.com/ashryaagr/MIDAS.jl) by [Ashrya Agrawal](https://github.com/ashryaagr)
 
 ## Citation
 
