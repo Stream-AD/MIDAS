@@ -1,3 +1,7 @@
+## v1.0.2 (2020.07.23)
+
+- Rename parameter name `to` -> `with` of `Assign()` in `EdgeHaash.hpp` and `NodeHash.hpp`
+
 ## v1.0.1 (2020.06.25)
 
 - Remove useless script file `MIDAS/util/PlotAnomalousEvent.py`
