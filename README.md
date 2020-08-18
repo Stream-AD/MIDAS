@@ -11,8 +11,8 @@
   <a href="https://youtu.be/Bd4PyLCHrto">
     <img src="http://img.shields.io/badge/Talk-Youtube-ff69b4.svg">
   </a>
-  <a href="https://www.kdnuggets.com/2020/04/midas-new-baseline-anomaly-detection-graphs.html"> 
-    <img src="https://img.shields.io/badge/Press-KDnuggets-orange.svg">
+  <a href="https://www.youtube.com/watch?v=DPmN-uPW8qU"> 
+    <img src="https://img.shields.io/badge/Overview-Youtube-orange.svg">
   </a>
   <a href="https://github.com/bhatiasiddharth/MIDAS/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg">
@@ -106,13 +106,14 @@ You need to prepare three files:
 1. Instantiate cores with required parameters
 1. Call `operator()` on individual data records, it returns the anomaly score for the input record.
 
-## Online Articles
+## Online Coverage
 
-1. KDnuggets: [Introducing MIDAS: A New Baseline for Anomaly Detection in Graphs](https://www.kdnuggets.com/2020/04/midas-new-baseline-anomaly-detection-graphs.html)
-2. Towards Data Science: [Controlling Fake News using Graphs and Statistics](https://towardsdatascience.com/controlling-fake-news-using-graphs-and-statistics-31ed116a986f)
-2. Towards Data Science: [Anomaly detection in dynamic graphs using MIDAS](https://towardsdatascience.com/anomaly-detection-in-dynamic-graphs-using-midas-e4f8d0b1db45)
-4. Towards AI: [Anomaly Detection with MIDAS](https://medium.com/towards-artificial-intelligence/anomaly-detection-with-midas-2735a2e6dce8)
-5. [AIhub Interview](https://aihub.org/2020/05/01/interview-with-siddharth-bhatia-a-new-approach-for-anomaly-detection/)
+1. [ACM TechNews](https://technews.acm.org/archives.cfm?fo=2020-05-may/may-06-2020.html)
+2. [AIhub](https://aihub.org/2020/05/01/interview-with-siddharth-bhatia-a-new-approach-for-anomaly-detection/)
+3. [Hacker News](https://news.ycombinator.com/item?id=22802604)
+4. [KDnuggets](https://www.kdnuggets.com/2020/04/midas-new-baseline-anomaly-detection-graphs.html)
+5. [Microsoft](https://techcommunity.microsoft.com/t5/azure-sentinel/announcing-the-azure-sentinel-hackathon-winners/ba-p/1548240)
+6. [Towards Data Science](https://towardsdatascience.com/controlling-fake-news-using-graphs-and-statistics-31ed116a986f)
 
 ## MIDAS in Other Languages
 
