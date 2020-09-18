@@ -4,7 +4,7 @@
   <a href="https://aaai.org/Conferences/AAAI-20/">
     <img src="http://img.shields.io/badge/AAAI-2020-red.svg">
   </a>
-  <a href="https://arxiv.org/pdf/1911.04464.pdf"><img src="http://img.shields.io/badge/Paper-PDF-brightgreen.svg"></a>
+  <a href="https://arxiv.org/pdf/2009.08452.pdf"><img src="http://img.shields.io/badge/Paper-PDF-brightgreen.svg"></a>
   <a href="https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midasslides.pdf">
       <img src="http://img.shields.io/badge/Slides-PDF-ff9e18.svg">
   </a>
@@ -21,7 +21,7 @@
 
 C++ implementation of
 
-- Real-time Streaming Anomaly Detection in Dynamic Graphs. *Siddharth Bhatia, Rui Liu, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. (Under Review)
+- [Real-time Streaming Anomaly Detection in Dynamic Graphs](https://arxiv.org/pdf/2009.08452.pdf). *Siddharth Bhatia, Rui Liu, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. (Under Review)
 - [MIDAS: Microcluster-Based Detector of Anomalies in Edge Streams](https://arxiv.org/pdf/1911.04464.pdf). *Siddharth Bhatia, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. AAAI 2020.
 
 The old implementation is in another branch `OldImplementation`, it should be considered as being archived and will hardly receive feature updates.
@@ -130,9 +130,24 @@ You need to prepare three files:
 
 ## Citation
 
-If you use this code for your research, please consider citing our paper.
+If you use this code for your research, please consider citing our arXiv preprint
+
+```bibtex
+@misc{bhatia2020realtime,
+    title={Real-Time Streaming Anomaly Detection in Dynamic Graphs},
+    author={Siddharth Bhatia and Rui Liu and Bryan Hooi and Minji Yoon and Kijung Shin and Christos Faloutsos},
+    year={2020},
+    eprint={2009.08452},
+    archivePrefix={arXiv},
+    primaryClass={cs.LG}
+}
 
 ```
+
+or our AAAI paper
+
+
+```bibtex
 @inproceedings{bhatia2020midas,
     title="MIDAS: Microcluster-Based Detector of Anomalies in Edge Streams",
     author="Siddharth {Bhatia} and Bryan {Hooi} and Minji {Yoon} and Kijung {Shin} and Christos {Faloutsos}",
