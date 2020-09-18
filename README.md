@@ -89,22 +89,25 @@ You need to prepare three files:
 - Meta file
   - Only includes an integer `N`, the number of records in the dataset
   - Use its path for `pathMeta`
+  - E.g. `MIDAS/data/DARPA/darpa_shape.txt`
 - Data file
   - A header-less csv format file of shape `[N,3]`
   - Columns are sources, destinations, timestamps
   - Use its path for `pathData`
+  - E.g. `MIDAS/data/DARPA/darpa_processed.csv`
 - Label file
   - A header-less csv format file of shape `[N,1]`
   - The corresponding label for data records
     - 0 means normal record
     - 1 means anomalous record
-  - Use its path for `pathGroundTruth` 
+  - Use its path for `pathGroundTruth`
+  - E.g. `MIDAS/data/DARPA/darpa_ground_truth.csv`
 
 ### Custom Dataset + Custom Runner
 
 1. Include the header `MIDAS/CPU/NormalCore.hpp`, `MIDAS/CPU/RelationalCore.hpp` or `MIDAS/CPU/FilteringCore.hpp`
 1. Instantiate cores with required parameters
-1. Call `operator()` on individual data records, it returns the anomaly score for the input record.
+1. Call `operator()` on individual data records, it returns the anomaly score for the input record
 
 ## Online Coverage
 
