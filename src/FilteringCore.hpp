@@ -26,16 +26,20 @@ struct FilteringCore {
 	const float threshold;
 	int timestamp = 1;
 	const float factor;
-	int* const indexEdge; // Pre-compute the index to-be-modified, thanks to the same structure of CMSs
+	const int lenData;
+	int* const indexEdge; // Pre-compute the index to-be-modified, thanks to the Same-Layout Assumption
 	int* const indexSource;
 	int* const indexDestination;
 	CountMinSketch numCurrentEdge, numTotalEdge, scoreEdge;
 	CountMinSketch numCurrentSource, numTotalSource, scoreSource;
 	CountMinSketch numCurrentDestination, numTotalDestination, scoreDestination;
+	float* const timestampReciprocal;
+	bool* const shouldMerge;
 
 	FilteringCore(int numRow, int numColumn, float threshold, float factor = 0.5):
 		threshold(threshold),
 		factor(factor),
+		lenData(numRow * numColumn), // I assume all CMSs have same size, but Same-Layout Assumption is not that strict
 		indexEdge(new int[numRow]),
 		indexSource(new int[numRow]),
 		indexDestination(new int[numRow]),
@@ -47,32 +51,36 @@ struct FilteringCore {
 		scoreSource(numCurrentSource),
 		numCurrentDestination(numRow, numColumn),
 		numTotalDestination(numCurrentDestination),
-		scoreDestination(numCurrentDestination) { }
+		scoreDestination(numCurrentDestination),
+		timestampReciprocal(new float[numRow * numColumn]{ }), // Initially all are 0
+		shouldMerge(new bool[numRow * numColumn]) { }
 
 	virtual ~FilteringCore() {
 		delete[] indexEdge;
 		delete[] indexSource;
 		delete[] indexDestination;
+		delete[] timestampReciprocal;
+		delete[] shouldMerge;
 	}
 
 	static float ComputeScore(float a, float s, float t) {
 		return s == 0 ? 0 : pow(a + s - a * t, 2) / (s * (t - 1)); // If t == 1, then s == 0, so no need to check twice
 	}
 
+	inline void ConditionalMerge(const float* current, float* total, const float* score) const {
+		for (int i = 0; i < lenData; i++)
+			shouldMerge[i] = score[i] < threshold;
+		for (int i = 0, I = lenData; i < I; i++) // Vectorization
+			total[i] += shouldMerge[i] * current[i] + (true - shouldMerge[i]) * total[i] * timestampReciprocal[i];
+	}
+
 	float operator()(int source, int destination, int timestamp) {
 		if (this->timestamp < timestamp) {
-			for (int i = 0; i < numCurrentEdge.lenData; i++)
-				numTotalEdge.data[i] += scoreEdge.data[i] < threshold ?
-					numCurrentEdge.data[i] : this->timestamp - 1 ?
-						numTotalEdge.data[i] / (this->timestamp - 1) : 0;
-			for (int i = 0; i < numCurrentSource.lenData; i++)
-				numTotalSource.data[i] += scoreSource.data[i] < threshold ?
-					numCurrentSource.data[i] : this->timestamp - 1 ?
-						numTotalSource.data[i] / (this->timestamp - 1) : 0;
-			for (int i = 0; i < numCurrentDestination.lenData; i++)
-				numTotalDestination.data[i] += scoreDestination.data[i] < threshold ?
-					numCurrentDestination.data[i] : this->timestamp - 1 ?
-						numTotalDestination.data[i] / (this->timestamp - 1) : 0;
+			if (this->timestamp - 1)
+				std::fill(timestampReciprocal, timestampReciprocal + lenData, 1.f / (this->timestamp - 1));
+			ConditionalMerge(numCurrentEdge.data, numTotalEdge.data, scoreEdge.data);
+			ConditionalMerge(numCurrentSource.data, numTotalSource.data, scoreSource.data);
+			ConditionalMerge(numCurrentDestination.data, numTotalDestination.data, scoreDestination.data);
 			numCurrentEdge.MultiplyAll(factor);
 			numCurrentSource.MultiplyAll(factor);
 			numCurrentDestination.MultiplyAll(factor);
