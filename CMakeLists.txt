@@ -47,3 +47,4 @@ ADD_COMPILE_DEFINITIONS(
 
 ADD_EXECUTABLE(Demo example/Demo.cpp)
 ADD_EXECUTABLE(Experiment example/Experiment.cpp)
+ADD_EXECUTABLE(Reproducible example/Reproducible.cpp)
