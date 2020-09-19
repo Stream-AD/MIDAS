@@ -18,13 +18,13 @@
 
 #include <cmath>
 
-#include "EdgeHash.hpp"
+#include "CountMinSketch.hpp"
 
 namespace MIDAS {
 struct NormalCore {
 	int timestampCurrent = 1;
 	int* const index; // Pre-compute the index to-be-modified, thanks to the same structure of CMSs
-	EdgeHash numCurrent, numTotal;
+	CountMinSketch numCurrent, numTotal;
 
 	NormalCore(int numRow, int numColumn):
 		index(new int[numRow]),

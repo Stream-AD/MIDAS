@@ -19,11 +19,11 @@
 #include <algorithm>
 
 namespace MIDAS {
-struct NodeHash {
+struct CountMinSketch {
 	// Fields
 	// --------------------------------------------------------------------------------
 
-	const int r, c;
+	const int r, c, m = 104729; // Yes, a magic number, I just pick a random prime
 	const int lenData;
 	int* const param1;
 	int* const param2;
@@ -33,10 +33,10 @@ struct NodeHash {
 	// Methods
 	// --------------------------------------------------------------------------------
 
-	NodeHash() = delete;
-	NodeHash& operator=(const NodeHash& b) = delete;
+	CountMinSketch() = delete;
+	CountMinSketch& operator=(const CountMinSketch& b) = delete;
 
-	NodeHash(int numRow, int numColumn):
+	CountMinSketch(int numRow, int numColumn):
 		r(numRow),
 		c(numColumn),
 		lenData(r * c),
@@ -50,7 +50,7 @@ struct NodeHash {
 		std::fill(data, data + lenData, 0);
 	}
 
-	NodeHash(const NodeHash& b):
+	CountMinSketch(const CountMinSketch& b):
 		r(b.r),
 		c(b.c),
 		lenData(b.lenData),
@@ -62,7 +62,7 @@ struct NodeHash {
 		std::copy(b.data, b.data + lenData, data);
 	}
 
-	~NodeHash() {
+	~CountMinSketch() {
 		delete[] param1;
 		delete[] param2;
 		delete[] data;
@@ -74,6 +74,13 @@ struct NodeHash {
 
 	void MultiplyAll(float by) const {
 		std::for_each(data, data + lenData, [&](float& a) { a *= by; }); // Magic of vectorization
+	}
+
+	void Hash(int a, int b, int* index) const {
+		for (int i = 0; i < r; i++) {
+			index[i] = ((a + m * b) * param1[i] + param2[i]) % c;
+			index[i] += i * c + (index[i] < 0 ? c : 0);
+		}
 	}
 
 	void Hash(int a, int* index) const {

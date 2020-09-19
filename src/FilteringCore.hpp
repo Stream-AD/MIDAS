@@ -19,8 +19,7 @@
 #include <cmath>
 #include <algorithm>
 
-#include "EdgeHash.hpp"
-#include "NodeHash.hpp"
+#include "CountMinSketch.hpp"
 
 namespace MIDAS {
 struct FilteringCore {
@@ -30,9 +29,9 @@ struct FilteringCore {
 	int* const indexEdge; // Pre-compute the index to-be-modified, thanks to the same structure of CMSs
 	int* const indexSource;
 	int* const indexDestination;
-	EdgeHash numCurrentEdge, numTotalEdge, scoreEdge;
-	NodeHash numCurrentSource, numTotalSource, scoreSource;
-	NodeHash numCurrentDestination, numTotalDestination, scoreDestination;
+	CountMinSketch numCurrentEdge, numTotalEdge, scoreEdge;
+	CountMinSketch numCurrentSource, numTotalSource, scoreSource;
+	CountMinSketch numCurrentDestination, numTotalDestination, scoreDestination;
 
 	FilteringCore(int numRow, int numColumn, float threshold, float factor = 0.5):
 		threshold(threshold),

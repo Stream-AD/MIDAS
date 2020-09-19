@@ -19,8 +19,7 @@
 #include <cmath>
 #include <algorithm>
 
-#include "EdgeHash.hpp"
-#include "NodeHash.hpp"
+#include "CountMinSketch.hpp"
 
 namespace MIDAS {
 struct RelationalCore {
@@ -29,9 +28,9 @@ struct RelationalCore {
 	int* const indexEdge; // Pre-compute the index to-be-modified, thanks to the same structure of CMSs
 	int* const indexSource;
 	int* const indexDestination;
-	EdgeHash numCurrentEdge, numTotalEdge;
-	NodeHash numCurrentSource, numTotalSource;
-	NodeHash numCurrentDestination, numTotalDestination;
+	CountMinSketch numCurrentEdge, numTotalEdge;
+	CountMinSketch numCurrentSource, numTotalSource;
+	CountMinSketch numCurrentDestination, numTotalDestination;
 
 	RelationalCore(int numRow, int numColumn, float factor = 0.5):
 		factor(factor),
