@@ -23,7 +23,7 @@
 
 namespace MIDAS {
 struct RelationalCore {
-	int timestampCurrent = 1;
+	int timestamp = 1;
 	const float factor;
 	int* const indexEdge; // Pre-compute the index to-be-modified, thanks to the same structure of CMSs
 	int* const indexSource;
@@ -55,11 +55,11 @@ struct RelationalCore {
 	}
 
 	float operator()(int source, int destination, int timestamp) {
-		if (timestamp > timestampCurrent) {
+		if (this->timestamp < timestamp) {
 			numCurrentEdge.MultiplyAll(factor);
 			numCurrentSource.MultiplyAll(factor);
 			numCurrentDestination.MultiplyAll(factor);
-			timestampCurrent = timestamp;
+			this->timestamp = timestamp;
 		}
 		numCurrentEdge.Hash(indexEdge, source, destination);
 		numCurrentEdge.Add(indexEdge);

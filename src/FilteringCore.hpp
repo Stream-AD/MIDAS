@@ -24,7 +24,7 @@
 namespace MIDAS {
 struct FilteringCore {
 	const float threshold;
-	int timestampCurrent = 1;
+	int timestamp = 1;
 	const float factor;
 	int* const indexEdge; // Pre-compute the index to-be-modified, thanks to the same structure of CMSs
 	int* const indexSource;
@@ -60,23 +60,23 @@ struct FilteringCore {
 	}
 
 	float operator()(int source, int destination, int timestamp) {
-		if (timestamp > timestampCurrent) {
+		if (this->timestamp < timestamp) {
 			for (int i = 0; i < numCurrentEdge.lenData; i++)
 				numTotalEdge.data[i] += scoreEdge.data[i] < threshold ?
-					numCurrentEdge.data[i] : timestampCurrent - 1 ?
-						numTotalEdge.data[i] / (timestampCurrent - 1) : 0;
+					numCurrentEdge.data[i] : this->timestamp - 1 ?
+						numTotalEdge.data[i] / (this->timestamp - 1) : 0;
 			for (int i = 0; i < numCurrentSource.lenData; i++)
 				numTotalSource.data[i] += scoreSource.data[i] < threshold ?
-					numCurrentSource.data[i] : timestampCurrent - 1 ?
-						numTotalSource.data[i] / (timestampCurrent - 1) : 0;
+					numCurrentSource.data[i] : this->timestamp - 1 ?
+						numTotalSource.data[i] / (this->timestamp - 1) : 0;
 			for (int i = 0; i < numCurrentDestination.lenData; i++)
 				numTotalDestination.data[i] += scoreDestination.data[i] < threshold ?
-					numCurrentDestination.data[i] : timestampCurrent - 1 ?
-						numTotalDestination.data[i] / (timestampCurrent - 1) : 0;
+					numCurrentDestination.data[i] : this->timestamp - 1 ?
+						numTotalDestination.data[i] / (this->timestamp - 1) : 0;
 			numCurrentEdge.MultiplyAll(factor);
 			numCurrentSource.MultiplyAll(factor);
 			numCurrentDestination.MultiplyAll(factor);
-			timestampCurrent = timestamp;
+			this->timestamp = timestamp;
 		}
 		numCurrentEdge.Hash(indexEdge, source, destination);
 		numCurrentEdge.Add(indexEdge);
