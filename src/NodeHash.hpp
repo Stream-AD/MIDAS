@@ -76,10 +76,10 @@ struct NodeHash {
 		std::for_each(data, data + lenData, [&](float& a) { a *= by; }); // Magic of vectorization
 	}
 
-	void Hash(int a, int* indexOut) const {
+	void Hash(int a, int* index) const {
 		for (int i = 0; i < r; i++) {
-			indexOut[i] = (a * param1[i] + param2[i]) % c;
-			indexOut[i] += i * c + (indexOut[i] < 0 ? c : 0);
+			index[i] = (a * param1[i] + param2[i]) % c;
+			index[i] += i * c + (index[i] < 0 ? c : 0);
 		}
 	}
 
