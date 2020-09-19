@@ -19,9 +19,9 @@
 #include <vector>
 #include <chrono>
 
-#if defined(ParallelProvider_IntelTBB)
+#if defined(ParallelizationProvider_IntelTBB)
 #include <tbb/parallel_for.h>
-#elif defined(ParallelProvider_OpenMP)
+#elif defined(ParallelizationProvider_OpenMP)
 #include <omp.h>
 #endif
 
@@ -38,7 +38,7 @@ void ThresholdVsAUC(int n, const char* pathGroundTruth, int numColumn, const std
 	const auto auc = new float[thresholds.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
 
-#ifdef ParallelProvider_IntelTBB
+#ifdef ParallelizationProvider_IntelTBB
 	tbb::parallel_for<int>(0, thresholds.size(), [&](int i) {
 		tbb::parallel_for<int>(0, numRepeat, [&](int j) {
 #else // @formatter:off
@@ -67,7 +67,7 @@ void ThresholdVsAUC(int n, const char* pathGroundTruth, int numColumn, const std
 			const auto fileAUC = fopen(pathAUC, "r");
 			fscanf(fileAUC, "%f", auc + i * numRepeat + j);
 			fclose(fileAUC);
-#ifdef ParallelProvider_IntelTBB
+#ifdef ParallelizationProvider_IntelTBB
 		});
 	});
 #else // @formatter:off
@@ -196,7 +196,7 @@ void NumColumnVsAUC(int n, const char* pathGroundTruth, const std::vector<int>& 
 	const auto auc = new float[numsColumn.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
 
-#ifdef ParallelProvider_IntelTBB
+#ifdef ParallelizationProvider_IntelTBB
 	tbb::parallel_for<int>(0, numsColumn.size(), [&](int i) {
 		tbb::parallel_for<int>(0, numRepeat, [&](int j) {
 #else // @formatter:off
@@ -225,7 +225,7 @@ void NumColumnVsAUC(int n, const char* pathGroundTruth, const std::vector<int>& 
 			const auto fileAUC = fopen(pathAUC, "r");
 			fscanf(fileAUC, "%f", auc + i * numRepeat + j);
 			fclose(fileAUC);
-#ifdef ParallelProvider_IntelTBB
+#ifdef ParallelizationProvider_IntelTBB
 		});
 	});
 #else // @formatter:off
@@ -249,7 +249,7 @@ void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float thresh
 	const auto auc = new float[factors.size() * numRepeat];
 	std::for_each(seed, seed + numRepeat, [](int& a) { a = rand(); });
 
-#ifdef ParallelProvider_IntelTBB
+#ifdef ParallelizationProvider_IntelTBB
 	tbb::parallel_for<int>(0, factors.size(), [&](int i) {
 		tbb::parallel_for<int>(0, numRepeat, [&](int j) {
 #else // @formatter:off
@@ -278,7 +278,7 @@ void FactorVsAUC(int n, const char* pathGroundTruth, int numColumn, float thresh
 			const auto fileAUC = fopen(pathAUC, "r");
 			fscanf(fileAUC, "%f", auc + i * numRepeat + j);
 			fclose(fileAUC);
-#ifdef ParallelProvider_IntelTBB
+#ifdef ParallelizationProvider_IntelTBB
 		});
 	});
 #else // @formatter:off
