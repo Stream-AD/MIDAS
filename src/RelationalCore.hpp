@@ -61,13 +61,13 @@ struct RelationalCore {
 			numCurrentDestination.MultiplyAll(factor);
 			timestampCurrent = timestamp;
 		}
-		numCurrentEdge.Hash(source, destination, indexEdge);
+		numCurrentEdge.Hash(indexEdge, source, destination);
 		numCurrentEdge.Add(indexEdge);
 		numTotalEdge.Add(indexEdge);
-		numCurrentSource.Hash(source, indexSource);
+		numCurrentSource.Hash(indexSource, source);
 		numCurrentSource.Add(indexSource);
 		numTotalSource.Add(indexSource);
-		numCurrentDestination.Hash(destination, indexDestination);
+		numCurrentDestination.Hash(indexDestination, destination);
 		numCurrentDestination.Add(indexDestination);
 		numTotalDestination.Add(indexDestination);
 		return std::max({

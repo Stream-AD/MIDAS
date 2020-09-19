@@ -78,11 +78,11 @@ struct FilteringCore {
 			numCurrentDestination.MultiplyAll(factor);
 			timestampCurrent = timestamp;
 		}
-		numCurrentEdge.Hash(source, destination, indexEdge);
+		numCurrentEdge.Hash(indexEdge, source, destination);
 		numCurrentEdge.Add(indexEdge);
-		numCurrentSource.Hash(source, indexSource);
+		numCurrentSource.Hash(indexSource, source);
 		numCurrentSource.Add(indexSource);
-		numCurrentDestination.Hash(destination, indexDestination);
+		numCurrentDestination.Hash(indexDestination, destination);
 		numCurrentDestination.Add(indexDestination);
 		return std::max({
 			scoreEdge.Assign(indexEdge, ComputeScore(numCurrentEdge(indexEdge), numTotalEdge(indexEdge), timestamp)),

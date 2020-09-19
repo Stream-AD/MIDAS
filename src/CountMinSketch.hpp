@@ -76,17 +76,17 @@ struct CountMinSketch {
 		std::for_each(data, data + lenData, [&](float& a) { a *= by; }); // Magic of vectorization
 	}
 
-	void Hash(int a, int b, int* index) const {
+	void Hash(int* indexOut, int a, int b) const {
 		for (int i = 0; i < r; i++) {
-			index[i] = ((a + m * b) * param1[i] + param2[i]) % c;
-			index[i] += i * c + (index[i] < 0 ? c : 0);
+			indexOut[i] = ((a + m * b) * param1[i] + param2[i]) % c;
+			indexOut[i] += i * c + (indexOut[i] < 0 ? c : 0);
 		}
 	}
 
-	void Hash(int a, int* index) const {
+	void Hash(int* indexOut, int a) const {
 		for (int i = 0; i < r; i++) {
-			index[i] = (a * param1[i] + param2[i]) % c;
-			index[i] += i * c + (index[i] < 0 ? c : 0);
+			indexOut[i] = (a * param1[i] + param2[i]) % c;
+			indexOut[i] += i * c + (indexOut[i] < 0 ? c : 0);
 		}
 	}
 

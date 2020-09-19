@@ -44,7 +44,7 @@ struct NormalCore {
 			numCurrent.ClearAll();
 			timestampCurrent = timestamp;
 		}
-		numCurrent.Hash(source, destination, index);
+		numCurrent.Hash(index, source, destination);
 		numCurrent.Add(index);
 		numTotal.Add(index);
 		return ComputeScore(numCurrent(index), numTotal(index), timestamp);
