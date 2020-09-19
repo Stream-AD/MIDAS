@@ -25,8 +25,25 @@ INCLUDE_DIRECTORIES(
 	$ENV{VCPKG_INCLUDE_DIR}
 )
 
+FIND_PACKAGE(TBB)
+FIND_PACKAGE(OpenMP)
+IF(TBB_FOUND)
+	LINK_LIBRARIES(TBB::tbb)
+	ADD_COMPILE_DEFINITIONS(ParallelizationProvider_IntelTBB)
+ELSEIF(OpenMP_FOUND)
+	LINK_LIBRARIES(OpenMP::OpenMP_CXX)
+	ADD_COMPILE_DEFINITIONS(ParallelizationProvider_OpenMP)
+ENDIF()
+
+IF(WIN32)
+	ADD_COMPILE_OPTIONS(/wd4244) # int to float may lose precision. Yes, yes, I know, it is on purpose
+ELSEIF(UNIX)
+	ADD_COMPILE_OPTIONS(-Wno-unused-result) # Why do we need the return value from fscanf() or system()?
+ENDIF()
+
 ADD_COMPILE_DEFINITIONS(
 	SOLUTION_DIR="${CMAKE_SOURCE_DIR}/"
 )
 
-ADD_SUBDIRECTORY(src)
+ADD_EXECUTABLE(Demo example/Demo.cpp)
+ADD_EXECUTABLE(Experiment example/Experiment.cpp)
