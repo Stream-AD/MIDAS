@@ -33,7 +33,7 @@ struct FilteringCore {
 	CountMinSketch numCurrentEdge, numTotalEdge, scoreEdge;
 	CountMinSketch numCurrentSource, numTotalSource, scoreSource;
 	CountMinSketch numCurrentDestination, numTotalDestination, scoreDestination;
-	float* const timestampReciprocal;
+	float timestampReciprocal = 0;
 	bool* const shouldMerge;
 
 	FilteringCore(int numRow, int numColumn, float threshold, float factor = 0.5):
@@ -52,14 +52,12 @@ struct FilteringCore {
 		numCurrentDestination(numRow, numColumn),
 		numTotalDestination(numCurrentDestination),
 		scoreDestination(numCurrentDestination),
-		timestampReciprocal(new float[numRow * numColumn]{ }), // Initially all are 0
 		shouldMerge(new bool[numRow * numColumn]) { }
 
 	virtual ~FilteringCore() {
 		delete[] indexEdge;
 		delete[] indexSource;
 		delete[] indexDestination;
-		delete[] timestampReciprocal;
 		delete[] shouldMerge;
 	}
 
@@ -71,19 +69,18 @@ struct FilteringCore {
 		for (int i = 0; i < lenData; i++)
 			shouldMerge[i] = score[i] < threshold;
 		for (int i = 0, I = lenData; i < I; i++) // Vectorization
-			total[i] += shouldMerge[i] * current[i] + (true - shouldMerge[i]) * total[i] * timestampReciprocal[i];
+			total[i] += shouldMerge[i] * current[i] + (true - shouldMerge[i]) * total[i] * timestampReciprocal;
 	}
 
 	float operator()(int source, int destination, int timestamp) {
 		if (this->timestamp < timestamp) {
-			if (this->timestamp - 1)
-				std::fill(timestampReciprocal, timestampReciprocal + lenData, 1.f / (this->timestamp - 1));
 			ConditionalMerge(numCurrentEdge.data, numTotalEdge.data, scoreEdge.data);
 			ConditionalMerge(numCurrentSource.data, numTotalSource.data, scoreSource.data);
 			ConditionalMerge(numCurrentDestination.data, numTotalDestination.data, scoreDestination.data);
 			numCurrentEdge.MultiplyAll(factor);
 			numCurrentSource.MultiplyAll(factor);
 			numCurrentDestination.MultiplyAll(factor);
+			timestampReciprocal = 1.f / (timestamp - 1); // So I can skip an if-statement
 			this->timestamp = timestamp;
 		}
 		numCurrentEdge.Hash(indexEdge, source, destination);
