@@ -73,7 +73,8 @@ struct CountMinSketch {
 	}
 
 	void MultiplyAll(float by) const {
-		std::for_each(data, data + lenData, [&](float& a) { a *= by; }); // Magic of vectorization
+		for (int i = 0, I = lenData; i < I; i++) // Vectorization
+			data[i] *= by;
 	}
 
 	void Hash(int* indexOut, int a, int b = 0) const {
