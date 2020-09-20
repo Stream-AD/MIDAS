@@ -65,7 +65,7 @@ struct FilteringCore {
 		return s == 0 ? 0 : pow(a + s - a * t, 2) / (s * (t - 1)); // If t == 1, then s == 0, so no need to check twice
 	}
 
-	inline void ConditionalMerge(const float* current, float* total, const float* score) const {
+	void ConditionalMerge(const float* current, float* total, const float* score) const {
 		for (int i = 0; i < lenData; i++)
 			shouldMerge[i] = score[i] < threshold;
 		for (int i = 0, I = lenData; i < I; i++) // Vectorization
