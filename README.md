@@ -30,12 +30,19 @@ The old implementation is in another branch `OldImplementation`, it should be co
 
 ## Table of Contents
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
 - [Features](#features)
 - [Demo](#demo)
 - [Customization](#customization)
-- [Online Articles](#online-articles)
-- [MIDAS in other Languages](#midas-in-other-languages)
+- [Other Files](#other-files)
+- [In Other Languages](#in-other-languages)
+- [Online Coverage](#online-coverage)
 - [Citation](#citation)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Features
 
@@ -56,31 +63,31 @@ If you use Windows:
 
 1. Open a Visual Studio developer command prompt, we want their toolchain
 1. `cd` to the project root `MIDAS/`
-1. `cmake -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles" -S . -B build/release`
+1. `cmake -DCMAKE_BUILD_TYPE=Release -GNinja -S . -B build/release`
 1. `cmake --build build/release --target Demo`
-1. `cd` to `MIDAS/build/release/src`
+1. `cd` to `MIDAS/build/release/`
 1. `.\Demo.exe`
 
-If you use Linux/macOS systems:
+If you use Linux/macOS:
 
 1. Open a terminal
 1. `cd` to the project root `MIDAS/`
 1. `cmake -DCMAKE_BUILD_TYPE=Release -S . -B build/release`
 1. `cmake --build build/release --target Demo`
-1. `cd` to `MIDAS/build/release/src`
+1. `cd` to `MIDAS/build/release/`
 1. `./Demo`
 
-The demo runs on `MIDAS/data/DARPA/darpa_processed.csv`, which has 4.5M records, with the filtering core.
+The demo runs on `MIDAS/data/DARPA/darpa_processed.csv`, which has 4.5M records, with the filtering core (MIDAS-F).
 
 The scores will be exported to `MIDAS/temp/Score.txt`, higher means more anomalous.
 
-All file paths are absolute and "hardcoded" by CMake, but it's suggested NOT to run by double-click on the executable file.
+All file paths are absolute and "hardcoded" by CMake, but it's suggested NOT to run by double clicking on the executable file.
 
 ## Customization
 
 ### Switch Cores
 
-Cores are instantiated at `MIDAS/example/Demo.cpp:64-66`, uncomment the chosen one.
+Cores are instantiated at `MIDAS/example/Demo.cpp:67-69`, uncomment the chosen one.
 
 ### Custom Dataset + `Demo.cpp`
 
@@ -105,28 +112,55 @@ You need to prepare three files:
 
 ### Custom Dataset + Custom Runner
 
-1. Include the header `MIDAS/CPU/NormalCore.hpp`, `MIDAS/CPU/RelationalCore.hpp` or `MIDAS/CPU/FilteringCore.hpp`
+1. Include the header `MIDAS/src/NormalCore.hpp`, `MIDAS/src/RelationalCore.hpp` or `MIDAS/src/FilteringCore.hpp`
 1. Instantiate cores with required parameters
 1. Call `operator()` on individual data records, it returns the anomaly score for the input record
+
+## Other Files
+
+### `example/`
+
+#### `Experiment.cpp`
+
+The code we used for experiments.   
+It will try to use Intel TBB or OpenMP for parallelization.  
+You should comment all but only one runner function call in the `main()` as most results are exported to `MIDAS/temp/Experiiment.csv` together with many intermediate files.
+
+#### `Reproducible.cpp`
+
+Similar to `Demo.cpp`, but with all random parameters hardcoded and always produce the same result.  
+It's for other developers and us to test if the implementation in other languages can produce acceptable results.  
+
+### `util/`
+
+`DeleteTempFile.py`, `EvaluateScore.py` and `ReproduceROC.py` will show their usage and a short description when executed without any argument.
+
+#### `PreprocessData.py`
+
+The code to process the raw dataset into an easy-to-read format.
+Datasets are always assumed to be in a folder in `MIDAS/data/`.    
+It can process the following dataset(s)
+
+- `DARPA/darpa_original.csv` -> `DARPA/darpa_processed.csv`, `DARPA/darpa_ground_truth.csv`, `DARPA/darpa_shape.txt`
+
+## In Other Languages
+
+1. Python: [Rui Liu's MIDAS.Python](https://github.com/liurui39660/MIDAS.Python), [Ritesh Kumar's pyMIDAS](https://github.com/ritesh99rakesh/pyMIDAS)
+1. Golang: [Steve Tan's midas](https://github.com/steve0hh/midas)
+1. Ruby: [Andrew Kane's midas](https://github.com/ankane/midas)
+1. Rust: [Scott Steele's midas_rs](https://github.com/scooter-dangle/midas_rs)
+1. R: [Tobias Heidler's MIDASwrappeR](https://github.com/pteridin/MIDASwrappeR)
+1. Java: [Joshua Tokle's MIDAS-Java](https://github.com/jotok/MIDAS-Java)
+1. Julia: [Ashrya Agrawal's MIDAS.jl](https://github.com/ashryaagr/MIDAS.jl)
 
 ## Online Coverage
 
 1. [ACM TechNews](https://technews.acm.org/archives.cfm?fo=2020-05-may/may-06-2020.html)
-2. [AIhub](https://aihub.org/2020/05/01/interview-with-siddharth-bhatia-a-new-approach-for-anomaly-detection/)
-3. [Hacker News](https://news.ycombinator.com/item?id=22802604)
-4. [KDnuggets](https://www.kdnuggets.com/2020/04/midas-new-baseline-anomaly-detection-graphs.html)
-5. [Microsoft](https://techcommunity.microsoft.com/t5/azure-sentinel/announcing-the-azure-sentinel-hackathon-winners/ba-p/1548240)
-6. [Towards Data Science](https://towardsdatascience.com/controlling-fake-news-using-graphs-and-statistics-31ed116a986f)
-
-## MIDAS in Other Languages
-
-1. [Golang](https://github.com/steve0hh/midas) by [Steve Tan](https://github.com/steve0hh)
-2. [Ruby](https://github.com/ankane/midas) by [Andrew Kane](https://github.com/ankane)
-3. [Rust](https://github.com/scooter-dangle/midas_rs) by [Scott Steele](https://github.com/scooter-dangle)
-4. [R](https://github.com/pteridin/MIDASwrappeR) by [Tobias Heidler](https://github.com/pteridin)
-5. [Python](https://github.com/ritesh99rakesh/pyMIDAS) by [Ritesh Kumar](https://github.com/ritesh99rakesh)
-6. [Java](https://github.com/jotok/MIDAS-Java) by [Joshua Tokle](https://github.com/jotok)
-7. [Julia](https://github.com/ashryaagr/MIDAS.jl) by [Ashrya Agrawal](https://github.com/ashryaagr)
+1. [AIhub](https://aihub.org/2020/05/01/interview-with-siddharth-bhatia-a-new-approach-for-anomaly-detection/)
+1. [Hacker News](https://news.ycombinator.com/item?id=22802604)
+1. [KDnuggets](https://www.kdnuggets.com/2020/04/midas-new-baseline-anomaly-detection-graphs.html)
+1. [Microsoft](https://techcommunity.microsoft.com/t5/azure-sentinel/announcing-the-azure-sentinel-hackathon-winners/ba-p/1548240)
+1. [Towards Data Science](https://towardsdatascience.com/controlling-fake-news-using-graphs-and-statistics-31ed116a986f)
 
 ## Citation
 
