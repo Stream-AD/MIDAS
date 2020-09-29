@@ -1,3 +1,7 @@
+## v1.1.1 (2020.09.29)
+
+- unused `#include <algorithm>` in `RelationalCore` and `FilteringCore`
+
 ## v1.1.0 (2020.09.20)
 
 - Partially vectorize MIDAS-F's conditional merge
