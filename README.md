@@ -83,6 +83,22 @@ The scores will be exported to `MIDAS/temp/Score.txt`, higher means more anomalo
 
 All file paths are absolute and "hardcoded" by CMake, but it's suggested NOT to run by double clicking on the executable file.
 
+### Requirements
+
+Core
+- C++11
+- C++ standard libraries
+
+Demo
+- Python 3 (`MIDAS/util/EvaluateScore.py`)
+    - `pandas`: I/O 
+    - `scikit-learn`: Compute ROC-AUC
+
+Other python utility scripts
+- Python 3
+    - `pandas`
+    - `scikit-learn`
+
 ## Customization
 
 ### Switch Cores

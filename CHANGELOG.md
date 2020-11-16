@@ -1,3 +1,9 @@
+## v1.1.2 (2020.11.16)
+
+- Change C++ standard 20 -> 11
+- \- unused `#include` in `Demo` and `Reproducible`
+- Convert `const char*` to `const auto` in `Demo`
+
 ## v1.1.1 (2020.09.29)
 
 - \- unused `#include <algorithm>` in `RelationalCore` and `FilteringCore`
