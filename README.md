@@ -94,6 +94,10 @@ Demo
     - `pandas`: I/O 
     - `scikit-learn`: Compute ROC-AUC
 
+Experiment
+- (Optional) Intel TBB: Parallelization
+- (Optional) OpenMP: Parallelization
+
 Other python utility scripts
 - Python 3
     - `pandas`
