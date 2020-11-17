@@ -25,8 +25,8 @@ INCLUDE_DIRECTORIES(
 	$ENV{VCPKG_INCLUDE_DIR}
 )
 
-FIND_PACKAGE(TBB)
-FIND_PACKAGE(OpenMP)
+FIND_PACKAGE(TBB QUIET)
+FIND_PACKAGE(OpenMP QUIET)
 IF(TBB_FOUND)
 	LINK_LIBRARIES(TBB::tbb)
 	ADD_COMPILE_DEFINITIONS(ParallelizationProvider_IntelTBB)
@@ -38,7 +38,10 @@ ENDIF()
 IF(WIN32)
 	ADD_COMPILE_OPTIONS(/wd4244) # int to float may lose precision. Yes, yes, I know, it is on purpose
 ELSEIF(UNIX)
-	ADD_COMPILE_OPTIONS(-Wno-unused-result) # Why do we need the return value from fscanf() or system()?
+	ADD_COMPILE_OPTIONS(
+		-Wno-unused-result # I don't need to return value from fscanf() and system()
+		-Wno-format # Is there any issue printing long int with %lld?
+	)
 ENDIF()
 
 ADD_COMPILE_DEFINITIONS(
