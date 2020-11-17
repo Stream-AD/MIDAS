@@ -14,6 +14,7 @@
 // limitations under the License.
 // -----------------------------------------------------------------------------
 
+#include <cstdio>
 #include <chrono>
 
 #include "NormalCore.hpp"
