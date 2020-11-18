@@ -39,7 +39,7 @@ IF(WIN32)
 	ADD_COMPILE_OPTIONS(/wd4244) # int to float may lose precision. Yes, yes, I know, it is on purpose
 ELSEIF(UNIX)
 	ADD_COMPILE_OPTIONS(
-		-Wno-unused-result # I don't need to return value from fscanf() and system()
+		-Wno-unused-result # I don't need the return value of fscanf() and system()
 		-Wno-format # Is there any issue printing long int with %lld?
 	)
 ENDIF()
