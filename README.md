@@ -105,6 +105,10 @@ Other python utility scripts
 
 ## Customization
 
+### Different CMS Size / Decay Factor / Threshold
+
+Those are arguments of cores' constructors, which are at `MIDAS/example/Demo.cpp:67-69`.
+
 ### Switch Cores
 
 Cores are instantiated at `MIDAS/example/Demo.cpp:67-69`, uncomment the chosen one.
