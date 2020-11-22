@@ -37,6 +37,7 @@ ENDIF()
 
 IF(WIN32)
 	ADD_COMPILE_OPTIONS(/wd4244) # int to float may lose precision. Yes, yes, I know, it is on purpose
+	ADD_COMPILE_DEFINITIONS(_CRT_SECURE_NO_WARNINGS) # fopen(), fscanf(), ...
 ELSEIF(UNIX)
 	ADD_COMPILE_OPTIONS(
 		-Wno-unused-result # I don't need the return value of fscanf() and system()
