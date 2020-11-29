@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
 	const auto time = high_resolution_clock::now();
 	for (int i = 0; i < n; i++)
 		score[i] = midas(source[i], destination[i], timestamp[i]);
-	printf("Time = %lldms\t// Algorithm is finished\n", duration_cast<milliseconds>(high_resolution_clock::now() - time).count());
+	printf("Time = %lldms\t\t// Algorithm is finished\n", duration_cast<milliseconds>(high_resolution_clock::now() - time).count());
 
 	// Evaluate scores (experimental)
 	// --------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
 		fscanf(fileLabel, "%f", &label[i]);
 	fclose(fileLabel);
 
-	printf("ROC-AUC = %.4f // Experimental impl is used\n", AUROC(label, score, n));
+	printf("ROC-AUC = %.4f\t// Experimental impl is used\n", AUROC(label, score, n));
 	delete[] label;
 
 	// Write output scores
