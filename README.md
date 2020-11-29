@@ -89,7 +89,10 @@ Core
 - C++11
 - C++ standard libraries
 
-Demo
+Demo (if experimental ROC-AUC impl)
+- C++ standard libraries
+
+Demo (if `sklearn` ROC-AUC impl)
 - Python 3 (`MIDAS/util/EvaluateScore.py`)
     - `pandas`: I/O 
     - `scikit-learn`: Compute ROC-AUC
@@ -104,6 +107,12 @@ Other python utility scripts
     - `scikit-learn`
 
 ## Customization
+
+### Switch to `sklearn` ROC-AUC Implementation
+
+In `MIDAS/example/Demo.cpp`.  
+Comment out section "Evaluate scores (experimental)"  
+Uncomment section "Write output scores" and "Evaluate scores".
 
 ### Different CMS Size / Decay Factor / Threshold
 
@@ -159,10 +168,14 @@ It's for other developers and us to test if the implementation in other language
 
 `DeleteTempFile.py`, `EvaluateScore.py` and `ReproduceROC.py` will show their usage and a short description when executed without any argument.
 
+#### `AUROC.hpp`
+
+Experimental ROC-AUC implementation in C++11. More info at [this repo](https://github.com/liurui39660/AUROC).
+
 #### `PreprocessData.py`
 
-The code to process the raw dataset into an easy-to-read format.
-Datasets are always assumed to be in a folder in `MIDAS/data/`.    
+The code to process the raw dataset into an easy-to-read format.  
+Datasets are always assumed to be in a folder in `MIDAS/data/`.  
 It can process the following dataset(s)
 
 - `DARPA/darpa_original.csv` -> `DARPA/darpa_processed.csv`, `DARPA/darpa_ground_truth.csv`, `DARPA/darpa_shape.txt`

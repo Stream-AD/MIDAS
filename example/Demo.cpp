@@ -20,6 +20,7 @@
 #include "NormalCore.hpp"
 #include "RelationalCore.hpp"
 #include "FilteringCore.hpp"
+#include "AUROC.hpp"
 
 using namespace std::chrono;
 
@@ -72,22 +73,34 @@ int main(int argc, char* argv[]) {
 		score[i] = midas(source[i], destination[i], timestamp[i]);
 	printf("Time = %lldms\t// Algorithm is finished\n", duration_cast<milliseconds>(high_resolution_clock::now() - time).count());
 
+	// Evaluate scores (experimental)
+	// --------------------------------------------------------------------------------
+
+	const auto label = new float[n];
+	const auto fileLabel = fopen(pathLabel, "r");
+	for (int i = 0; i < n; i++)
+		fscanf(fileLabel, "%f", &label[i]);
+	fclose(fileLabel);
+
+	printf("ROC-AUC = %.4f // Experimental impl is used\n", AUROC(label, score, n));
+	delete[] label;
+
 	// Write output scores
 	// --------------------------------------------------------------------------------
 
-	const auto pathScore = SOLUTION_DIR"temp/Score.txt";
-	const auto fileScore = fopen(pathScore, "w");
-	for (int i = 0; i < n; i++)
-		fprintf(fileScore, "%f\n", score[i]);
-	fclose(fileScore);
-	printf("// Raw anomaly scores are exported to\n// " SOLUTION_DIR"temp/Score.txt\n");
+	// const auto pathScore = SOLUTION_DIR"temp/Score.txt";
+	// const auto fileScore = fopen(pathScore, "w");
+	// for (int i = 0; i < n; i++)
+	// 	fprintf(fileScore, "%f\n", score[i]);
+	// fclose(fileScore);
+	// printf("// Raw anomaly scores are exported to\n// " SOLUTION_DIR"temp/Score.txt\n");
 
 	// Evaluate scores
 	// --------------------------------------------------------------------------------
 
-	char command[1024];
-	sprintf(command, "python %s %s %s", SOLUTION_DIR"util/EvaluateScore.py", pathLabel, pathScore);
-	system(command);
+	// char command[1024];
+	// sprintf(command, "python %s %s %s", SOLUTION_DIR"util/EvaluateScore.py", pathLabel, pathScore);
+	// system(command);
 
 	// Clean up
 	// --------------------------------------------------------------------------------
