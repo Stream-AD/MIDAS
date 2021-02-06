@@ -14,7 +14,7 @@
   <a href="https://www.youtube.com/watch?v=DPmN-uPW8qU"> 
     <img src="https://img.shields.io/badge/Overview-Youtube-orange.svg">
   </a>
-  <a href="https://github.com/bhatiasiddharth/MIDAS/blob/master/LICENSE">
+  <a href="https://github.com/Stream-AD/MIDAS/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg">
   </a>
 </p>
