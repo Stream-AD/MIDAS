@@ -21,35 +21,37 @@ PROJECT(MIDAS)
 SET(CMAKE_CXX_STANDARD 11)
 
 INCLUDE_DIRECTORIES(
-	src
-	util
-	$ENV{VCPKG_INCLUDE_DIR}
+        src
+        util
+        $ENV{VCPKG_INCLUDE_DIR}
 )
 
+ADD_SUBDIRECTORY(extern/pybind11)
 FIND_PACKAGE(TBB QUIET)
 FIND_PACKAGE(OpenMP QUIET)
-IF(TBB_FOUND)
-	LINK_LIBRARIES(TBB::tbb)
-	ADD_COMPILE_DEFINITIONS(ParallelizationProvider_IntelTBB)
-ELSEIF(OpenMP_FOUND)
-	LINK_LIBRARIES(OpenMP::OpenMP_CXX)
-	ADD_COMPILE_DEFINITIONS(ParallelizationProvider_OpenMP)
-ENDIF()
+IF (TBB_FOUND)
+    LINK_LIBRARIES(TBB::tbb)
+    ADD_COMPILE_DEFINITIONS(ParallelizationProvider_IntelTBB)
+ELSEIF (OpenMP_FOUND)
+    LINK_LIBRARIES(OpenMP::OpenMP_CXX)
+    ADD_COMPILE_DEFINITIONS(ParallelizationProvider_OpenMP)
+ENDIF ()
 
-IF(WIN32)
-	ADD_COMPILE_OPTIONS(/wd4244) # int to float may lose precision. Yes, yes, I know, it is on purpose
-	ADD_COMPILE_DEFINITIONS(_CRT_SECURE_NO_WARNINGS) # fopen(), fscanf(), ...
-ELSEIF(UNIX)
-	ADD_COMPILE_OPTIONS(
-		-Wno-unused-result # I don't need the return value of fscanf() and system()
-		-Wno-format # Is there any issue printing long int with %lld?
-	)
-ENDIF()
+IF (WIN32)
+    ADD_COMPILE_OPTIONS(/wd4244) # int to float may lose precision. Yes, yes, I know, it is on purpose
+    ADD_COMPILE_DEFINITIONS(_CRT_SECURE_NO_WARNINGS) # fopen(), fscanf(), ...
+ELSEIF (UNIX)
+    ADD_COMPILE_OPTIONS(
+            -Wno-unused-result # I don't need the return value of fscanf() and system()
+            -Wno-format # Is there any issue printing long int with %lld?
+    )
+ENDIF ()
 
 ADD_COMPILE_DEFINITIONS(
-	SOLUTION_DIR="${CMAKE_SOURCE_DIR}/"
+        SOLUTION_DIR="${CMAKE_SOURCE_DIR}/"
 )
 
 ADD_EXECUTABLE(Demo example/Demo.cpp)
 ADD_EXECUTABLE(Experiment example/Experiment.cpp)
 ADD_EXECUTABLE(Reproducible example/Reproducible.cpp)
+PYBIND11_ADD_MODULE(MIDAS python/MIDASWrapper.cpp)
