@@ -14,14 +14,15 @@ PYBIND11_MODULE(MIDAS, m) {
     m.doc() = "MIDAS wrapper";
 
     py::class_<MIDAS::NormalCore>(m, "MIDAS")
-            .def(py::init<int, int>())
+            .def(py::init<int, int>(), py::arg("num_row"), py::arg("num_col"))
             .def("add_edge", &MIDAS::NormalCore::operator());
 
     py::class_<MIDAS::RelationalCore>(m, "MIDASR")
-            .def(py::init<int, int, float>())
+            .def(py::init<int, int, float>(), py::arg("num_row"), py::arg("num_col"), py::arg("factor") = 0.5)
             .def("add_edge", &MIDAS::RelationalCore::operator());
 
     py::class_<MIDAS::FilteringCore>(m, "MIDASF")
-            .def(py::init<int, int, float, float>())
+            .def(py::init<int, int, float, float>(), py::arg("num_row"), py::arg("num_col"), py::arg("threshold"),
+                 py::arg("factor") = 0.5)
             .def("add_edge", &MIDAS::FilteringCore::operator());
 }
