@@ -87,10 +87,8 @@ All file paths are absolute and "hardcoded" by CMake, but it's suggested NOT to 
 1. Make sure you clone the project with `--recursive`
 1. Open a terminal
 1. `cd` to the project root `MIDAS/`
-1. `cmake -DCMAKE_BUILD_TYPE=Release -S . -B build/release`
-1. `cmake --build build/release --target MIDAS`
-1. `cd` to `MIDAS/build/release/`
-1. run `python` and try import MIDAS
+1. Install with pip: `pip install .`
+1. run `python`
 ```python
 from MIDAS import MIDAS, MIDASR, MIDASF
 
@@ -102,7 +100,7 @@ threshold = 1e3
 
 midas = MIDAS(num_row=num_row, num_col=num_col)
 midas_r = MIDASR(num_row=num_row, num_col=num_col, factor=factor)
-midas_f = MIDASF(num_row=num_row, num_col=num_col, thrshold=threshold, factor=factor)
+midas_f = MIDASF(num_row=num_row, num_col=num_col, threshold=threshold, factor=factor)
 
 example_source = 3
 example_destination = 5
