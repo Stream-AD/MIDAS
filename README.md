@@ -83,6 +83,37 @@ The scores will be exported to `MIDAS/temp/Score.txt`, higher means more anomalo
 
 All file paths are absolute and "hardcoded" by CMake, but it's suggested NOT to run by double clicking on the executable file.
 
+### Python Wrapper
+1. Make sure you clone the project with `--recursive`
+1. Open a terminal
+1. `cd` to the project root `MIDAS/`
+1. `cmake -DCMAKE_BUILD_TYPE=Release -S . -B build/release`
+1. `cmake --build build/release --target MIDAS`
+1. `cd` to `MIDAS/build/release/`
+1. run `python` and try import MIDAS
+```python
+from MIDAS import MIDAS, MIDASR, MIDASF
+
+
+num_row = 2
+num_col = 1024
+factor = 0.5
+threshold = 1e3
+
+midas = MIDAS(num_row=num_row, num_col=num_col)
+midas_r = MIDASR(num_row=num_row, num_col=num_col, factor=factor)
+midas_f = MIDASF(num_row=num_row, num_col=num_col, thrshold=threshold, factor=factor)
+
+example_source = 3
+example_destination = 5
+example_timestamp = 1
+
+
+score = midas.add_edge(source=example_source, destination=example_destination, timestamp=example_timestamp)
+score_r = midas_r.add_edge(source=example_source, destination=example_destination, timestamp=example_timestamp)
+score_f = midas_f.add_edge(source=example_source, destination=example_destination, timestamp=example_timestamp)
+```
+
 ### Requirements
 
 Core
