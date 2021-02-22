@@ -45,7 +45,7 @@ class CMakeBuild(build_ext):
             "-DVERSION_INFO={}".format(self.distribution.get_version()),
             "-DCMAKE_BUILD_TYPE={}".format(cfg),  # not used on MSVC, but no harm
         ]
-        build_args = []
+        build_args = ["--target", "MIDAS"]
 
         if self.compiler.compiler_type != "msvc":
             # Using Ninja-build since it a) is available as a wheel and b)
