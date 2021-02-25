@@ -183,6 +183,7 @@ It can process the following dataset(s)
 ## In Other Languages
 
 1. Python: [Rui Liu's MIDAS.Python](https://github.com/liurui39660/MIDAS.Python), [Ritesh Kumar's pyMIDAS](https://github.com/ritesh99rakesh/pyMIDAS)
+1. Python (pybind): [Wong Mun Hou's MIDAS](https://github.com/munhouiani/MIDAS)
 1. Golang: [Steve Tan's midas](https://github.com/steve0hh/midas)
 1. Ruby: [Andrew Kane's midas](https://github.com/ankane/midas)
 1. Rust: [Scott Steele's midas_rs](https://github.com/scooter-dangle/midas_rs)
