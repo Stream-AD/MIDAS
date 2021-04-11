@@ -5,7 +5,7 @@
     <img src="http://img.shields.io/badge/AAAI-2020-red.svg">
   </a>
   <a href="https://arxiv.org/pdf/2009.08452.pdf"><img src="http://img.shields.io/badge/Paper-PDF-brightgreen.svg"></a>
-  <a href="https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/midasslides.pdf">
+  <a href="https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/MIDAS_slides.pdf">
       <img src="http://img.shields.io/badge/Slides-PDF-ff9e18.svg">
   </a>
   <a href="https://youtu.be/Bd4PyLCHrto">
