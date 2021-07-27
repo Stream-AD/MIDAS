@@ -202,7 +202,7 @@ It can process the following dataset(s)
 
 ## Citation
 
-If you use this code for your research, please consider citing our arXiv preprint
+If you use this code for your research, please consider citing the arXiv preprint
 
 ```bibtex
 @misc{bhatia2020realtime,
@@ -216,7 +216,7 @@ If you use this code for your research, please consider citing our arXiv preprin
 
 ```
 
-or our AAAI paper
+or the AAAI paper
 
 
 ```bibtex
