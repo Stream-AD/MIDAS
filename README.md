@@ -21,7 +21,7 @@
 
 C++ implementation of
 
-- [Real-time Streaming Anomaly Detection in Dynamic Graphs](https://arxiv.org/pdf/2009.08452.pdf). *Siddharth Bhatia, Rui Liu, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. (Under Review)
+- [Real-time Streaming Anomaly Detection in Dynamic Graphs](https://arxiv.org/pdf/2009.08452.pdf). *Siddharth Bhatia, Rui Liu, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. TKDD 2022.
 - [MIDAS: Microcluster-Based Detector of Anomalies in Edge Streams](https://arxiv.org/pdf/1911.04464.pdf). *Siddharth Bhatia, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. AAAI 2020.
 
 The old implementation is in another branch `OldImplementation`, it should be considered as being archived and will hardly receive feature updates.
@@ -206,12 +206,11 @@ If you use this code for your research, please consider citing the arXiv preprin
 
 ```bibtex
 @misc{bhatia2020realtime,
-    title={Real-Time Streaming Anomaly Detection in Dynamic Graphs},
+    title={Real-Time Anomaly Detection in Edge Streams},
     author={Siddharth Bhatia and Rui Liu and Bryan Hooi and Minji Yoon and Kijung Shin and Christos Faloutsos},
-    year={2020},
-    eprint={2009.08452},
-    archivePrefix={arXiv},
-    primaryClass={cs.LG}
+    year={2022},
+    booktitle={Transactions on Knowledge Discovery from Data (TKDD)},
+    year={2022}
 }
 
 ```
