@@ -208,7 +208,6 @@ If you use this code for your research, please consider citing the arXiv preprin
 @misc{bhatia2020realtime,
     title={Real-Time Anomaly Detection in Edge Streams},
     author={Siddharth Bhatia and Rui Liu and Bryan Hooi and Minji Yoon and Kijung Shin and Christos Faloutsos},
-    year={2022},
     booktitle={Transactions on Knowledge Discovery from Data (TKDD)},
     year={2022}
 }
