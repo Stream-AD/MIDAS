@@ -223,7 +223,6 @@ articleno = {75},
 numpages = {22}
 }
 
-```bibtex
 @inproceedings{bhatia2020midas,
     title="MIDAS: Microcluster-Based Detector of Anomalies in Edge Streams",
     author="Siddharth {Bhatia} and Bryan {Hooi} and Minji {Yoon} and Kijung {Shin} and Christos {Faloutsos}",
