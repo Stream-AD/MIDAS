@@ -224,9 +224,9 @@ numpages = {22}
 }
 
 @inproceedings{bhatia2020midas,
-    title="MIDAS: Microcluster-Based Detector of Anomalies in Edge Streams",
-    author="Siddharth {Bhatia} and Bryan {Hooi} and Minji {Yoon} and Kijung {Shin} and Christos {Faloutsos}",
-    booktitle="AAAI Conference on Artificial Intelligence (AAAI)",
-    year="2020"
+    title={MIDAS: Microcluster-Based Detector of Anomalies in Edge Streams},
+    author={Siddharth Bhatia and Bryan Hooi and Minji Yoon and Kijung Shin and Christos Faloutsos},
+    booktitle={AAAI Conference on Artificial Intelligence (AAAI)},
+    year={2020}
 }
 ```
