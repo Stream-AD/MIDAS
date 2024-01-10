@@ -21,8 +21,8 @@
 
 C++ implementation of
 
-- [Real-time Streaming Anomaly Detection in Dynamic Graphs](https://arxiv.org/pdf/2009.08452.pdf). *Siddharth Bhatia, Rui Liu, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. TKDD 2022.
-- [MIDAS: Microcluster-Based Detector of Anomalies in Edge Streams](https://arxiv.org/pdf/1911.04464.pdf). *Siddharth Bhatia, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. AAAI 2020.
+- [Real-time Streaming Anomaly Detection in Dynamic Graphs](https://arxiv.org/pdf/2009.08452.pdf). *Siddharth Bhatia, Rui Liu, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. TKDD, 2022.
+- [MIDAS: Microcluster-Based Detector of Anomalies in Edge Streams](https://arxiv.org/pdf/1911.04464.pdf). *Siddharth Bhatia, Bryan Hooi, Minji Yoon, Kijung Shin, Christos Faloutsos*. AAAI, 2020.
 
 The old implementation is in another branch `OldImplementation`, it should be considered as being archived and will hardly receive feature updates.
 
@@ -202,20 +202,26 @@ It can process the following dataset(s)
 
 ## Citation
 
-If you use this code for your research, please consider citing the arXiv preprint
+If you use this code for your research, please consider citing our TKDD and AAAI papers.
 
 ```bibtex
-@misc{bhatia2020realtime,
-    title={Real-Time Anomaly Detection in Edge Streams},
-    author={Siddharth Bhatia and Rui Liu and Bryan Hooi and Minji Yoon and Kijung Shin and Christos Faloutsos},
-    booktitle={Transactions on Knowledge Discovery from Data (TKDD)},
-    year={2022}
+@article{bhatia2022realtime,
+author = {Bhatia, Siddharth and Liu, Rui and Hooi, Bryan and Yoon, Minji and Shin, Kijung and Faloutsos, Christos},
+title = {Real-Time Anomaly Detection in Edge Streams},
+year = {2022},
+issue_date = {August 2022},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {16},
+number = {4},
+issn = {1556-4681},
+url = {https://doi.org/10.1145/3494564},
+doi = {10.1145/3494564},
+journal = {ACM Trans. Knowl. Discov. Data},
+month = {jan},
+articleno = {75},
+numpages = {22}
 }
-
-```
-
-or the AAAI paper
-
 
 ```bibtex
 @inproceedings{bhatia2020midas,
